@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e47d44ef21e97e141a7ad68795e4c08d, type: 3}
+  m_Name: Touch Breast
+  m_EditorClassIdentifier: 
+  internalDescription: The guy grabs her boob
+  isCombat: 1
+  sexActType: 0
+  statDependency: 3
+  cardDificulty: 2
+  sucessImage: {fileID: 21300000, guid: 700185b3d9721f147bf63e2a4c6b84d1, type: 3}
+  successText: "You hool your arm around her and place your palm on her chest. You
+    squeeze over her shirt.\n\"You feel her erect nipple poking through her clothes.
+    Pointy. Sharp. You can't wait to make your way inside her clothes. To feel her
+    skin. \nShe pushes her chest forward, so your palm fills more of her chest. She
+    moves her body, horny, and rubs her buttocks against your crotch. \n\"\"Your
+    tits are great.\"\"\n\"\"You think so?\"\"\nShe grabs her other breast herself
+    and  squeezes it, mirroring you\u2019re actions.\"\r"
+  exhaustionHitPlayer1Success: 0
+  frustrationHitPlayer1Success: 0
+  arousalHitPlayer1Success: 1
+  exhaustionHitPlayer2Success: 0
+  frustrationHitPlayer2Success: 0
+  arousalHitPlayer2Success: 1
+  failImage: {fileID: 21300000, guid: 83635390768a47e47a56b6a06d26b142, type: 3}
+  failText: "You hook your arm around her and grab her tit, and squeeze over her
+    shirt.\r\nShe makes a noise with your throat. It's not a good one. Maybe you
+    gripped too hard? Maybe not hard enough? In any case, she wipes her chest to
+    shake your hand off. She grabs her other breast herself and  squeezes it, mirroring
+    you\u2019re actions."
+  exhaustionHitPlayer1Failure: 0
+  frustrationHitPlayer1Failure: -1
+  arousalHitPlayer1Failure: 0
+  exhaustionHitPlayer2Failure: 0
+  frustrationHitPlayer2Failure: -2
+  arousalHitPlayer2Failure: 0

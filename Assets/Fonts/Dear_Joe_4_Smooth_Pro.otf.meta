@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 445722843e71de0479ad42a87f15eebf
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Dear Joe 4
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 92a4c04cf31e297479d492e988a65ee4, type: 3}
+  - {fileID: 12800000, guid: 02bdecac9893e1848af2a7e255e41f4e, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

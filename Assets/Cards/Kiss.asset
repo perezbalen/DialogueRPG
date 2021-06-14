@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e47d44ef21e97e141a7ad68795e4c08d, type: 3}
+  m_Name: Kiss
+  m_EditorClassIdentifier: 
+  internalDescription: The guy says hello.
+  isCombat: 1
+  sexActType: 0
+  statDependency: 2
+  cardDificulty: 1
+  sucessImage: {fileID: 21300000, guid: 52fe3899c293341438053550dc78f06d, type: 3}
+  successText: She kisses your tip. It feels devine.
+  firstLinesSuccess:
+  - You kiss her.
+  - You kiss her again.
+  exhaustionHitPlayer1Success: 0
+  frustrationHitPlayer1Success: 0
+  arousalHitPlayer1Success: 1
+  exhaustionHitPlayer2Success: 0
+  frustrationHitPlayer2Success: 0
+  arousalHitPlayer2Success: 1
+  failImage: {fileID: 21300000, guid: 531c8f2d5ebf5b04dacc3ca37a4fac2f, type: 3}
+  failText: "She liks your tip, but it's salty and she doesnt like ti. \nYou grab
+    Gabbie by the head, and move your cock over her face, effectively using her cheeks
+    to masturbate.\r"
+  firstLinesFailure:
+  - She pulls away. Maybe it's your breath?
+  - She pulls away. It's definitely your breath?
+  - "You don\u2019t care your breath stinks, so you reach forward and stick your
+    tongue in her mouth. She struggles to pull away, but you hold her in place. Clearly
+    she doesn\u2019t like it."
+  exhaustionHitPlayer1Failure: 0
+  frustrationHitPlayer1Failure: 0
+  arousalHitPlayer1Failure: 0
+  exhaustionHitPlayer2Failure: 0
+  frustrationHitPlayer2Failure: 0
+  arousalHitPlayer2Failure: -1

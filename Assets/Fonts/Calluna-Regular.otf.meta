@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: e3da246a3d6a80c47b2d1bb9ed091094
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Calluna
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: b25e58108d392bc4f8e255fb23f7e930, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

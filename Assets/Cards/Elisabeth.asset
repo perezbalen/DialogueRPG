@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e47d44ef21e97e141a7ad68795e4c08d, type: 3}
+  m_Name: Elisabeth
+  m_EditorClassIdentifier: 
+  internalDescription: The guy says hello.
+  sexActType: 3
+  statDependency: 1
+  cardDificulty: 1
+  sucessImage: {fileID: 21300000, guid: baa6690ce09f4c94297fd43373df8126, type: 3}
+  successText: "Gabbie lies down, and you sit over her massive, cushiony melons.
+    Comfortable. Then you bend your dick forward, so Gabbie can suck it. \r"
+  exhaustionHitPlayer1Success: 0
+  frustrationHitPlayer1Success: 0
+  arousalHitPlayer1Success: 2
+  exhaustionHitPlayer2Success: 2
+  frustrationHitPlayer2Success: 0
+  arousalHitPlayer2Success: 1
+  failImage: {fileID: 21300000, guid: 07653909378b580468e465a1b4b117f6, type: 3}
+  failText: "She suks, but her theeth rub. You grab Gabbie by the head, and move
+    your cock over her face, effectively using her cheeks to masturbate.\r"
+  exhaustionHitPlayer1Failure: 0
+  frustrationHitPlayer1Failure: 2
+  arousalHitPlayer1Failure: -2
+  exhaustionHitPlayer2Failure: 2
+  frustrationHitPlayer2Failure: 1
+  arousalHitPlayer2Failure: 0
