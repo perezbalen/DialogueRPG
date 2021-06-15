@@ -20,18 +20,20 @@ MonoBehaviour:
   sucessImage: {fileID: 21300000, guid: b40a00faefda7364c88c0957584487fb, type: 3}
   successText: I think this will also be here for reference. The actual text goes
     in the dialogue system
-  exhaustionHitPlayer1Success: 0
-  frustrationHitPlayer1Success: 100
+  firstLinesSuccess: []
+  exhaustionHitPlayer1Success: 5
+  frustrationHitPlayer1Success: 0
   arousalHitPlayer1Success: 0
   exhaustionHitPlayer2Success: 0
   frustrationHitPlayer2Success: 0
-  arousalHitPlayer2Success: 0
+  arousalHitPlayer2Success: 10
   failImage: {fileID: 21300000, guid: 16025423af303204c98e311253b92134, type: 3}
   failText: I think this will also be here for reference. The actual text goes in
     the dialogue system
-  exhaustionHitPlayer1Failure: 0
+  firstLinesFailure: []
+  exhaustionHitPlayer1Failure: 5
   frustrationHitPlayer1Failure: 0
   arousalHitPlayer1Failure: 0
-  exhaustionHitPlayer2Failure: 0
+  exhaustionHitPlayer2Failure: 5
   frustrationHitPlayer2Failure: 0
-  arousalHitPlayer2Failure: 100
+  arousalHitPlayer2Failure: -10

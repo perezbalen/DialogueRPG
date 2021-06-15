@@ -87,8 +87,8 @@ public class PlayerSRPGSheet : MonoBehaviour
     private void OnValidate()
     {
         CalculateSumStats();
-        SetUpGuiBars();
         SetHealthPoolsMaxLevels();
+        SetUpGuiBars();
 
     }
 

@@ -113,23 +113,23 @@ public class CombatManager : MonoBehaviour
         if (isItAWinScenario)
         {
             // Player 1
-            Player1.ChangeExhaustion(   card.exhaustionHitPlayer1Success    * Player1.stamina);
-            Player1.ChangeFrustration(  card.frustrationHitPlayer1Success   * Player1.will);
-            Player1.ChangeArousal(      card.arousalHitPlayer1Success       * Player1.technique);
+            Player1.ChangeExhaustion(   card.exhaustionHitPlayer1Success    );//Player1.stamina);
+            Player1.ChangeFrustration(  card.frustrationHitPlayer1Success);//* Player1.will);
+            Player1.ChangeArousal(      card.arousalHitPlayer1Success);//* Player1.technique);
             // Player 2
-            Player2.ChangeExhaustion(   card.exhaustionHitPlayer2Success    * Player2.stamina);
-            Player2.ChangeFrustration(  card.frustrationHitPlayer2Success   * Player2.will);
-            Player2.ChangeArousal(      card.arousalHitPlayer2Success       * Player2.technique);
+            Player2.ChangeExhaustion(   card.exhaustionHitPlayer2Success);//   * Player2.stamina);
+            Player2.ChangeFrustration(  card.frustrationHitPlayer2Success);//* Player2.will);
+            Player2.ChangeArousal(      card.arousalHitPlayer2Success);//* Player2.technique);
         }
         else // # Do stuff wne !isItAWinScenario
         {
-            Player1.ChangeExhaustion(   card.exhaustionHitPlayer1Failure    * Player1.stamina);
-            Player1.ChangeFrustration(  card.frustrationHitPlayer1Failure   * Player1.will);
-            Player1.ChangeArousal(      card.arousalHitPlayer1Failure       * Player1.technique);
+            Player1.ChangeExhaustion(   card.exhaustionHitPlayer1Failure);//* Player1.stamina);
+            Player1.ChangeFrustration(  card.frustrationHitPlayer1Failure);//* Player1.will);
+            Player1.ChangeArousal(      card.arousalHitPlayer1Failure);//* Player1.technique);
             // Player 2
-            Player2.ChangeExhaustion(   card.exhaustionHitPlayer2Failure    * Player2.stamina);
-            Player2.ChangeFrustration(  card.frustrationHitPlayer2Failure   * Player2.will);
-            Player2.ChangeArousal(      card.arousalHitPlayer2Failure       * Player2.technique);
+            Player2.ChangeExhaustion(   card.exhaustionHitPlayer2Failure);//* Player2.stamina);
+            Player2.ChangeFrustration(  card.frustrationHitPlayer2Failure);//* Player2.will);
+            Player2.ChangeArousal(      card.arousalHitPlayer2Failure);//* Player2.technique);
         }
 
         // # update gui bars is done by the sheerts.

@@ -19,22 +19,6 @@ public class d6Dice : MonoBehaviour
         diceFace.SetText("" + maxValue);
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        RollDice();
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        //for debug
-        if(Input.GetKeyDown(KeyCode.R))
-        {
-            RollDice();
-        }
-    }
 
     public int RollDice()
     {

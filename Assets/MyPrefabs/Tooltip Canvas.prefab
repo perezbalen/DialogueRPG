@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1867394303505988095}
   - component: {fileID: 1867394303505988065}
   - component: {fileID: 1867394303505988066}
+  - component: {fileID: 5166267115340127223}
   m_Layer: 5
   m_Name: Tooltip
   m_TagString: Untagged
@@ -40,9 +41,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -222.96777, y: 4013.4194}
+  m_AnchoredPosition: {x: 747, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.02, y: 1.13}
+  m_Pivot: {x: 0, y: 0}
 --- !u!222 &1867394303505988092
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -95,9 +96,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding:
     m_Left: 51
-    m_Right: 36
+    m_Right: 46
     m_Top: 18
-    m_Bottom: 20
+    m_Bottom: 30
   m_ChildAlignment: 0
   m_Spacing: 10
   m_ChildForceExpandWidth: 0
@@ -158,6 +159,22 @@ MonoBehaviour:
   layoutElement: {fileID: 1867394303505988065}
   characterWrapLimit: 59
   rectTransform: {fileID: 1867394303505988064}
+  fadeInSpeed: 0.15
+  fadeOutSpeed: 0.2
+  xOffset: -1
+  yOffset: 36
+--- !u!225 &5166267115340127223
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1867394303505988067}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1867394303908637782
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,7 +448,6 @@ GameObject:
   - component: {fileID: 1867394304957638175}
   - component: {fileID: 1867394304957638144}
   - component: {fileID: 1867394304957638145}
-  - component: {fileID: 251637681}
   - component: {fileID: 251637682}
   m_Layer: 5
   m_Name: Tooltip Body Text
@@ -487,11 +503,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'In is correct, here are three other things you can try: Try again later.Check
-    your network connection.
-
-    If you are connected but behind a firewall, check
-    that Firefox has permission to access the Web.'
+  m_text: 'In is correct, re are three other things you can try: Try again later.Check
+    your network connection.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 809b38a566f245f4da59750b715fbace, type: 2}
   m_sharedMaterial: {fileID: 4520911103986896951, guid: 809b38a566f245f4da59750b715fbace, type: 2}
@@ -560,18 +573,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &251637681
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1867394304957638146}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9017007c016e03545a57f7a88ee81b33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &251637682
 MonoBehaviour:
   m_ObjectHideFlags: 0

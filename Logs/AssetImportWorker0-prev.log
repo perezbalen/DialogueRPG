@@ -15,11 +15,11 @@ V:/Unity Projects/DialogueRPG
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-1340
+10671
 Successfully changed project path to: V:/Unity Projects/DialogueRPG
 V:/Unity Projects/DialogueRPG
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 72.25 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 71.64 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.3.9f1 (108be757e447)
 [Subsystems] Discovering subsystems at path V:/Unity/Hub/Editor/2020.3.9f1/Editor/Data/Resources/UnitySubsystems
@@ -35,79 +35,63 @@ Initialize mono
 Mono path[0] = 'V:/Unity/Hub/Editor/2020.3.9f1/Editor/Data/Managed'
 Mono path[1] = 'V:/Unity/Hub/Editor/2020.3.9f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'V:/Unity/Hub/Editor/2020.3.9f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56608
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56108
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: V:/Unity/Hub/Editor/2020.3.9f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.001274 seconds.
+Registered in 0.001147 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 69.59 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 69.12 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.039 seconds
+- Completed reload, in  1.068 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.001629 seconds.
+Registered in 0.001430 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 69.76 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 69.44 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.992 seconds
+- Completed reload, in  1.004 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
 Launched and connected shader compiler UnityShaderCompiler.exe after 0.08 seconds
-Refreshing native plugins compatible for Editor in 0.52 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 1.18 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 2933 Unused Serialized files (Serialized files now loaded: 0)
 System memory in use before: 123.0 MB.
 System memory in use after: 123.2 MB.
 
 Unloading 26 unused Assets to reduce memory usage. Loaded Objects now: 3379.
-Total: 1.861300 ms (FindLiveObjects: 0.249400 ms CreateObjectMapping: 0.137600 ms MarkObjects: 1.412400 ms  DeleteObjects: 0.060900 ms)
+Total: 2.012000 ms (FindLiveObjects: 0.254600 ms CreateObjectMapping: 0.149500 ms MarkObjects: 1.539600 ms  DeleteObjects: 0.067300 ms)
 
 ========================================================================
 Received Import Request.
-  path: Assets/MyPrefabs/Runic Mod Dialogue UI New 1.prefab
-  artifactKey: Guid(1c3c066004ae9c543b0a860dcd46e04e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/MyPrefabs/Runic Mod Dialogue UI New 1.prefab using Guid(1c3c066004ae9c543b0a860dcd46e04e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7370610923643600af9616325e7e4675') in 0.224738 seconds
-  Import took 0.229586 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 5.001762 seconds.
-  path: Assets/MyPrefabs/Runic Mod Dialogue UI New 116.prefab
-  artifactKey: Guid(1c3c066004ae9c543b0a860dcd46e04e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/MyPrefabs/Runic Mod Dialogue UI New 116.prefab using Guid(1c3c066004ae9c543b0a860dcd46e04e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ffa5b6af1d63eda1e6e5401805a23fe4') in 0.062908 seconds
-  Import took 0.067618 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 20.292183 seconds.
-  path: Assets/MyPrefabs/Tooltip Canvas.prefab
-  artifactKey: Guid(65cf092a3d818f84d923087228a9c20f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/MyPrefabs/Tooltip Canvas.prefab using Guid(65cf092a3d818f84d923087228a9c20f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4d333beaeada6474c2397aafd056b518') in 0.030142 seconds
-  Import took 0.035384 seconds .
+  path: Assets/SoundFX
+  artifactKey: Guid(b9650a4243e431d49adba9aa69980a18) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SoundFX using Guid(b9650a4243e431d49adba9aa69980a18) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b5f8af6b060af654c8cf390b0e189d17') in 0.008484 seconds
+  Import took 0.014407 seconds .
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.001425 seconds.
+Registered in 0.001475 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.54 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 0.52 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.844 seconds
+- Completed reload, in  0.841 seconds
 Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.53 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 0.52 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 2908 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 121.1 MB.
+System memory in use before: 121.0 MB.
 System memory in use after: 121.3 MB.
 
-Unloading 17 unused Assets to reduce memory usage. Loaded Objects now: 3383.
-Total: 2.003700 ms (FindLiveObjects: 0.244600 ms CreateObjectMapping: 0.136200 ms MarkObjects: 1.598900 ms  DeleteObjects: 0.023100 ms)
+Unloading 14 unused Assets to reduce memory usage. Loaded Objects now: 3383.
+Total: 1.797200 ms (FindLiveObjects: 0.241400 ms CreateObjectMapping: 0.132100 ms MarkObjects: 1.403700 ms  DeleteObjects: 0.019000 ms)
 
 AssetImportWorkerClient::OnTransportError - code=2 error=End of file

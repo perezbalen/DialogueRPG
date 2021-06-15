@@ -60,6 +60,9 @@ public class DiceRoller : MonoBehaviour
     /// <returns></returns>
     public int RollDiceResult(int numberToBeatOrMatch, int modifier = 0)
     {
+        //play sound
+        PlayRollingSound();
+
         int result1 = dice1.RollDice();
         int result2 = dice2.RollDice();
         rollModifierText.ShowModifierInGui(modifier);
@@ -93,7 +96,9 @@ public class DiceRoller : MonoBehaviour
     /// <returns></returns>
     public bool RollDice(int numberToBeatOrMatch)
     {
-        //onDiceRolled?.Invoke();
+
+        //dontt play sound here, it's played on the onDiceResult()
+
         if (RollDiceResult(numberToBeatOrMatch) >= numberToBeatOrMatch) 
         {
             // Tells all observers that Player won the roll
@@ -156,5 +161,10 @@ public class DiceRoller : MonoBehaviour
             i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a - (Time.deltaTime / t));
             yield return null;
         }
+    }
+
+    private void PlayRollingSound()
+    {
+        gameObject.GetComponent<AudioSource>().Play();
     }
 }

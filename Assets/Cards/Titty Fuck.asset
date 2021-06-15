@@ -14,24 +14,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   internalDescription: This wnot show in game. It's as a helper for design. Actual
     description will go in dialogue system.
+  isCombat: 1
   sexActType: 0
   statDependency: 0
   cardDificulty: 0
   sucessImage: {fileID: 21300000, guid: 8313c72a11e35c840807279975987a94, type: 3}
   successText: I think this will also be here for reference. The actual text goes
     in the dialogue system
+  firstLinesSuccess: []
   exhaustionHitPlayer1Success: 0
   frustrationHitPlayer1Success: 0
-  arousalHitPlayer1Success: 0
-  exhaustionHitPlayer2Success: 0
+  arousalHitPlayer1Success: 5
+  exhaustionHitPlayer2Success: 10
   frustrationHitPlayer2Success: 0
-  arousalHitPlayer2Success: 0
+  arousalHitPlayer2Success: 20
   failImage: {fileID: 21300000, guid: 192d9afcc2ec69c4daa8e59372ab729a, type: 3}
   failText: I think this will also be here for reference. The actual text goes in
     the dialogue system
+  firstLinesFailure: []
   exhaustionHitPlayer1Failure: 0
   frustrationHitPlayer1Failure: 0
-  arousalHitPlayer1Failure: 0
-  exhaustionHitPlayer2Failure: 0
-  frustrationHitPlayer2Failure: 0
-  arousalHitPlayer2Failure: 0
+  arousalHitPlayer1Failure: -10
+  exhaustionHitPlayer2Failure: 10
+  frustrationHitPlayer2Failure: 10
+  arousalHitPlayer2Failure: -10
