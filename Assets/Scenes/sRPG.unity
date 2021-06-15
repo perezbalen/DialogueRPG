@@ -344,6 +344,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character Status Bars
       objectReference: {fileID: 0}
+    - target: {fileID: 1521830346844607832, guid: d4894421626db664786d6d6743a3a13d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1521830346844607835, guid: d4894421626db664786d6d6743a3a13d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1350,17 +1354,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unregisterOnDisable: 0
-  exhaustionMaxLevel: 100
-  exhaustionLevel: 0
-  frustrationMaxLevel: 100
+  exhaustionMaxLevel: 80
+  exhaustionLevel: 55
+  frustrationMaxLevel: 70
   frustrationLevel: 0
-  arousalMaxLevel: 100
+  arousalMaxLevel: 80
   arousalLevel: 0
-  stamina: 10
-  technique: 10
-  charisma: 10
-  will: 10
-  sumStats: 40
+  stamina: 8
+  will: 7
+  technique: 8
+  charisma: 7
+  sumStats: 30
   exhaustionBar: {fileID: 1717264226}
   frustrationBar: {fileID: 2009880808}
   arousalBar: {fileID: 1058519126}
@@ -5078,17 +5082,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unregisterOnDisable: 0
-  exhaustionMaxLevel: 100
+  exhaustionMaxLevel: 80
   exhaustionLevel: 0
-  frustrationMaxLevel: 100
+  frustrationMaxLevel: 60
   frustrationLevel: 0
-  arousalMaxLevel: 100
+  arousalMaxLevel: 90
   arousalLevel: 0
-  stamina: 10
-  technique: 10
-  charisma: 10
-  will: 10
-  sumStats: 40
+  stamina: 8
+  will: 6
+  technique: 9
+  charisma: 7
+  sumStats: 30
   exhaustionBar: {fileID: 709092791}
   frustrationBar: {fileID: 97420729}
   arousalBar: {fileID: 335391063}

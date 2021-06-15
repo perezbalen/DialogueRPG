@@ -22,26 +22,27 @@ public class PlayerSRPGSheet : MonoBehaviour
     //energy levles
     [Header("Player HP")]
     public int exhaustionMaxLevel;
-    [Range(0, 100)]
+    [Range(0, 120)]
     public int exhaustionLevel;
 
     public int frustrationMaxLevel;
-    [Range(0, 100)]
+    [Range(0, 120)]
     public int frustrationLevel;
 
     public int arousalMaxLevel;
-    [Range(0, 100)]
+    [Range(0, 120)]
     public int arousalLevel;
 
     [Header("Player Stats")]
     [Range(2, 12)]
     public int stamina;
     [Range(2, 12)]
+    public int will;
+    [Range(2, 12)]
     public int technique;
     [Range(2, 12)]
     public int charisma;
-    [Range(2, 12)]
-    public int will;
+
     [Tooltip("Read only. This gets recalculated constantly.")]
     public int sumStats; //this is exposed because I might need it on char creation.
 
@@ -87,11 +88,16 @@ public class PlayerSRPGSheet : MonoBehaviour
     {
         CalculateSumStats();
         SetUpGuiBars();
+        SetHealthPoolsMaxLevels();
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        SetHealthPoolsMaxLevels();
+        SetHealthPoolsInitialValues();
+
         /// Puts this player info in the GUI
         SetUpGuiBars();
 
@@ -119,15 +125,29 @@ public class PlayerSRPGSheet : MonoBehaviour
         }
     }
 
-    /*
+    #region initialize sheet
 
-    //Modify the number of a stat (not done)
-    public void UpdateStat(string statName, double valueToAdd)
+    /// <summary>
+    /// Sets the health pools mac value to the relevant stat * 10
+    /// </summary>
+    private void SetHealthPoolsMaxLevels()
     {
-        //change this to use enumerator isntead of string
-        exhaustionLevel += (int)valueToAdd;
+        exhaustionMaxLevel = stamina * 10;
+        frustrationMaxLevel = will * 10;
+        arousalMaxLevel = technique * 10;
     }
-    */
+
+    /// <summary>
+    /// Sets the Health pools at their ideal inicial values.
+    /// </summary>
+    private void SetHealthPoolsInitialValues()
+    {
+        exhaustionLevel = 0;
+        frustrationLevel = 0;
+        arousalLevel = 0;
+    }
+
+    #endregion
 
     /// <summary>
     /// Helper function. 
