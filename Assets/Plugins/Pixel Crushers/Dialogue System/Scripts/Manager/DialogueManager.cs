@@ -363,9 +363,10 @@ namespace PixelCrushers.DialogueSystem
         /// direct camera angles and perform other actions. In PC-NPC conversations, the conversant
         /// is usually the NPC.
         /// </param>
-        public static bool ConversationHasValidEntry(string title, Transform actor, Transform conversant)
+        /// <param name="initialDialogueEntryID">Optional starting entry ID; omit to start at beginning.</param>
+        public static bool ConversationHasValidEntry(string title, Transform actor, Transform conversant, int initialDialogueEntryID = -1)
         {
-            return hasInstance ? instance.ConversationHasValidEntry(title, actor, conversant) : false;
+            return hasInstance ? instance.ConversationHasValidEntry(title, actor, conversant, initialDialogueEntryID) : false;
         }
 
         /// <summary>

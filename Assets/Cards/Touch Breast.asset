@@ -16,7 +16,7 @@ MonoBehaviour:
   isCombat: 1
   sexActType: 0
   statDependency: 3
-  cardDificulty: 2
+  cardDificulty: 1
   sucessImage: {fileID: 21300000, guid: 700185b3d9721f147bf63e2a4c6b84d1, type: 3}
   successText: "You hool your arm around her and place your palm on her chest. You
     squeeze over her shirt.\n\"You feel her erect nipple poking through her clothes.
@@ -26,12 +26,12 @@ MonoBehaviour:
     tits are great.\"\"\n\"\"You think so?\"\"\nShe grabs her other breast herself
     and  squeezes it, mirroring you\u2019re actions.\"\r"
   firstLinesSuccess: []
-  exhaustionHitPlayer1Success: 5
-  frustrationHitPlayer1Success: 0
-  arousalHitPlayer1Success: 10
+  exhaustionHitPlayer1Success: 0
+  frustrationHitPlayer1Success: 50
+  arousalHitPlayer1Success: 0
   exhaustionHitPlayer2Success: 0
   frustrationHitPlayer2Success: 0
-  arousalHitPlayer2Success: 10
+  arousalHitPlayer2Success: 0
   failImage: {fileID: 21300000, guid: 83635390768a47e47a56b6a06d26b142, type: 3}
   failText: "You hook your arm around her and grab her tit, and squeeze over her
     shirt.\r\nShe makes a noise with your throat. It's not a good one. Maybe you
@@ -40,8 +40,8 @@ MonoBehaviour:
     you\u2019re actions."
   firstLinesFailure: []
   exhaustionHitPlayer1Failure: 0
-  frustrationHitPlayer1Failure: -10
+  frustrationHitPlayer1Failure: 0
   arousalHitPlayer1Failure: 0
-  exhaustionHitPlayer2Failure: 5
-  frustrationHitPlayer2Failure: -20
+  exhaustionHitPlayer2Failure: 0
+  frustrationHitPlayer2Failure: 50
   arousalHitPlayer2Failure: 0

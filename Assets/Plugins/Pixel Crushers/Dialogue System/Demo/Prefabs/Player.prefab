@@ -1574,7 +1574,7 @@ MonoBehaviour:
   runRaycasts: 1
   raycastAll: 0
   useDefaultGUI: 1
-  guiSkin: {fileID: 11400000, guid: 29245abd9e583b5409a4aeadfdf5e11f, type: 2}
+  guiSkin: {fileID: 0}
   guiStyleName: label
   alignment: 1
   textStyle: 1

@@ -202,6 +202,10 @@ namespace PixelCrushers.DialogueSystem
                 SetUIElementsActive(true);
                 if (CanTriggerAnimations() && !string.IsNullOrEmpty(animationTransitions.showTrigger))
                 {
+                    if (!string.IsNullOrEmpty(animationTransitions.hideTrigger))
+                    {
+                        animator.ResetTrigger(animationTransitions.hideTrigger);
+                    }
                     animator.SetTrigger(animationTransitions.showTrigger);
                 }
                 if (typewriter != null) typewriter.StartTyping(subtitleText);
@@ -242,7 +246,7 @@ namespace PixelCrushers.DialogueSystem
             numSequencesActive = 0;
             if (CanTriggerAnimations() && !string.IsNullOrEmpty(animationTransitions.hideTrigger))
             {
-                if (!string.IsNullOrEmpty(animationTransitions.hideTrigger))
+                if (!string.IsNullOrEmpty(animationTransitions.showTrigger))
                 {
                     animator.ResetTrigger(animationTransitions.showTrigger);
                 }

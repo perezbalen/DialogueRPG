@@ -22,12 +22,12 @@ MonoBehaviour:
   firstLinesSuccess:
   - You kiss her.
   - You kiss her again.
-  exhaustionHitPlayer1Success: 0
+  exhaustionHitPlayer1Success: 50
   frustrationHitPlayer1Success: 0
-  arousalHitPlayer1Success: 1
+  arousalHitPlayer1Success: 0
   exhaustionHitPlayer2Success: 0
   frustrationHitPlayer2Success: 0
-  arousalHitPlayer2Success: 1
+  arousalHitPlayer2Success: 0
   failImage: {fileID: 21300000, guid: 531c8f2d5ebf5b04dacc3ca37a4fac2f, type: 3}
   failText: "She liks your tip, but it's salty and she doesnt like ti. \nYou grab
     Gabbie by the head, and move your cock over her face, effectively using her cheeks
@@ -41,6 +41,6 @@ MonoBehaviour:
   exhaustionHitPlayer1Failure: 0
   frustrationHitPlayer1Failure: 0
   arousalHitPlayer1Failure: 0
-  exhaustionHitPlayer2Failure: 0
+  exhaustionHitPlayer2Failure: 50
   frustrationHitPlayer2Failure: 0
-  arousalHitPlayer2Failure: -1
+  arousalHitPlayer2Failure: 0

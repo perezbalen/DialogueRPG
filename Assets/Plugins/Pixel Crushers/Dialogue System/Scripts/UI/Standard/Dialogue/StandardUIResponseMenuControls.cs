@@ -120,12 +120,26 @@ namespace PixelCrushers.DialogueSystem
             if (m_forcedOverridePanel != null) return m_forcedOverridePanel;
 
             // Find player's transform & DialogueActor:
-            var playerTransform = (lastSubtitle != null && lastSubtitle.speakerInfo.isPlayer) ? lastSubtitle.speakerInfo.transform
-                : (responses != null && responses.Length > 0) ? GetActorTransformFromID(responses[0].destinationEntry.ActorID)
-                : (lastSubtitle != null && lastSubtitle.listenerInfo.isPlayer) ? lastSubtitle.listenerInfo.transform
-                : DialogueManager.currentActor;
+            // [2021-04-20]: Prioritize responses[0] panel only if useFirstResponseForPortrait is true:
+            var playerTransform = (lastSubtitle != null && lastSubtitle.speakerInfo.isPlayer) ? lastSubtitle.speakerInfo.transform : null;
+            if (playerTransform == null)
+            {
+                if (useFirstResponseForPortrait)
+                {
+                    playerTransform =
+                        (responses != null && responses.Length > 0) ? GetActorTransformFromID(responses[0].destinationEntry.ActorID)
+                        : (lastSubtitle != null && lastSubtitle.listenerInfo.isPlayer) ? lastSubtitle.listenerInfo.transform
+                        : DialogueManager.currentActor;
+                }
+                else
+                {
+                    playerTransform =
+                        (lastSubtitle != null && lastSubtitle.listenerInfo.isPlayer) ? lastSubtitle.listenerInfo.transform
+                        : (responses != null && responses.Length > 0) ? GetActorTransformFromID(responses[0].destinationEntry.ActorID)
+                        : DialogueManager.currentActor;
+                }
+            }
             if (playerTransform == null) playerTransform = DialogueManager.currentActor;
-
             var playerDialogueActor = DialogueActor.GetDialogueActorComponent(playerTransform);
 
             // Check NPC for non-default menu panel:

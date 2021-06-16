@@ -132,15 +132,12 @@ namespace PixelCrushers
                 }
             }
 
-            if (!m_alsoUpdateInactiveLocalizeUI)
+            var localizeUIs = m_alsoUpdateInactiveLocalizeUI
+                ? GameObjectUtility.FindObjectsOfTypeAlsoInactive<LocalizeUI>()
+                : FindObjectsOfType<LocalizeUI>();
+            for (int i = 0; i < localizeUIs.Length; i++)
             {
-                var localizeUIs = m_alsoUpdateInactiveLocalizeUI
-                    ? GameObjectUtility.FindObjectsOfTypeAlsoInactive<LocalizeUI>()
-                    : FindObjectsOfType<LocalizeUI>();
-                for (int i = 0; i < localizeUIs.Length; i++)
-                {
-                    localizeUIs[i].UpdateText();
-                }
+                localizeUIs[i].UpdateText();
             }
         }
 

@@ -176,6 +176,18 @@ namespace PixelCrushers
             return DefaultGetMousePosition();
         }
 
+#if UNITY_2019_3_OR_NEWER
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void InitStaticVariables()
+        {
+            m_instance = null;
+#if USE_NEW_INPUT
+            inputActionDict = null;
+            m_specialKeyCodeDict = null;
+#endif
+        }
+#endif
+
         public void Awake()
         {
             if (m_instance != null && singleton)
@@ -422,6 +434,36 @@ namespace PixelCrushers
         {
             if (inputActionDict.ContainsKey(name)) inputActionDict.Remove(name);
         }
+
+        // Number keys translate differently in Input System, so create a quick lookup dictionary:
+        protected static Dictionary<KeyCode, KeyControl> m_specialKeyCodeDict = null;
+        protected static Dictionary<KeyCode, KeyControl> specialKeyCodeDict
+        {
+            get
+            {
+                if (m_specialKeyCodeDict == null)
+                {
+                    m_specialKeyCodeDict = new Dictionary<KeyCode, KeyControl>();
+                    for (int i = (int)KeyCode.Alpha0; i <= (int)KeyCode.Alpha9; i++)
+                    {
+                        try
+                        {
+                            m_specialKeyCodeDict.Add((KeyCode)i, Keyboard.current[(i - (int)KeyCode.Alpha0).ToString()] as KeyControl);
+                        }
+                        catch (KeyNotFoundException) { }
+                    }
+                    for (int i = (int)KeyCode.Keypad0; i <= (int)KeyCode.Keypad9; i++)
+                    {
+                        try
+                        {
+                            m_specialKeyCodeDict.Add((KeyCode)i, Keyboard.current["numpad" + (i - (int)KeyCode.Keypad0).ToString()] as KeyControl);
+                        }
+                        catch (KeyNotFoundException) { }
+                    }
+                }
+                return m_specialKeyCodeDict;
+            }
+        }
 #endif
 
         public static bool DefaultGetKeyDown(KeyCode keyCode)
@@ -430,6 +472,12 @@ namespace PixelCrushers
             if (Keyboard.current == null || keyCode == KeyCode.None) return false;
             var s = keyCode.ToString().ToLower();
             if (s.StartsWith("joystick")) return false;
+            if ((KeyCode.Alpha0 <= keyCode && keyCode <= KeyCode.Alpha9) || 
+                (KeyCode.Keypad0 <= keyCode && keyCode <= KeyCode.Keypad9))
+            {
+                KeyControl numKeyControl;
+                return specialKeyCodeDict.TryGetValue(keyCode, out numKeyControl) ? numKeyControl.wasPressedThisFrame : false;
+            }
             var keyControl = Keyboard.current[s] as KeyControl;
             return (keyControl != null) ? keyControl.wasPressedThisFrame : false;
 #else

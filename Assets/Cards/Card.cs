@@ -8,11 +8,13 @@ public class Card : ScriptableObject
 
     #region Parameters
     //public string cardName; //the name is the file/object name
+    [Tooltip("Flag to tell if Roll stats should be shown. (And wantever else I manage to do)")]
+    [Header("If the card is set to isCombat, to ShowCardWin, and it's the first in a conversation, it will never trigger.")]
+    public bool isCombat = true;
+    [Space]
+
     [Multiline]
     public string internalDescription = "This wnot show in game. It's as a helper for design. Actual description will go in dialogue system.";
-
-    [Tooltip("Flag to tell if Roll stats should be shown. (And wantever else I manage to do)")]
-    public bool isCombat = true;
 
     [System.Serializable]
     public enum SexActType { 
@@ -133,6 +135,22 @@ public class Card : ScriptableObject
     /// but has no arguments. Shows the Failure State.
     /// </summary>
     public void ShowCardLose()
+    {
+        ShowCard(false);
+    }
+
+    /// <summary>
+    /// The same as ShowCardWin, but doesn't get Conditions and Scripts Overwritten on initialization
+    /// </summary>
+    public void ShowNonCombatCardWinSide()
+    {
+        ShowCard(true);
+    }
+
+    /// <summary>
+    /// The same as ShowCardLoose, but doesn't get Conditions and Scripts Overwritten on initialization
+    /// </summary>
+    public void ShowNonCombatCardLoseSide()
     {
         ShowCard(false);
     }

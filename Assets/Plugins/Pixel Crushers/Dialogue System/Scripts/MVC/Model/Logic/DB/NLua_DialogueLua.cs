@@ -36,6 +36,14 @@ namespace PixelCrushers.DialogueSystem
         public static bool includeSimStatus = true;
 
         /// <summary>
+        /// DANGEROUS: Version 2.2.5 introduced a fix that replaces "/" with "_" in table indices.
+        /// In some existing projects with many forward slashes, it may not be practical to globally
+        /// search and replace all variable names in Conditions and Script fields. In this case,
+        /// you can revert the fix (and not replace "/" with "_") by setting this bool to false.
+        /// </summary>
+        public static bool replaceSlashWithUnderscore = true;
+
+        /// <summary>
         /// The status table used by the Chat Mapper GetStatus() and SetStatus() Lua functions. 
         /// See the online Chat Mapper manual for more details: http://www.chatmapper.com
         /// </summary>
@@ -634,9 +642,16 @@ namespace PixelCrushers.DialogueSystem
         /// </param>
         public static string StringToTableIndex(string s)
         {
-            //---Was: return string.IsNullOrEmpty(s) ? string.Empty : SpacesToUnderscores(DoubleQuotesToSingle(s)).Replace('-', '_');
-            return string.IsNullOrEmpty(s) ? string.Empty : SpacesToUnderscores(DoubleQuotesToSingle(s.Replace('\"', '_'))).Replace('-', '_').
-                Replace('(', '_').Replace(')', '_');
+            if (replaceSlashWithUnderscore)
+            {
+                return string.IsNullOrEmpty(s) ? string.Empty : SpacesToUnderscores(DoubleQuotesToSingle(s.Replace('\"', '_'))).Replace('-', '_').
+                    Replace('(', '_').Replace(')', '_').Replace("/", "_");
+            }
+            else
+            {
+                return string.IsNullOrEmpty(s) ? string.Empty : SpacesToUnderscores(DoubleQuotesToSingle(s.Replace('\"', '_'))).Replace('-', '_').
+                    Replace('(', '_').Replace(')', '_');
+            }
         }
 
         private static Lua.Result SafeGetLuaResult(string luaCode)

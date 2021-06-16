@@ -672,12 +672,18 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             entryEventFoldout = EditorGUILayout.Foldout(entryEventFoldout, "Events");
             if (entryEventFoldout) DrawUnityEvents();
 
-            // Notes:
+            // Notes: (special handling to use TextArea)
             Field notes = Field.Lookup(entry.fields, "Notes");
             if (notes != null)
             {
                 EditorGUILayout.LabelField("Notes");
                 notes.value = EditorGUILayout.TextArea(notes.value);
+            }
+
+            // Custom inspector code hook:
+            if (customDrawDialogueEntryInspector != null)
+            {
+                customDrawDialogueEntryInspector(database, entry);
             }
 
             // All Fields foldout:
@@ -1073,9 +1079,9 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             VerifyParticipantField(entry, "Actor", ref currentEntryActor);
             VerifyParticipantField(entry, "Conversant", ref currentEntryConversant);
 
-            // If actor and conversant are unassigned, use conversation's values:
+            // If actor is unassigned, use conversation's values: (conversant may be set to None)
             if (IsActorIDUnassigned(currentEntryActor)) currentEntryActor.value = currentConversation.ActorID.ToString();
-            if (IsActorIDUnassigned(currentEntryConversant)) currentEntryConversant.value = currentConversation.ConversantID.ToString(); ;
+            //if (IsActorIDUnassigned(currentEntryConversant)) currentEntryConversant.value = currentConversation.ConversantID.ToString(); ;
 
             // Participant IDs:
             EditorGUILayout.BeginHorizontal();

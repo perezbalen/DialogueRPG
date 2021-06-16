@@ -6,6 +6,7 @@ using PixelCrushers.DialogueSystem;
 
 public class CombatManager : MonoBehaviour
 {
+    #region parameters
     [Header("Dialogue System stuff")]
     [Tooltip("Typically leave unticked so temporary Dialogue Managers don't unregister your functions.")]
     public bool unregisterOnDisable = false;
@@ -19,6 +20,8 @@ public class CombatManager : MonoBehaviour
     public CardDisplay cardDisplay;
 
     public enum StatElement { Stamina, Technique, Charisma, Will }
+
+    #endregion
 
     /// <summary>
     /// Returns true if the Player rolling won.
@@ -237,5 +240,6 @@ public class CombatManager : MonoBehaviour
         }
     }
     #endregion
+
 
 }

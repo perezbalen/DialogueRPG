@@ -164,7 +164,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
         private void DrawMainSectionField(Field field)
         {
             EditorGUILayout.BeginHorizontal();
-            if (field.type == FieldType.Text)
+            if (field.typeString == "CustomFieldType_Text")
             {
                 DrawTextAreaFirstPart(field, false, false);
                 DrawTextAreaSecondPart(field);

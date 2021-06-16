@@ -668,10 +668,10 @@ namespace PixelCrushers.DialogueSystem
         /// direct camera angles and perform other actions. In PC-NPC conversations, the conversant
         /// is usually the NPC.
         /// </param>
-        public bool ConversationHasValidEntry(string title, Transform actor, Transform conversant)
+        public bool ConversationHasValidEntry(string title, Transform actor, Transform conversant, int initialDialogueEntryID = -1)
         {
             if (string.IsNullOrEmpty(title)) return false;
-            var model = new ConversationModel(m_databaseManager.masterDatabase, title, actor, conversant, allowLuaExceptions, isDialogueEntryValid);
+            var model = new ConversationModel(m_databaseManager.masterDatabase, title, actor, conversant, allowLuaExceptions, isDialogueEntryValid, initialDialogueEntryID, true, true);
             return model.hasValidEntry;
         }
 
@@ -896,6 +896,12 @@ namespace PixelCrushers.DialogueSystem
                 currentConversant = conversant;
                 lastConversationStarted = title;
 
+                // If we previously overrode display settings or UI, restore the original:
+                if ((m_overrodeDisplaySettings && m_originalDisplaySettings != null) || (m_originalDialogueUI != null))
+                {
+                    RestoreOriginalUI();
+                }
+
                 SetConversationUI(actor, conversant);
 
                 m_calledRandomizeNextEntry = false;
@@ -931,6 +937,7 @@ namespace PixelCrushers.DialogueSystem
                 record.isOverrideUIPrefab = m_isOverrideUIPrefab;
                 m_activeConversations.Add(record);
                 activeConversation = record;
+                view.sequencer.activeConversationRecord = record;
 
                 var target = (actor != null) ? actor : this.transform;
                 if (actor != this.transform) gameObject.BroadcastMessage(DialogueSystemMessages.OnConversationStart, target, SendMessageOptions.DontRequireReceiver);

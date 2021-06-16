@@ -165,6 +165,16 @@ namespace PixelCrushers
             panelStack.Remove(this);
         }
 
+        /// <summary>
+        /// Move this panel to the top of the stack.
+        /// </summary>
+        public void TakeFocus()
+        {
+            PushToPanelStack();
+            RefreshSelectablesList();
+            CheckFocus();
+        }
+
         protected virtual void OnEnable()
         {
             PushToPanelStack();

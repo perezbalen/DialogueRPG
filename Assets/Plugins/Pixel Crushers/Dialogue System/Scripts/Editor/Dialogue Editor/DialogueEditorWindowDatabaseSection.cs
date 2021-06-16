@@ -57,13 +57,15 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
         [SerializeField]
         private bool mergeConversations = true;
 
-        private enum ExportFormat { ChatMapperXML, CSV, VoiceoverScript, LanguageText, Screenplay };
+        private enum ExportFormat { ChatMapperXML, JSON, CSV, VoiceoverScript, LanguageText, Screenplay };
         [SerializeField]
         private ExportFormat exportFormat = ExportFormat.ChatMapperXML;
         [SerializeField]
         private string chatMapperExportPath = string.Empty;
         [SerializeField]
         private string csvExportPath = string.Empty;
+        [SerializeField]
+        private string jsonExportPath = string.Empty;
         [SerializeField]
         private string voiceoverExportPath = string.Empty;
         [SerializeField]
@@ -574,6 +576,9 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                 case ExportFormat.CSV:
                     EditorGUILayout.HelpBox("Use this feature to export your database to external text-based formats.\nYou can import CSV format into spreadsheet programs such as Excel and Google Sheets. To reimport into the Dialogue System, use Tools > Pixel Crushers > Dialogue System > Import > CSV.", MessageType.None);
                     break;
+                case ExportFormat.JSON:
+                    EditorGUILayout.HelpBox("Use this feature to export your database to external JSON text-based format.\nTo reimport back into the Dialogue System, use Tools > Pixel Crushers > Dialogue System > Import > JSON.", MessageType.None);
+                    break;
                 case ExportFormat.ChatMapperXML:
                     EditorGUILayout.HelpBox("Use this feature to export your database to external text-based formats.\nIf exporting to Chat Mapper format for import into Chat Mapper, you must also prepare a Chat Mapper template project that contains all the fields defined in this database. You can use the Dialogue System Chat Mapper template project as a base. To reimport into the Dialogue System, use Tools > Pixel Crushers > Dialogue System > Import > Chat Mapper.", MessageType.None);
                     break;
@@ -587,7 +592,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                     EditorGUILayout.HelpBox("Use this feature to export your database to external text-based formats.\nThe screenplay script option will export a separate text file for each language.", MessageType.None);
                     break;
             }
-            if (exportFormat != ExportFormat.LanguageText && exportFormat != ExportFormat.Screenplay)
+            if (exportFormat != ExportFormat.LanguageText && exportFormat != ExportFormat.Screenplay && exportFormat != ExportFormat.JSON)
             {
                 exportActors = EditorGUILayout.Toggle("Export Actors", exportActors);
                 exportItems = EditorGUILayout.Toggle("Export Items/Quests", exportItems);
@@ -615,6 +620,9 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                         break;
                     case ExportFormat.CSV:
                         TryExportToCSV();
+                        break;
+                    case ExportFormat.JSON:
+                        TryExportToJSON();
                         break;
                     case ExportFormat.VoiceoverScript:
                         TryExportToVoiceoverScript();
@@ -712,6 +720,21 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                 }
                 CSVExporter.Export(database, csvExportPath, exportActors, exportItems, exportLocations, exportVariables, exportConversations, exportConversationsAfterEntries, entrytagFormat);
                 EditorUtility.DisplayDialog("Export Complete", "The dialogue database was exported to CSV (comma-separated values) format. ", "OK");
+            }
+        }
+
+        private void TryExportToJSON()
+        {
+            string newJSONExportPath = EditorUtility.SaveFilePanel("Save JSON", EditorWindowTools.GetDirectoryName(jsonExportPath), jsonExportPath, "json");
+            if (!string.IsNullOrEmpty(newJSONExportPath))
+            {
+                jsonExportPath = newJSONExportPath;
+                if (Application.platform == RuntimePlatform.WindowsEditor)
+                {
+                    jsonExportPath = csvExportPath.Replace("/", "\\");
+                }
+                System.IO.File.WriteAllText(newJSONExportPath, JsonUtility.ToJson(database), System.Text.Encoding.UTF8);
+                EditorUtility.DisplayDialog("Export Complete", "The dialogue database was exported to JSON format. ", "OK");
             }
         }
 

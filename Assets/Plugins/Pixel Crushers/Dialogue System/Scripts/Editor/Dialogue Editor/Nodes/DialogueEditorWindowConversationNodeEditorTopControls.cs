@@ -179,6 +179,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                     menu.AddItem(new GUIContent("Refresh"), false, RefreshConversation);
                 }
                 AddRelationsInspectorMenuItems(menu);
+                if (customNodeMenuSetup != null) customNodeMenuSetup(database, menu);
                 menu.ShowAsContext();
             }
         }

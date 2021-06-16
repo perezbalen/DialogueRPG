@@ -307,15 +307,18 @@ namespace PixelCrushers.DialogueSystem
                 if (distance <= usable.maxUseDistance)
                 {
                     usable.OnUseUsable();
-                    // If within range, send the OnUse message:
-                    var fromTransform = (actorTransform != null) ? actorTransform : this.transform;
-                    if (broadcastToChildren)
+                    if (usable != null)
                     {
-                        usable.gameObject.BroadcastMessage("OnUse", fromTransform, SendMessageOptions.DontRequireReceiver);
-                    }
-                    else
-                    {
-                        usable.gameObject.SendMessage("OnUse", fromTransform, SendMessageOptions.DontRequireReceiver);
+                        // If within range, send the OnUse message:
+                        var fromTransform = (actorTransform != null) ? actorTransform : this.transform;
+                        if (broadcastToChildren)
+                        {
+                            usable.gameObject.BroadcastMessage("OnUse", fromTransform, SendMessageOptions.DontRequireReceiver);
+                        }
+                        else
+                        {
+                            usable.gameObject.SendMessage("OnUse", fromTransform, SendMessageOptions.DontRequireReceiver);
+                        }
                     }
                 }
                 else
@@ -484,6 +487,7 @@ namespace PixelCrushers.DialogueSystem
 
         public virtual void SetCurrentUsable(Usable usable)
         {
+            if (usable == this.usable) return;
             if (usable == null)
             {
                 DeselectTarget();
@@ -492,6 +496,8 @@ namespace PixelCrushers.DialogueSystem
             {
                 if (this.usable != null && this.usable != usable) DeselectTarget();
                 this.usable = usable;
+                usable.disabled -= OnUsableDisabled;
+                usable.disabled += OnUsableDisabled;
                 selection = usable.gameObject;
                 heading = string.Empty;
                 useMessage = string.Empty;
@@ -515,11 +521,20 @@ namespace PixelCrushers.DialogueSystem
 
         protected virtual void DeselectTarget()
         {
+            if (usable != null) usable.disabled -= OnUsableDisabled;
             OnDeselectedUsableObject(usable);
             usable = null;
             selection = null;
             heading = string.Empty;
             useMessage = string.Empty;
+        }
+
+        protected virtual void OnUsableDisabled(Usable usable)
+        {
+            if (usable == this.usable)
+            {
+                DeselectTarget();
+            }
         }
 
         protected virtual bool IsUseButtonDown()
@@ -568,6 +583,7 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         public virtual void OnGUI()
         {
+            if (!enabled) return;
             if (!useDefaultGUI) return;
             if (guiStyle == null && (Event.current.type == EventType.Repaint || usable != null))
             {

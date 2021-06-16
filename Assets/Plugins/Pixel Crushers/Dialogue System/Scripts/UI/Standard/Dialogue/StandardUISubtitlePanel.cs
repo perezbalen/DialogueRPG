@@ -62,6 +62,12 @@ namespace PixelCrushers.DialogueSystem
         [Tooltip("Clear text when closing panel, including when hiding using SetDialoguePanel().")]
         public bool clearTextOnClose = true;
 
+        [Tooltip("Clear text when any conversation starts.")]
+        public bool clearTextOnConversationStart = false;
+
+        [Tooltip("If Subtitle Text doesn't have a typewriter effect, to enable scroll to bottom add UIScrollbarEnabler to Scroll Rect and assign it here.")]
+        public UIScrollbarEnabler scrollbarEnabler;
+
         /// <summary>
         /// Invoked when the subtitle panel gains focus.
         /// </summary>
@@ -121,12 +127,20 @@ namespace PixelCrushers.DialogueSystem
         protected bool shouldShowContinueButton = false;
         protected const float WaitForCloseTimeoutDuration = 8f;
         private StandardDialogueUI m_dialogueUI = null;
-        protected StandardDialogueUI dialogueUI
+        public StandardDialogueUI dialogueUI
         {
             get
             {
-                if (m_dialogueUI == null) m_dialogueUI = GetComponentInParent<StandardDialogueUI>();
+                if (m_dialogueUI == null)
+                { 
+                    m_dialogueUI = GetComponentInParent<StandardDialogueUI>();
+                    if (m_dialogueUI == null) m_dialogueUI = DialogueManager.dialogueUI as StandardDialogueUI;
+                }
                 return m_dialogueUI;
+            }
+            set
+            {
+                m_dialogueUI = value;
             }
         }
 
@@ -211,7 +225,7 @@ namespace PixelCrushers.DialogueSystem
 
         public virtual void OnConversationStart(Transform actor)
         {
-            if (frameLastSetContent < (Time.frameCount - 1)) // If we just set content, don't clear the text.
+            if (clearTextOnConversationStart && (frameLastSetContent < (Time.frameCount - 1))) // If we just set content, don't clear the text.
             {
                 ClearText();
             }
@@ -442,8 +456,6 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         public virtual void OnContinue()
         {
-            var dialogueUI = GetComponentInParent<AbstractDialogueUI>();
-            if (dialogueUI == null) dialogueUI = DialogueManager.dialogueUI as AbstractDialogueUI;
             if (dialogueUI != null) dialogueUI.OnContinueConversation();
         }
 
@@ -464,15 +476,22 @@ namespace PixelCrushers.DialogueSystem
                     Tools.SetGameObjectActive(portraitImage, sprite != null);
                 }
                 portraitActorName = subtitle.speakerInfo.nameInDatabase;
-                portraitName.text = subtitle.speakerInfo.Name;
-                UITools.SendTextChangeMessage(portraitName);
+                if (portraitName.text != subtitle.speakerInfo.Name)
+                {
+                    portraitName.text = subtitle.speakerInfo.Name;
+                    UITools.SendTextChangeMessage(portraitName);
+                }
             }
             TypewriterUtility.StopTyping(subtitleText);
             var previousText = accumulateText ? m_accumulatedText : string.Empty;
             var previousChars = accumulateText ? UITools.StripRPGMakerCodes(Tools.StripTextMeshProTags(Tools.StripRichTextCodes(previousText))).Length : 0;
             SetFormattedText(subtitleText, previousText, subtitle.formattedText);
             if (accumulateText) m_accumulatedText = subtitleText.text + "\n";
-            if (delayTypewriterUntilOpen && !hasFocus)
+            if (scrollbarEnabler != null && !HasTypewriter())
+            {
+                scrollbarEnabler.CheckScrollbarWithResetValue(0);
+            }
+            else if (delayTypewriterUntilOpen && !hasFocus)
             {
                 StartCoroutine(StartTypingWhenFocused(subtitleText, subtitleText.text, previousChars));
             }
@@ -558,7 +577,7 @@ namespace PixelCrushers.DialogueSystem
             }
             if (animatorController != null)
             {
-                Tools.SetGameObjectActive(portraitImage, true);
+                Tools.SetGameObjectActive(portraitImage, portraitImage.sprite != null);
             }
             yield return new WaitForEndOfFrame();
             if (animator.runtimeAnimatorController != animatorController)
@@ -567,7 +586,7 @@ namespace PixelCrushers.DialogueSystem
             }
             if (animatorController != null)
             {
-                Tools.SetGameObjectActive(portraitImage, true);
+                Tools.SetGameObjectActive(portraitImage, portraitImage.sprite != null);
             }
         }
 

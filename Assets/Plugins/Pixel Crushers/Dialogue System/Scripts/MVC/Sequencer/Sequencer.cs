@@ -72,19 +72,38 @@ namespace PixelCrushers.DialogueSystem
             get { return m_listener; }
         }
 
+        /// <summary>
+        /// Original camera position at start of conversation. At the end of
+        /// the conversation, the camera is restored back to this position.
+        /// You can change this if you want to reset the 'original' position
+        /// to be elsewhere.
+        /// </summary>
         public Vector3 originalCameraPosition
         {
             get { return m_originalCameraPosition; }
+            set { m_originalCameraPosition = value; }
         }
 
+        /// <summary>
+        /// Original camera position at start of conversation.
+        /// You can change this if you want to reset the 'original' rotation
+        /// to be different.
+        /// </summary>
         public Quaternion originalCameraRotation
         {
             get { return m_originalCameraRotation; }
+            set { m_originalCameraRotation = value; }
         }
 
+        /// <summary>
+        /// Original 2D camera orthographic size at start of conversation.
+        /// You can change this if you want to reset the the 'original' size
+        /// to be different.
+        /// </summary>
         public float originalOrthographicSize
         {
             get { return m_originalOrthographicSize; }
+            set { m_originalOrthographicSize = value; }
         }
 
         /// <summary>
@@ -97,10 +116,18 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
 		public string entrytag { get; set; }
 
+        /// <summary>
+        /// Currently language-localized entrytag.
+        /// </summary>
         public string entrytaglocal
         {
             get { return Localization.isDefaultLanguage ? entrytag : entrytag + "_" + Localization.language; }
         }
+
+        /// <summary>
+        /// Active conversation record associated with this sequencer instance.
+        /// </summary>
+        public ActiveConversationRecord activeConversationRecord { get; set; }
 
         /// @cond FOR_V1_COMPATIBILITY
         public bool IsPlaying { get { return isPlaying; } }
@@ -179,6 +206,8 @@ namespace PixelCrushers.DialogueSystem
         private static Dictionary<string, string> m_shortcuts = new Dictionary<string, string>();
 
         private static Dictionary<string, Stack<string>> m_shortcutStack = new Dictionary<string, Stack<string>>();
+
+        private Dictionary<string, Coroutine> m_timedMessageCoroutines = new Dictionary<string, Coroutine>();
 
 #if UNITY_2019_3_OR_NEWER
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
@@ -732,7 +761,12 @@ namespace PixelCrushers.DialogueSystem
             }
             else if (HandleCommandInternally(commandName, args, out duration))
             {
-                if (!string.IsNullOrEmpty(endMessage)) StartCoroutine(SendTimedSequencerMessage(endMessage, duration));
+                if (!string.IsNullOrEmpty(endMessage))
+                {
+                    var guid = Guid.NewGuid().ToString();
+                    var coroutine = StartCoroutine(SendTimedSequencerMessage(endMessage, duration, guid));
+                    m_timedMessageCoroutines.Add(guid, coroutine);
+                }
             }
             else
             {
@@ -835,9 +869,10 @@ namespace PixelCrushers.DialogueSystem
         //    return Type.GetType(fullPath, false);
         //}
 
-        private IEnumerator SendTimedSequencerMessage(string endMessage, float delay)
+        private IEnumerator SendTimedSequencerMessage(string endMessage, float delay, string guid)
         {
             yield return StartCoroutine(DialogueTime.WaitForSeconds(delay));
+            if (m_timedMessageCoroutines.ContainsKey(guid)) m_timedMessageCoroutines.Remove(guid);
             Sequencer.Message(endMessage);
         }
 
@@ -924,8 +959,18 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         public void Stop()
         {
+            StopTimedSequencerMessageCoroutines();
             StopQueued();
             StopActive();
+        }
+
+        private void StopTimedSequencerMessageCoroutines()
+        {
+            foreach (var coroutine in m_timedMessageCoroutines.Values)
+            {
+                StopCoroutine(coroutine);
+            }
+            m_timedMessageCoroutines.Clear();
         }
 
         public void StopQueued()

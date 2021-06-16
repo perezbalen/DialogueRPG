@@ -92,7 +92,7 @@ namespace PixelCrushers.DialogueSystem
         {
             if (closeCoroutine != null) StopCoroutine(closeCoroutine);
             base.Open();
-            conversationUIElements.OpenSubtitlePanelsOnStart();
+            conversationUIElements.OpenSubtitlePanelsOnStart(this);
         }
 
         public override void Close()

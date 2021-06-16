@@ -37,7 +37,7 @@ namespace PixelCrushers.DialogueSystem
         [Tooltip("Default panel for response menus.")]
         public StandardUIMenuPanel defaultMenuPanel;
 
-        [Tooltip("When showing response menu, use portrait info of player actor assigned to first response.")]
+        [Tooltip("When showing response menu, use portrait info of player actor assigned to first response. Also use that actor's menu panel if using multiple menu panels.")]
         public bool useFirstResponseForMenuPortrait;
 
         [Tooltip("When closing, wait for all subtitle panels and menu panels to close.")]
@@ -127,9 +127,9 @@ namespace PixelCrushers.DialogueSystem
             }
         }
 
-        public void OpenSubtitlePanelsOnStart()
+        public void OpenSubtitlePanelsOnStart(StandardDialogueUI ui)
         {
-            if (allowOpenSubtitlePanelsOnStartConversation) standardSubtitleControls.OpenSubtitlePanelsOnStartConversation();
+            if (allowOpenSubtitlePanelsOnStartConversation) standardSubtitleControls.OpenSubtitlePanelsOnStartConversation(ui);
         }
 
         public void ClearCaches()

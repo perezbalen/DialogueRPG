@@ -20,6 +20,12 @@ namespace PixelCrushers.DialogueSystem
         [ConversationPopup]
         public string conversation;
 
+        [Tooltip("Bark a specific dialogue entry instead of starting from the conversation's START node.")]
+        public bool barkSpecificEntry;
+
+        [Tooltip("Dialogue entry to bark.")]
+        public int entryID;
+
         [Tooltip("Bark this text.")]
         public string text;
 

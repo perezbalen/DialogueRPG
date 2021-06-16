@@ -1,8 +1,9 @@
 // Copyright (c) Pixel Crushers. All rights reserved.
 
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using System;
 
 namespace PixelCrushers.DialogueSystem
 {
@@ -16,6 +17,8 @@ namespace PixelCrushers.DialogueSystem
     {
 
         public static DialogueDatabaseEditor instance = null;
+
+        private static List<DialogueDatabaseEditor> instances = new List<DialogueDatabaseEditor>();
 
         private static bool showDefaultInspector = false;
 
@@ -32,16 +35,36 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         public RefreshSource refreshSource = RefreshSource.None;
 
-        void OnEnable()
+#if UNITY_2019_3_OR_NEWER
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void InitStaticVariables()
+        {
+            instance = null;
+            instances = new List<DialogueDatabaseEditor>();
+        }
+#endif
+
+        public static void RepaintInstances()
+        {
+            if (instance != null) instance.Repaint();
+        }
+
+        private void OnEnable()
         {
             instance = this;
+            if (instances != null) instances.Add(this);
             EditorApplication.projectWindowItemOnGUI -= OnProjectWindowItemOnGUI;
             EditorApplication.projectWindowItemOnGUI += OnProjectWindowItemOnGUI;
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             instance = null;
+            if (instances != null)
+            {
+                instances.Remove(this);
+                if (instances.Count > 0) instance = instances[0];
+            }
             EditorApplication.projectWindowItemOnGUI -= OnProjectWindowItemOnGUI;
             if (DialogueEditor.DialogueEditorWindow.instance != null) DialogueEditor.DialogueEditorWindow.instance.ResetLuaWizards();
         }
@@ -224,6 +247,12 @@ namespace PixelCrushers.DialogueSystem
                 {
                     DrawInspectorSelectionTitle("Link");
                     DialogueEditor.DialogueEditorWindow.instance.DrawSelectedLinkContents();
+                }
+                else if (selectionType == typeof(EntryGroup))
+                {
+                    DrawInspectorSelectionTitle("Dialogue Entry Group");
+                    DialogueEditor.DialogueEditorWindow.instance.DrawEntryGroupContents();
+                    DialogueEditor.DialogueEditorWindow.instance.Repaint();
                 }
                 else if (selectionType == typeof(DialogueEditor.DialogueEditorWindow.MultinodeSelection))
                 {

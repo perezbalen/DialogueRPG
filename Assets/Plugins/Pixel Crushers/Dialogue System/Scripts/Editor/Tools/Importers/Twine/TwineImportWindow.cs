@@ -35,6 +35,7 @@ namespace PixelCrushers.DialogueSystem.Twine
             public string databaseGuid = string.Empty;
             public List<StoryInfo> storyInfoList = new List<StoryInfo>();
             public EncodingType encodingType = EncodingType.Default;
+            public bool useTwineNodePositions = false;
 
             public const string PrefsKey = "PixelCrushers.DialogueSystem.TwineImportPrefs";
 
@@ -68,6 +69,7 @@ namespace PixelCrushers.DialogueSystem.Twine
         protected int[] actorIDs;
         protected bool traceExceptions = false;
         protected static GUIContent traceExceptionsGUIContent = new GUIContent("Trace Exceptions (Debug)", "If import process throws an exception, stop and pinpoint error. Used for internal debugging.");
+        protected static GUIContent useTwineNodePositionsGUIContent = new GUIContent("Use Twine Node Positions", "Import node positions from Twine. If unticked, auto-arranges nodes on import.");
         protected TwineImporter twineImporter = new TwineImporter();
 
         protected virtual void OnEnable()
@@ -101,6 +103,7 @@ namespace PixelCrushers.DialogueSystem.Twine
         {
             DrawStoryInfoList();
             DrawDatabaseField();
+            prefs.useTwineNodePositions = EditorGUILayout.Toggle(useTwineNodePositionsGUIContent, prefs.useTwineNodePositions);
             traceExceptions = EditorGUILayout.Toggle(traceExceptionsGUIContent, traceExceptions);
             DrawImportButton();
         }
@@ -279,7 +282,7 @@ namespace PixelCrushers.DialogueSystem.Twine
             if (string.IsNullOrEmpty(json)) throw new Exception("Unable to read Twine JSON from file.");
             var story = JsonUtility.FromJson<TwineStory>(json);
             if (story == null) throw new Exception("Unable to parse JSON.");
-            twineImporter.ConvertStoryToConversation(database, template, story, storyInfo.actorID, storyInfo.conversantID, storyInfo.splitPipes);
+            twineImporter.ConvertStoryToConversation(database, template, story, storyInfo.actorID, storyInfo.conversantID, storyInfo.splitPipes, prefs.useTwineNodePositions);
         }
 
         #endregion

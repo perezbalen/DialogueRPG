@@ -911,10 +911,25 @@ namespace PixelCrushers.DialogueSystem
                 // Variable:
                 var freeWidth = position.width - (typeWidth + equalityWidth + deleteButtonWidth + 8);
                 rect = new Rect(x, y, freeWidth / 2, EditorGUIUtility.singleLineHeight);
-                item.variableNamesIndex = EditorGUI.Popup(rect, item.variableNamesIndex, variablePopupNames);
+                FieldType variableType = FieldType.Text;
+                if (item.variableNamesIndex == 0)
+                {
+                    // New variable:
+                    var thirdWidth = rect.width / 3;
+                    item.variableNamesIndex = EditorGUI.Popup(new Rect(rect.x, rect.y, thirdWidth, rect.height), item.variableNamesIndex, variablePopupNames);
+                    item.newVariableName = EditorGUI.TextField(new Rect(rect.x + thirdWidth, rect.y, thirdWidth, rect.height), item.newVariableName);
+                    item.newVariableType = (FieldType)EditorGUI.EnumPopup(new Rect(rect.x + 2 * thirdWidth, rect.y, thirdWidth, rect.height), item.newVariableType);
+                    variableType = item.newVariableType;
+                }
+                else
+                {
+                    // Existing variable:
+                    item.variableNamesIndex = EditorGUI.Popup(rect, item.variableNamesIndex, variablePopupNames);
+                    variableType = GetWizardVariableType(item.variableNamesIndex);
+                }
                 x += rect.width + 2;
                 rect = new Rect(x, y, equalityWidth + 2 + (freeWidth / 2), EditorGUIUtility.singleLineHeight);
-                DrawRightHand(rect, item, GetWizardVariableType(item.variableNamesIndex));
+                DrawRightHand(rect, item, variableType);
                 x += rect.width + 2;
 
             }

@@ -102,7 +102,7 @@ public class InitializeDialogeSystemCombat : MonoBehaviour
             if (methodName == cardMethodNames.GetCardReady.ToString())
             {
                 /// Get Card Ready
-                /// Modify the Script. (string composed a few lines before for easy reaing.
+                /// Modify the Script. (string composed a few lines above for easy code reaing).
                 currentEntry.userScript = scriptForQuestionEntry;
                 ///Debug.Log("Script: " + currentEntry.userScript);
                 ///Debug.Log("methodName:" + methodName);
@@ -110,7 +110,7 @@ public class InitializeDialogeSystemCombat : MonoBehaviour
             if (methodName == cardMethodNames.ShowCardWin.ToString())
             {
                 /// What to do if WIN card?
-                /// Modify the Condition. (string composed a few lines before for easy reaing.
+                /// Modify the Condition. (string composed a few lines above for easy code reaing).
                 currentEntry.conditionsString = conditionForResponseEntryWin;
                 ///Debug.Log("Conditions:" + currentEntry.conditionsString);
                 ///Debug.Log("methodName:" + methodName);
@@ -118,11 +118,15 @@ public class InitializeDialogeSystemCombat : MonoBehaviour
             if (methodName == cardMethodNames.ShowCardLose.ToString())
             {
                 /// What to do if LOSE card
-                /// Modify the Condition. (string composed a few lines before for easy reaing.
+                /// Modify the Condition. (string composed a few lines above for easy code reaing).
                 currentEntry.conditionsString = conditionForResponseEntryLose;
                 ///Debug.Log("Conditions:" + currentEntry.conditionsString);
                 ///Debug.Log("methodName:" + methodName);
             }
+            /// remember that if the card is set to isCombat, and to ShowCardWin.
+            /// And it's the first in a conversation, it will never trigger.
+            /// Becasue it will set a conditon asking for previous roll that 
+            /// did never happen. So it will imediately exit.
         }
         else
         {

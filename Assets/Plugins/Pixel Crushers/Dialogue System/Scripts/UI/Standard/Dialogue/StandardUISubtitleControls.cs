@@ -104,7 +104,15 @@ namespace PixelCrushers.DialogueSystem
         {
             if (actor == null) return;
             if (customPanel == null) customPanel = actor.IsPlayer ? m_defaultPCPanel : m_defaultNPCPanel;
-            m_actorIdOverridePanel[actor.id] = GetPanelFromNumber(subtitlePanelNumber, customPanel);
+            var panel = GetPanelFromNumber(subtitlePanelNumber, customPanel);
+            if (panel == null)
+            {
+                m_actorIdOverridePanel.Remove(actor.id);
+            }
+            else
+            {
+                m_actorIdOverridePanel[actor.id] = panel;
+            }
         }
 
         /// <summary>
@@ -132,7 +140,14 @@ namespace PixelCrushers.DialogueSystem
             }
             if (panel != null)
             {
-                m_actorPanelCache[dialogueActor.transform] = panel;
+                if (panel == null)
+                {
+                    m_actorPanelCache.Remove(dialogueActor.transform);
+                }
+                else
+                {
+                    m_actorPanelCache[dialogueActor.transform] = panel;
+                }
                 if (actor != null && m_actorIdOverridePanel.ContainsKey(actor.id))
                 {
                     m_actorIdOverridePanel.Remove(actor.id);
@@ -390,8 +405,7 @@ namespace PixelCrushers.DialogueSystem
                         if (previousPanel.isOpen) previousPanel.Close();
                     }
                 }
-                m_lastActorToUsePanel[panel] = actorID;
-                m_lastPanelUsedByActor[actorID] = panel;
+                SetLastActorToUsePanel(panel, actorID);
 
                 // Focus the panel and show the subtitle:
                 m_focusedPanel = panel;
@@ -544,7 +558,7 @@ namespace PixelCrushers.DialogueSystem
         /// Searches the current conversation for any DialogueActors who use subtitle
         /// panels that are configured to appear when the conversation starts.
         /// </summary>
-        public void OpenSubtitlePanelsOnStartConversation()
+        public void OpenSubtitlePanelsOnStartConversation(StandardDialogueUI ui)
         {
             ApplyQueuedActorPanelCache();
 
@@ -557,18 +571,18 @@ namespace PixelCrushers.DialogueSystem
             var mainActorID = conversation.ActorID;
             var mainActor = DialogueManager.masterDatabase.GetActor(DialogueActor.GetActorName(DialogueManager.currentActor));
             if (mainActor != null) mainActorID = mainActor.id;
-            CheckActorIDOnStartConversation(mainActorID, checkedActorIDs, checkedPanels);
-            CheckActorIDOnStartConversation(conversation.ConversantID, checkedActorIDs, checkedPanels);
+            CheckActorIDOnStartConversation(mainActorID, checkedActorIDs, checkedPanels, ui);
+            CheckActorIDOnStartConversation(conversation.ConversantID, checkedActorIDs, checkedPanels, ui);
 
             // Check other actors:
             for (int i = 0; i < conversation.dialogueEntries.Count; i++)
             {
                 var actorID = conversation.dialogueEntries[i].ActorID;
-                CheckActorIDOnStartConversation(actorID, checkedActorIDs, checkedPanels);
+                CheckActorIDOnStartConversation(actorID, checkedActorIDs, checkedPanels, ui);
             }
         }
 
-        private void CheckActorIDOnStartConversation(int actorID, HashSet<int> checkedActorIDs, HashSet<StandardUISubtitlePanel> checkedPanels)
+        private void CheckActorIDOnStartConversation(int actorID, HashSet<int> checkedActorIDs, HashSet<StandardUISubtitlePanel> checkedPanels, StandardDialogueUI ui)
         {
             if (checkedActorIDs.Contains(actorID)) return;
             checkedActorIDs.Add(actorID);
@@ -581,18 +595,23 @@ namespace PixelCrushers.DialogueSystem
             {
                 panel = m_actorIdOverridePanel[actor.id];
             }
-            if (panel == null && Debug.isDebugBuild) Debug.LogWarning("Dialogue System: Can't determine what subtitle panel to use for " + actor.Name, actorTransform);
+            if (panel == null && actorTransform == null && Debug.isDebugBuild) Debug.LogWarning("Dialogue System: Can't determine what subtitle panel to use for " + actor.Name, actorTransform);
             if (panel == null || checkedPanels.Contains(panel)) return;
+            panel.dialogueUI = ui;
             checkedPanels.Add(panel);
             if (panel.visibility == UIVisibility.AlwaysFromStart)
             {
                 var actorPortrait = (dialogueActor != null && dialogueActor.GetPortraitSprite() != null) ? dialogueActor.GetPortraitSprite() : actor.GetPortraitSprite();
                 var actorName = CharacterInfo.GetLocalizedDisplayNameInDatabase(actor.Name);
                 panel.OpenOnStartConversation(actorPortrait, actorName, dialogueActor);
-
-                m_lastActorToUsePanel[panel] = actorID;
-                m_lastPanelUsedByActor[actorID] = panel;
+                SetLastActorToUsePanel(panel, actorID);
             }
+        }
+
+        public void SetLastActorToUsePanel(StandardUISubtitlePanel panel, int actorID)
+        {
+            m_lastActorToUsePanel[panel] = actorID;
+            m_lastPanelUsedByActor[actorID] = panel;
         }
 
         protected Transform GetActorTransform(string actorName)

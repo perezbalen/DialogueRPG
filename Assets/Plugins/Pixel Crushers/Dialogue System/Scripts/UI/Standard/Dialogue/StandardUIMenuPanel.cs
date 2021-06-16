@@ -191,7 +191,30 @@ namespace PixelCrushers.DialogueSystem
             {
                 if (s_isInputDisabled) EnableInput();
             }
+#if TMP_PRESENT
+            StartCoroutine(CheckTMProAutoScroll());
+#endif
         }
+
+#if TMP_PRESENT
+        // Handles edge case where TMPro uses autoscroll but entry ends before typing starts.
+        // In this case, this method updates the autoscroll size.
+        protected IEnumerator CheckTMProAutoScroll()
+        {
+            var ui = GetComponentInParent<StandardDialogueUI>();
+            if (ui == null || ui.conversationUIElements.defaultNPCSubtitlePanel == null || ui.conversationUIElements.defaultNPCSubtitlePanel.subtitleText == null) yield break;
+            var tmp = ui.conversationUIElements.defaultNPCSubtitlePanel.subtitleText.textMeshProUGUI;
+            if (tmp == null) yield break;
+            var layoutElement = tmp.GetComponent<UnityEngine.UI.LayoutElement>();
+            if (layoutElement != null) layoutElement.preferredHeight = -1;
+            var uiScrollbarEnabler = GetComponentInParent<UIScrollbarEnabler>();
+            if (uiScrollbarEnabler != null)
+            {
+                yield return null;
+                uiScrollbarEnabler.CheckScrollbarWithResetValue(0);
+            }
+        }
+#endif
 
         protected virtual IEnumerator ShowAfterPanelsClose(Subtitle subtitle, Response[] responses, Transform target)
         {
@@ -347,11 +370,11 @@ namespace PixelCrushers.DialogueSystem
                 if ((buttonTemplate != null) && (buttonTemplateHolder != null))
                 {
                     // Reset scrollbar to top:
-                    if (buttonTemplateScrollbar != null)
+                    //--- Scroll even if no scrollbar: if (buttonTemplateScrollbar != null)
                     {
                         if (buttonTemplateScrollbarResetValue >= 0)
                         {
-                            buttonTemplateScrollbar.value = buttonTemplateScrollbarResetValue;
+                            if (buttonTemplateScrollbar != null) buttonTemplateScrollbar.value = buttonTemplateScrollbarResetValue;
                             if (scrollbarEnabler != null)
                             {
                                 scrollbarEnabler.CheckScrollbarWithResetValue(buttonTemplateScrollbarResetValue);

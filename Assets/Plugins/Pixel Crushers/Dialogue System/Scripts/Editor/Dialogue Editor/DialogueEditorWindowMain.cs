@@ -30,7 +30,8 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                 {
                     Selection.activeObject = DialogueEditorWindow.instance.database;
                 }
-                if (DialogueDatabaseEditor.instance != null) DialogueDatabaseEditor.instance.Repaint();
+                DialogueDatabaseEditor.RepaintInstances();
+                //if (DialogueDatabaseEditor.instance != null) DialogueDatabaseEditor.instance.Repaint();
             }
         }
         [SerializeField]
