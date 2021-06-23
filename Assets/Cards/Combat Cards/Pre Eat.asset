@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e47d44ef21e97e141a7ad68795e4c08d, type: 3}
+  m_Name: Pre Eat
+  m_EditorClassIdentifier: 
+  isCombat: 0
+  internalDescription: This wnot show in game. It's as a helper for design. Actual
+    description will go in dialogue system.
+  sexActType: 4
+  statDependency: 0
+  cardDificulty: 0
+  sucessImage: {fileID: 0}
+  successText: I think this will also be here for reference. The actual text goes
+    in the dialogue system
+  firstLinesSuccess: []
+  exhaustionHitPlayer1Success: 0
+  frustrationHitPlayer1Success: 0
+  arousalHitPlayer1Success: 0
+  exhaustionHitPlayer2Success: 0
+  frustrationHitPlayer2Success: 0
+  arousalHitPlayer2Success: 0
+  failImage: {fileID: 0}
+  failText: I think this will also be here for reference. The actual text goes in
+    the dialogue system
+  firstLinesFailure: []
+  exhaustionHitPlayer1Failure: 0
+  frustrationHitPlayer1Failure: 0
+  arousalHitPlayer1Failure: 0
+  exhaustionHitPlayer2Failure: 0
+  frustrationHitPlayer2Failure: 0
+  arousalHitPlayer2Failure: 0

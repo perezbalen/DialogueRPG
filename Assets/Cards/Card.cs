@@ -18,15 +18,17 @@ public class Card : ScriptableObject
 
     [System.Serializable]
     public enum SexActType { 
-        Kissing, 
-        Breastsplay, 
-        Undressing, 
-        Blowjob, 
-        Cunnilingus, 
-        Anal, 
-        Handjob, 
-        Tittyfuck, 
-        Feetjob
+        Face, 
+        Tits, 
+        Pussy, 
+        Ass, 
+        Eat, 
+        CumMan, 
+        CumGirl, 
+        Foreplay, 
+        Pee,
+        Dildo,
+        Fist
         };
     public SexActType sexActType;
     /// <summary>

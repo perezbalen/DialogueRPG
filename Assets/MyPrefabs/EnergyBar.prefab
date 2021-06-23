@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.7175575, g: 0.8246656, b: 0.3083893, a: 1}
+  m_Color: {r: 0.5416347, g: 0.7735849, b: 0.29556784, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -159,9 +159,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 100
+  m_MaxValue: 80
   m_WholeNumbers: 0
-  m_Value: 83
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -180,17 +180,17 @@ MonoBehaviour:
   label: Exhaustion Bar
   gradient:
     serializedVersion: 2
-    key0: {r: 0.7607843, g: 0, b: 0, a: 1}
+    key0: {r: 0.5416347, g: 0.7735849, b: 0.29556784, a: 1}
     key1: {r: 0.9433962, g: 0.8902398, b: 0.32484868, a: 1}
-    key2: {r: 0.5416347, g: 0.7735849, b: 0.29556784, a: 0}
+    key2: {r: 0.7607843, g: 0, b: 0, a: 0}
     key3: {r: 0.5416347, g: 0.7735849, b: 0.29556784, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 15227
-    ctime1: 40092
-    ctime2: 65535
+    ctime0: 13878
+    ctime1: 39128
+    ctime2: 54548
     ctime3: 65535
     ctime4: 0
     ctime5: 0
@@ -217,8 +217,8 @@ MonoBehaviour:
   slideDelay: 0.16
   slideEaseType: 30
   minValue: 0
-  maxValue: 100
-  value: 83
+  maxValue: 80
+  value: 0
   slider: {fileID: 3980639447619780025}
   fill: {fileID: 3980639447531186964}
   textLabel: {fileID: 3980639447991415749}
@@ -235,10 +235,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69eadefaf4e71b346acadb033526aa51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  header: Stamina
+  header: Exhaustion
   content: 'It lets you know how much enery hou have left. When it reaches zero,
     you will fall asleep, exhausted (or, if the current location is not ideal for
     a nap, go to some place you can fall asleep). '
+  delayTime: 0.5
 --- !u!1 &3980639447991415755
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,7 +274,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000030517578, y: 19.2}
+  m_AnchoredPosition: {x: 0.0009460449, y: 13.3}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3980639447991415750
@@ -306,8 +307,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Exhaustion Bar
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 690b9b7f73421534fb8d2d1aea0e5eae, type: 2}
-  m_sharedMaterial: {fileID: -1338361242374363477, guid: 690b9b7f73421534fb8d2d1aea0e5eae, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 567fa1a4fd183494581af381989330ef, type: 2}
+  m_sharedMaterial: {fileID: 6026528423953776458, guid: 567fa1a4fd183494581af381989330ef, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -337,7 +338,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 16
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
@@ -516,10 +517,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 83/100
+  m_text: 0/80
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 690b9b7f73421534fb8d2d1aea0e5eae, type: 2}
-  m_sharedMaterial: {fileID: -1338361242374363477, guid: 690b9b7f73421534fb8d2d1aea0e5eae, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 567fa1a4fd183494581af381989330ef, type: 2}
+  m_sharedMaterial: {fileID: 6026528423953776458, guid: 567fa1a4fd183494581af381989330ef, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

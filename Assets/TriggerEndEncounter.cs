@@ -35,6 +35,7 @@ public class TriggerEndEncounter : MonoBehaviour
     {
         if (DialogueManager.isConversationActive)
         {
+
             //Constructs the new conversation name
             string characterName;
             if (sheet.name == "Player")
@@ -50,23 +51,28 @@ public class TriggerEndEncounter : MonoBehaviour
             //Saves the spot in the conversation
             previousConversationTitle = DialogueManager.lastConversationStarted;
 
-            Debug.Log("Gets here: [" + previousConversationTitle + "] Id: [" + previousEntryID);
-            Debug.Log("DialogueManager.currentConversationState.subtitle.dialogueEntry: " 
-                + DialogueManager.currentConversationState.subtitle.dialogueEntry);
-            previousEntryID = DialogueManager.currentConversationState.subtitle.dialogueEntry.id;
-            Debug.Log("But not here: [" + previousConversationTitle + "] Id: [" + previousEntryID);
+            Debug.Log("previousConversationTitle? [" + previousConversationTitle + "]");
+            Debug.Log("currentConversationState? [" + 
+                DialogueManager.currentConversationState + "]");
 
+            /// for some reason this is getting null when we get two warnings in a row.
+            /// THis prevents crash. Not sure if it actually fixes the ting.
+            /// NOTE: the fact that previousEntryID does not update the second time might cause problems
+            if (DialogueManager.currentConversationState!=null) 
+                previousEntryID = DialogueManager.currentConversationState.subtitle.dialogueEntry.id;
+            
             //stops the conversation
             DialogueManager.StopConversation();
-            
-            Debug.Log("StopConversation: [" + previousConversationTitle + "] Id: [" + previousEntryID);
-                       
+
+            /*
+            Debug.Log("previousConversationTitle: [" + previousConversationTitle + "] previousEntryID: [" + previousEntryID);
+            Debug.Log("conversationTitle: [" + conversationTitle);
+            Debug.Log("resumeLastConversation: [" + resumeLastConversation);
+            */
+
             resumeLastConversation = true;
             DialogueManager.StartConversation(conversationTitle, 
                 DialogueManager.currentActor, DialogueManager.currentConversant);
-
-            Debug.Log("HPPoolCritial: " + conversationTitle);
-
         }
     }
 
@@ -78,14 +84,8 @@ public class TriggerEndEncounter : MonoBehaviour
     /// <param name="actor"></param>
     public void OnConversationEnd(Transform actor) 
     {
-        Debug.Log("OnConversationEnd: [" + previousConversationTitle + "] will resume? " + resumeLastConversation);
-
-        //OnConversationEnd: [] will resume? True 
-
         if (!string.IsNullOrEmpty(previousConversationTitle) && resumeLastConversation)
         {
-            Debug.Log("Inside the if: " + previousConversationTitle + " will resume? " + resumeLastConversation);
-
             DialogueManager.StartConversation(previousConversationTitle, 
                 DialogueManager.currentActor, DialogueManager.currentConversant, previousEntryID);
 
@@ -108,114 +108,10 @@ public class TriggerEndEncounter : MonoBehaviour
             characterName = "Girl ";
         }
         string conversationTitle = characterName + poolName.ToString() + " Full";
-
-        /*
-        //Saves the spot in the conversation
-        previousConversationTitle = DialogueManager.lastConversationStarted;
-        previousEntryID = DialogueManager.currentConversationState.subtitle.dialogueEntry.id;
-        resumeLastConversation = true; // for debug. THis makes the conversation enter in the if loop of the OnConversatioEnd.
-        */
+   
         DialogueManager.StopConversation();
-
-        //Debug.Log("HPLimitReached and stopped. Ready to start limit conversation: [" + conversationTitle +"]");
         DialogueManager.StartConversation(conversationTitle,
             DialogueManager.currentActor, DialogueManager.currentConversant);
-
-        Debug.Log("HPLimitReached: ["+ conversationTitle + "] " + resumeLastConversation);
     }
-
-
-
-    /*
-    public void ExhaustionLimit(PlayerSRPGSheet sheet) 
-    {
-        if (sheet.name == "Player")
-        {
-            dialogueTrigger.conversation = "Player Exhausted Full";
-        }
-        else
-        {
-            dialogueTrigger.conversation = "Girl Exhausted Full";
-        }
-        dialogueTrigger.replace = true;
-        dialogueTrigger.OnUse();
-    }
-    public void FrustrationLimit(PlayerSRPGSheet sheet) {
-        if (sheet.name == "Player")
-        {
-            dialogueTrigger.conversation = "Player Frustrated Full";
-        }
-        else
-        {
-            dialogueTrigger.conversation = "Girl Frustrated Full";
-        }
-        dialogueTrigger.replace = true;
-        dialogueTrigger.OnUse();
-    }
-    public void ArousalnLimit(PlayerSRPGSheet sheet) {
-        Debug.Log(sheet.name + "'s ArousalnLimit.");
-        if (sheet.name == "Player")
-        {
-            dialogueTrigger.conversation = "Player Aroused Full";
-        }
-        else
-        {
-            dialogueTrigger.conversation = "Girl Aroused Full";
-        }
-        dialogueTrigger.replace = true;
-        dialogueTrigger.OnUse();
-    }
-
-    public void ExhaustionCritial(PlayerSRPGSheet sheet) {
-        if (DialogueManager.isConversationActive)
-        {
-            ConversationPositionStack.PushConversationPosition();
-
-            string conversation; 
-
-            if (sheet.name == "Player")
-            {
-                conversation = "Player Exhausted Warning";
-                //dialogueTrigger.conversation = "Player Exhausted Warning";
-            }
-            else
-            {
-                conversation = "Girl Exhausted Warning";
-                //dialogueTrigger.conversation = "Girl Exhausted Warning";
-            }
-
-            Debug.Log(sheet.name + "'s ExhaustionCritial.");
-            dialogueTrigger.replace = false;
-            dialogueTrigger.OnUse();
-        }
-    }
-    public void FrustrationCritial(PlayerSRPGSheet sheet) {
-        if (sheet.name == "Player")
-        {
-            dialogueTrigger.conversation = "Player Frustrated Warning";
-        }
-        else
-        {
-            dialogueTrigger.conversation = "Girl Frustrated Warning";
-        }
-        Debug.Log(sheet.name + "'s FrustrationCritial.");
-        dialogueTrigger.replace = false;
-        dialogueTrigger.OnUse();
-    }
-    public void ArousalCritial(PlayerSRPGSheet sheet) {
-        if (sheet.name == "Player")
-        {
-            dialogueTrigger.conversation = "Player Aroused Warning";
-        }
-        else
-        {
-            dialogueTrigger.conversation = "Girl Aroused Warning";
-        }
-        Debug.Log(sheet.name + "'s ArousalCritial.");
-        dialogueTrigger.replace = false;
-        dialogueTrigger.OnUse();
-    }
-    */
-
 
 }

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e47d44ef21e97e141a7ad68795e4c08d, type: 3}
   m_Name: Touch Breast
   m_EditorClassIdentifier: 
-  internalDescription: The guy grabs her boob
   isCombat: 1
+  internalDescription: The guy grabs her boob
   sexActType: 0
   statDependency: 3
   cardDificulty: 1

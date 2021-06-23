@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e47d44ef21e97e141a7ad68795e4c08d, type: 3}
   m_Name: Lick Neck
   m_EditorClassIdentifier: 
-  internalDescription: The guy licks the neck of the girl
   isCombat: 1
+  internalDescription: The guy licks the neck of the girl
   sexActType: 0
   statDependency: 1
   cardDificulty: 1

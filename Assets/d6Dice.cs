@@ -12,21 +12,69 @@ public class d6Dice : MonoBehaviour
     public float minFadeSpeed = 0.1f;
     public float maxFadeSpeed = 3f;
     [Header("Connect to game object")]
-    public TextMeshProUGUI diceFace;
+    public TextMeshProUGUI diceFaceText;
 
+    [SerializeField]
+    private Sprite dice1;
+    [SerializeField]
+    private Sprite dice2;
+    [SerializeField]
+    private Sprite dice3;
+    [SerializeField]
+    private Sprite dice4;
+    [SerializeField]
+    private Sprite dice5;
+    [SerializeField]
+    private Sprite dice6;
+
+    private Image diceFace;
+
+    private void Start()
+    {
+        diceFace = gameObject.GetComponentInChildren<Image>();
+    }
     private void OnValidate()
     {
-        diceFace.SetText("" + maxValue);
+        //diceFaceText.SetText("" + maxValue);
     }
 
 
     public int RollDice()
     {
-        StartCoroutine(FadeTextToFullAlpha( Random.Range(minFadeSpeed, maxFadeSpeed), diceFace));
+        StartCoroutine(FadeTextToFullAlpha( Random.Range(minFadeSpeed, maxFadeSpeed), diceFaceText));
 
         int result = Random.Range(1, maxValue + 1);
-        diceFace.SetText("" + result);
+        //diceFaceText.SetText("" + result);
+        showDiceFace(result);
         return result;
+    }
+
+    private void showDiceFace(int value)
+    {
+        switch (value)
+        {
+            case 1:
+                diceFace.sprite = dice1;
+                break;
+            case 2:
+                diceFace.sprite = dice2;
+                break;
+            case 3:
+                diceFace.sprite = dice3;
+                break;
+            case 4:
+                diceFace.sprite = dice4;
+                break;
+            case 5:
+                diceFace.sprite = dice5;
+                break;
+            case 6:
+                diceFace.sprite = dice6;
+                break;
+            default:
+                Debug.Log("Dice roll out of bounds: "+ value);
+                break;
+        }
     }
 
     #region Fade animation

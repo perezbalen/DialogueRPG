@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e47d44ef21e97e141a7ad68795e4c08d, type: 3}
   m_Name: Kiss
   m_EditorClassIdentifier: 
-  internalDescription: The guy says hello.
   isCombat: 1
+  internalDescription: The guy says hello.
   sexActType: 0
   statDependency: 2
   cardDificulty: 1
@@ -22,7 +22,7 @@ MonoBehaviour:
   firstLinesSuccess:
   - You kiss her.
   - You kiss her again.
-  exhaustionHitPlayer1Success: 50
+  exhaustionHitPlayer1Success: 10
   frustrationHitPlayer1Success: 0
   arousalHitPlayer1Success: 0
   exhaustionHitPlayer2Success: 0
@@ -41,6 +41,6 @@ MonoBehaviour:
   exhaustionHitPlayer1Failure: 0
   frustrationHitPlayer1Failure: 0
   arousalHitPlayer1Failure: 0
-  exhaustionHitPlayer2Failure: 50
+  exhaustionHitPlayer2Failure: 10
   frustrationHitPlayer2Failure: 0
   arousalHitPlayer2Failure: 0
