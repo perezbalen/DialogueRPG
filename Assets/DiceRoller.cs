@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
+using MoreMountains.Feedbacks;
 
 public class DiceRoller : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class DiceRoller : MonoBehaviour
     public d6Dice dice2;
     public RollModifier rollModifierText;
     public TextMeshProUGUI resultLabel;
+    public MMFeedbacks feedbacks;
 
     [Header("Debug")]
     public int numberToBeat = 6;
@@ -30,26 +32,9 @@ public class DiceRoller : MonoBehaviour
     public UnityEventInt OnDiceRolledWithResult;
     public UnityEventBool OnDiceRolled;
 
+
+
     #endregion
-
-
-    /*
-    public bool RollDice(int numberTosucceed)
-    {
-        int result1 = dice1.RollDice();
-        int result2 = dice2.RollDice();
-        if (result1+result2 >= numberTosucceed)
-        {
-            IsSuccess(true);
-            return true;
-        }
-        else
-        {
-            IsSuccess(false);
-            return false;
-        }
-    }
-    */
 
     /// <summary>
     /// Rolls the dice. Dispalys nubers and Success/Failure images.
@@ -165,6 +150,7 @@ public class DiceRoller : MonoBehaviour
 
     private void PlayRollingSound()
     {
-        gameObject.GetComponent<AudioSource>().Play();
+        //gameObject.GetComponent<AudioSource>().Play();
+        feedbacks?.PlayFeedbacks();
     }
 }
