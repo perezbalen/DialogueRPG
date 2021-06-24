@@ -34,7 +34,7 @@ namespace Crosstales.RTVoice.Model
 
       private string uid;
 
-      private string cachedString;
+      //private string cachedString;
       private readonly System.DateTime created = System.DateTime.Now;
 
       #endregion
@@ -47,24 +47,26 @@ namespace Crosstales.RTVoice.Model
       {
          get
          {
-            if (cachedString == null)
+            //if (cachedString == null)
+            //{
+            string result /*= cachedString*/ = Util.Helper.CleanText(text, Speaker.Instance.AutoClearTags || !ForceSSML /*&& !(Speaker.isMaryMode /* || Util.Helper.isWindowsPlatform )*/);
+
+            if (result.Length > Speaker.Instance.MaxTextLength)
             {
-               string result = cachedString = Util.Helper.CleanText(text, Speaker.Instance.AutoClearTags /*&& !(Speaker.isMaryMode /* || Util.Helper.isWindowsPlatform )*/);
+               Debug.LogWarning("Text is too long! It will be shortened to " + Speaker.Instance.MaxTextLength + " characters: " + this);
 
-               if (result.Length > Speaker.Instance.MaxTextLength)
-               {
-                  Debug.LogWarning("Text is too long! It will be shortened to " + Speaker.Instance.MaxTextLength + " characters: " + this);
-
-                  cachedString = result.Substring(0, Speaker.Instance.MaxTextLength);
-               }
+               return result.Substring(0, Speaker.Instance.MaxTextLength);
+               //cachedString = result.Substring(0, Speaker.Instance.MaxTextLength);
             }
+            //}
 
-            return cachedString;
+            return result;
+            //return cachedString;
          }
 
          set
          {
-            cachedString = null;
+            //cachedString = null;
             text = value;
          }
       }
@@ -104,11 +106,11 @@ namespace Crosstales.RTVoice.Model
          set => pitch = Mathf.Clamp(value, 0f, 2f);
       }
 
-      /// <summary>Volume of the speech (range: 0-1).</summary>
+      /// <summary>Volume of the speech (range: 0.01-1).</summary>
       public float Volume
       {
          get => volume;
-         set => volume = Mathf.Clamp(value, 0f, 1f);
+         set => volume = Mathf.Clamp(value, 0.01f, 1f);
       }
 
       /// <summary>Output file (without extension) for the generated audio.</summary>
@@ -302,7 +304,8 @@ namespace Crosstales.RTVoice.Model
          bool result = Text == o.Text &&
                        voice == o.voice &&
                        System.Math.Abs(Rate - o.Rate) < Util.Constants.FLOAT_TOLERANCE &&
-                       System.Math.Abs(Pitch - o.Pitch) < Util.Constants.FLOAT_TOLERANCE;
+                       System.Math.Abs(Pitch - o.Pitch) < Util.Constants.FLOAT_TOLERANCE &&
+                       System.Math.Abs(Volume - o.Volume) < Util.Constants.FLOAT_TOLERANCE;
 
          return result;
       }
@@ -317,6 +320,7 @@ namespace Crosstales.RTVoice.Model
             hash += voice.GetHashCode();
          hash += (int)(Rate * 100) * 17;
          hash += (int)(Pitch * 100) * 17;
+         hash += (int)(Volume * 100) * 17;
 
          return hash;
       }
@@ -324,4 +328,4 @@ namespace Crosstales.RTVoice.Model
       #endregion
    }
 }
-// © 2015-2020 crosstales LLC (https://www.crosstales.com)
+// © 2015-2021 crosstales LLC (https://www.crosstales.com)

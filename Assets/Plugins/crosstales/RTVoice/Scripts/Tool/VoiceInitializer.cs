@@ -10,8 +10,9 @@ namespace Crosstales.RTVoice.Tool
    {
       #region Variables
 
-      /// <summary>Selected provider to initialize the voices (default: Android).</summary>
-      [Tooltip("Selected provider to initialize the voices (default: Android).")] public Model.Enum.ProviderType Provider = Model.Enum.ProviderType.Android;
+      [Header("Configuration")]
+      /// <summary>Selected provider to initialize the voices (default: Any).</summary>
+      [Tooltip("Selected provider to initialize the voices (default: Any).")] public Model.Enum.ProviderType Provider = Model.Enum.ProviderType.Any;
 
       /// <summary>Initialize voices by name.</summary>
       [Tooltip("Initialize voices by name.")] public string[] VoiceNames;
@@ -101,7 +102,7 @@ namespace Crosstales.RTVoice.Tool
 
       private void onVoicesReady()
       {
-         if (Provider == Util.Helper.CurrentProviderType)
+         if (Provider == Model.Enum.ProviderType.Any || Provider == Util.Helper.CurrentProviderType)
          {
             StopAllCoroutines();
             StartCoroutine(initializeVoices());
@@ -121,4 +122,4 @@ namespace Crosstales.RTVoice.Tool
       #endregion
    }
 }
-// © 2017-2020 crosstales LLC (https://www.crosstales.com)
+// © 2017-2021 crosstales LLC (https://www.crosstales.com)

@@ -10,8 +10,6 @@ namespace Crosstales.RTVoice.Provider
    {
       #region Variables
 
-      //private static VoiceProviderWindows instance;
-
 #if ENABLE_IL2CPP
       private const bool useVisemesAndPhonemesIL2CPP = false;
 #endif
@@ -1109,4 +1107,4 @@ namespace Crosstales.RTVoice.Provider
    }
 }
 #endif
-// © 2015-2020 crosstales LLC (https://www.crosstales.com)
+// © 2015-2021 crosstales LLC (https://www.crosstales.com)

@@ -9,7 +9,8 @@
       iOS,
       WSA,
       Linux,
-      Custom //TODO not used atm
+      Custom, //TODO not used atm
+      Any
    }
 }
-// © 2017-2020 crosstales LLC (https://www.crosstales.com)
+// © 2017-2021 crosstales LLC (https://www.crosstales.com)

@@ -3,7 +3,8 @@
 namespace Crosstales.Common.Audio
 {
    /// <summary>FFT analyzer for an audio channel.</summary>
-  public class FFTAnalyzer : MonoBehaviour
+   [DisallowMultipleComponent]
+   public class FFTAnalyzer : MonoBehaviour
    {
       #region Variables
 
@@ -30,4 +31,4 @@ namespace Crosstales.Common.Audio
       #endregion
    }
 }
-// © 2015-2020 crosstales LLC (https://www.crosstales.com)
+// © 2015-2021 crosstales LLC (https://www.crosstales.com)

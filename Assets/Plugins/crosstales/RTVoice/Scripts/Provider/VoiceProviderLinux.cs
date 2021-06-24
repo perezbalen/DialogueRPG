@@ -13,8 +13,6 @@ namespace Crosstales.RTVoice.Provider
    {
       #region Variables
 
-      //private static VoiceProviderLinux instance;
-
       private const int defaultRate = 160;
       private const int defaultVolume = 100;
       private const int defaultPitch = 50;
@@ -737,4 +735,4 @@ namespace Crosstales.RTVoice.Provider
    }
 }
 #endif
-// © 2018-2020 crosstales LLC (https://www.crosstales.com)
+// © 2018-2021 crosstales LLC (https://www.crosstales.com)

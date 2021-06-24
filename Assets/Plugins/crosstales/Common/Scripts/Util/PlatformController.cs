@@ -31,7 +31,13 @@ namespace Crosstales.Common.Util
 
       protected virtual void Awake()
       {
-         selectPlatform();
+         if (enabled)
+            selectPlatform();
+      }
+
+      private void Start()
+      {
+         //do nothing, just allow to enable/disable the script
       }
 
       #endregion
@@ -76,4 +82,4 @@ namespace Crosstales.Common.Util
       #endregion
    }
 }
-// © 2017-2020 crosstales LLC (https://www.crosstales.com)
+// © 2017-2021 crosstales LLC (https://www.crosstales.com)

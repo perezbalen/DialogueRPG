@@ -4,7 +4,7 @@ namespace Crosstales.Common.Util
 {
    /// <summary>Take screen shots inside an application.</summary>
    [DisallowMultipleComponent]
-   public class TakeScreenshot : Singleton<TakeScreenshot>
+   public class CTScreenshot : Singleton<CTScreenshot>
    {
       #region Variables
 
@@ -25,7 +25,7 @@ namespace Crosstales.Common.Util
 
       #endregion
 
-#if (!UNITY_WSA && !UNITY_WEBGL) || UNITY_EDITOR
+#if (!UNITY_WSA && !UNITY_WEBGL && !UNITY_XBOXONE) || UNITY_EDITOR
 
       #region MonoBehaviour methods
 
@@ -51,7 +51,7 @@ namespace Crosstales.Common.Util
 
          if (!locationShown && ShowFileLocation)
          {
-            BaseHelper.ShowFileLocation(file);
+            BaseHelper.ShowFile(file);
             locationShown = true;
          }
       }
@@ -61,9 +61,9 @@ namespace Crosstales.Common.Util
 #else
       public void Start()
       {
-         Debug.LogWarning("'TakeScreenshot' doesn't work with the current platform!");
+         Debug.LogWarning("'CTScreenshot' doesn't work with the current platform!");
       }
 #endif
    }
 }
-// © 2014-2020 crosstales LLC (https://www.crosstales.com)
+// © 2014-2021 crosstales LLC (https://www.crosstales.com)

@@ -12,6 +12,7 @@ namespace Crosstales.RTVoice.Tool
    {
       #region Variables
 
+      [Header("Configuration")]
       [UnityEngine.Serialization.FormerlySerializedAsAttribute("Text")] [Tooltip("Text to speak."), TextArea(3, 15), SerializeField]
       private string text = string.Empty;
 
@@ -339,4 +340,4 @@ namespace Crosstales.RTVoice.Tool
       #endregion
    }
 }
-// © 2018-2020 crosstales LLC (https://www.crosstales.com)
+// © 2018-2021 crosstales LLC (https://www.crosstales.com)

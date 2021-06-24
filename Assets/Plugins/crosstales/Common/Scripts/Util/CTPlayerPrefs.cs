@@ -3,9 +3,8 @@
 namespace Crosstales.Common.Util
 {
    /// <summary>Wrapper for the PlayerPrefs.</summary>
-   public static class CTPlayerPrefs
+   public abstract class CTPlayerPrefs
    {
-      //TODO add getter and setter: Vector2 - 4, Quaternion
 /*
 #if UNITY_EDITOR
       private static readonly SerializableDictionary<string, string> content = new SerializableDictionary<string, string>();
@@ -27,13 +26,12 @@ namespace Crosstales.Common.Util
       /// <returns>Value for the key.</returns>
       public static bool HasKey(string key)
       {
-         if (string.IsNullOrEmpty(key))
-            throw new System.ArgumentNullException(nameof(key));
+         return !string.IsNullOrEmpty(key) && PlayerPrefs.HasKey(key);
+         //throw new System.ArgumentNullException(nameof(key));
 
 //#if UNITY_EDITOR
 //         return content.ContainsKey(key);
 //#else
-         return PlayerPrefs.HasKey(key);
 //#endif
       }
 
@@ -144,6 +142,72 @@ namespace Crosstales.Common.Util
          return result;
       }
 
+      /// <summary>Allows to get a Vector2 from a key.</summary>
+      /// <param name="key">Key for the PlayerPrefs.</param>
+      /// <returns>Value for the key.</returns>
+      public static Vector2 GetVector2(string key)
+      {
+         string[] values = GetString(key).Split(';');
+
+         float x = float.Parse(values[0]);
+         float y = float.Parse(values[1]);
+
+         return new Vector2(x, y);
+      }
+
+      /// <summary>Allows to get a Vector3 from a key.</summary>
+      /// <param name="key">Key for the PlayerPrefs.</param>
+      /// <returns>Value for the key.</returns>
+      public static Vector3 GetVector3(string key)
+      {
+         string[] values = GetString(key).Split(';');
+
+         float x = float.Parse(values[0]);
+         float y = float.Parse(values[1]);
+         float z = float.Parse(values[2]);
+
+         return new Vector3(x, y, z);
+      }
+
+      /// <summary>Allows to get a Vector4 from a key.</summary>
+      /// <param name="key">Key for the PlayerPrefs.</param>
+      /// <returns>Value for the key.</returns>
+      public static Vector4 GetVector4(string key)
+      {
+         string[] values = GetString(key).Split(';');
+
+         float x = float.Parse(values[0]);
+         float y = float.Parse(values[1]);
+         float z = float.Parse(values[2]);
+         float w = float.Parse(values[3]);
+
+         return new Vector4(x, y, z, w);
+      }
+
+      /// <summary>Allows to get a Quaternion from a key.</summary>
+      /// <param name="key">Key for the PlayerPrefs.</param>
+      /// <returns>Value for the key.</returns>
+      public static Quaternion GetQuaternion(string key)
+      {
+         return GetVector4(key).CTQuaternion();
+      }
+
+      /// <summary>Allows to get a Color from a key.</summary>
+      /// <param name="key">Key for the PlayerPrefs.</param>
+      /// <returns>Value for the key.</returns>
+      public static Color GetColor(string key)
+      {
+         return GetVector4(key).CTColorRGBA();
+      }
+
+      /// <summary>Allows to get a SystemLanguage from a key.</summary>
+      /// <param name="key">Key for the PlayerPrefs.</param>
+      /// <returns>Value for the key.</returns>
+      public static SystemLanguage GetLanguage(string key)
+      {
+         return (SystemLanguage)System.Enum.Parse(typeof(SystemLanguage), GetString(key));
+      }
+
       #endregion
 
 
@@ -222,7 +286,70 @@ namespace Crosstales.Common.Util
          SetString(key, value.ToString("yyyyMMddHHmmsss"));
       }
 
+      /// <summary>Allows to set a Vector2 for a key.</summary>
+      /// <param name="key">Key for the PlayerPrefs.</param>
+      /// <param name="value">Value for the PlayerPrefs.</param>
+      public static void SetVector2(string key, Vector2 value)
+      {
+         if (value == null)
+            throw new System.ArgumentNullException(nameof(value));
+
+         SetString(key, $"{value.x};{value.y}");
+      }
+
+      /// <summary>Allows to set a Vector3 for a key.</summary>
+      /// <param name="key">Key for the PlayerPrefs.</param>
+      /// <param name="value">Value for the PlayerPrefs.</param>
+      public static void SetVector3(string key, Vector3 value)
+      {
+         if (value == null)
+            throw new System.ArgumentNullException(nameof(value));
+
+         SetString(key, $"{value.x};{value.y};{value.z}");
+      }
+
+      /// <summary>Allows to set a Vector4 for a key.</summary>
+      /// <param name="key">Key for the PlayerPrefs.</param>
+      /// <param name="value">Value for the PlayerPrefs.</param>
+      public static void SetVector4(string key, Vector4 value)
+      {
+         if (value == null)
+            throw new System.ArgumentNullException(nameof(value));
+
+         SetString(key, $"{value.x};{value.y};{value.z};{value.w}");
+      }
+
+      /// <summary>Allows to set a Quaternion for a key.</summary>
+      /// <param name="key">Key for the PlayerPrefs.</param>
+      /// <param name="value">Value for the PlayerPrefs.</param>
+      public static void SetQuaternion(string key, Quaternion value)
+      {
+         if (value == null)
+            throw new System.ArgumentNullException(nameof(value));
+
+         SetVector4(key, value.CTVector4());
+      }
+
+      /// <summary>Allows to set a Color for a key.</summary>
+      /// <param name="key">Key for the PlayerPrefs.</param>
+      /// <param name="value">Value for the PlayerPrefs.</param>
+      public static void SetColor(string key, Color value)
+      {
+         if (value == null)
+            throw new System.ArgumentNullException(nameof(value));
+
+         SetVector4(key, value.CTVector4());
+      }
+
+      /// <summary>Allows to set a SystemLanguage for a key.</summary>
+      /// <param name="key">Key for the PlayerPrefs.</param>
+      /// <param name="value">Value for the PlayerPrefs.</param>
+      public static void SetLanguage(string key, SystemLanguage language)
+      {
+         SetString(key, language.ToString());
+      }
+
       #endregion
    }
 }
-// © 2015-2020 crosstales LLC (https://www.crosstales.com)
+// © 2015-2021 crosstales LLC (https://www.crosstales.com)

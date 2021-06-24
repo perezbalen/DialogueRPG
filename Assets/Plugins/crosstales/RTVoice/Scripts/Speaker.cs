@@ -595,7 +595,7 @@ namespace Crosstales.RTVoice
             {
                foreach (System.Collections.Generic.KeyValuePair<string, AudioSource> source in providedSources.Where(source => source.Value != null && source.Value.clip != null && !Common.Util.BaseHelper.hasActiveClip(source.Value)))
                {
-                  source.Value.clip = null; //remove clip
+                  //source.Value.clip = null; //remove clip
 
                   removeSources.Add(source.Key, source.Value);
                }
@@ -660,7 +660,7 @@ namespace Crosstales.RTVoice
          }
          */
 
-#if !UNITY_WSA || UNITY_EDITOR
+#if (!UNITY_WSA && !UNITY_XBOXONE) || UNITY_EDITOR
          if (deleteWorker?.IsAlive == true)
          {
             if (Util.Constants.DEV_DEBUG)
@@ -709,7 +709,7 @@ namespace Crosstales.RTVoice
       #endregion
 
 
-      #region Static methods
+      #region Public methods
 
       /// <summary>Resets this object.</summary>
       //[RuntimeInitializeOnLoadMethod]
@@ -912,20 +912,19 @@ namespace Crosstales.RTVoice
          if (string.IsNullOrEmpty(culture))
          {
             if (Model.Enum.Gender.UNKNOWN == gender)
-            {
                return Voices;
-            }
 
             voices.AddRange(Voices.Where(voice => voice.Gender == gender));
          }
          else
          {
             if (Model.Enum.Gender.UNKNOWN == gender)
-            {
                return VoicesForCulture(culture, isFuzzy);
-            }
 
             voices.AddRange(VoicesForCulture(culture, isFuzzy).Where(voice => voice.Gender == gender));
+
+            if (voices.Count == 0)
+               return VoicesForCulture(culture, isFuzzy);
          }
 
          return voices;
@@ -935,10 +934,10 @@ namespace Crosstales.RTVoice
       /// <param name="gender">Gender of the voice</param>
       /// <param name="culture">Culture of the voice (e.g. "en", optional)</param>
       /// <param name="index">Index of the voice (default: 0, optional)</param>
-      /// <param name="fallbackCulture">Fallback culture of the voice (e.g. "en", default "", optional)</param>
+      /// <param name="fallbackCulture">Fallback culture of the voice (default "en", optional)</param>
       /// <param name="isFuzzy">Always returns voices if there is no match with the gender and/or culture (default: false, optional)</param>
       /// <returns>Voice for the given culture and index.</returns>
-      public Model.Voice VoiceForGender(Model.Enum.Gender gender, string culture = "", int index = 0, string fallbackCulture = "", bool isFuzzy = false)
+      public Model.Voice VoiceForGender(Model.Enum.Gender gender, string culture = "", int index = 0, string fallbackCulture = "en", bool isFuzzy = false)
       {
          Model.Voice result = null;
 
@@ -999,7 +998,7 @@ namespace Crosstales.RTVoice
          }
 
          string _culture = culture.Trim().Replace(" ", string.Empty).Replace("_", string.Empty).Replace("-", string.Empty);
-#if UNITY_WSA
+#if UNITY_WSA || UNITY_XBOXONE
          System.Collections.Generic.List<Model.Voice> voices = Voices.Where(s => s.SimplifiedCulture.StartsWith(_culture, System.StringComparison.OrdinalIgnoreCase)).OrderBy(s => s.Name).ToList();
 #else
          System.Collections.Generic.List<Model.Voice> voices = Voices.Where(s => s.SimplifiedCulture.StartsWith(_culture, System.StringComparison.InvariantCultureIgnoreCase)).OrderBy(s => s.Name).ToList();
@@ -1015,10 +1014,10 @@ namespace Crosstales.RTVoice
       /// <summary>Get a voice from for a given culture and optional index from the current TTS-system.</summary>
       /// <param name="culture">Culture of the voice (e.g. "en")</param>
       /// <param name="index">Index of the voice (default: 0, optional)</param>
-      /// <param name="fallbackCulture">Fallback culture of the voice (e.g. "en", default "", optional)</param>
+      /// <param name="fallbackCulture">Fallback culture of the voice (default "en", optional)</param>
       /// <param name="isFuzzy">Always returns voices if there is no match with the culture (default: false, optional)</param>
       /// <returns>Voice for the given culture and index.</returns>
-      public Model.Voice VoiceForCulture(string culture, int index = 0, string fallbackCulture = "", bool isFuzzy = false)
+      public Model.Voice VoiceForCulture(string culture, int index = 0, string fallbackCulture = "en", bool isFuzzy = false)
       {
          Model.Voice result = null;
 
@@ -1078,7 +1077,8 @@ namespace Crosstales.RTVoice
 
          if (string.IsNullOrEmpty(_name))
          {
-            Debug.LogWarning("The given 'name' is null or empty! Returning null.", this);
+            if (Util.Config.DEBUG)
+               Debug.LogWarning("The given 'name' is null or empty! Returning null.", this);
          }
          else
          {
@@ -1097,9 +1097,9 @@ namespace Crosstales.RTVoice
       /// <summary>Speaks a text with a given voice (native mode).</summary>
       /// <param name="text">Text to speak.</param>
       /// <param name="voice">Voice to speak (optional).</param>
-      /// <param name="rate">Speech rate of the speaker in percent (1 = 100%, values: 0-3, default: 1, optional).</param>
+      /// <param name="rate">Speech rate of the speaker in percent (1 = 100%, values: 0.01-3, default: 1, optional).</param>
       /// <param name="pitch">Pitch of the speech in percent (1 = 100%, values: 0-2, default: 1, optional).</param>
-      /// <param name="volume">Volume of the speaker in percent (1 = 100%, values: 0-1, default: 1, optional).</param>
+      /// <param name="volume">Volume of the speaker in percent (1 = 100%, values: 0.01-1, default: 1, optional).</param>
       /// <param name="forceSSML">Force SSML on supported platforms (default: true, optional).</param>
       /// <returns>UID of the speaker.</returns>
       public string SpeakNative(string text, Model.Voice voice = null, float rate = 1f, float pitch = 1f, float volume = 1f, bool forceSSML = true)
@@ -1190,9 +1190,9 @@ namespace Crosstales.RTVoice
       /// <param name="source">AudioSource for the output (optional).</param>
       /// <param name="voice">Voice to speak (optional).</param>
       /// <param name="speakImmediately">Speak the text immediately (default: true). Only works if 'Source' is not null.</param>
-      /// <param name="rate">Speech rate of the speaker in percent (1 = 100%, values: 0-3, default: 1, optional).</param>
+      /// <param name="rate">Speech rate of the speaker in percent (1 = 100%, values: 0.01-3, default: 1, optional).</param>
       /// <param name="pitch">Pitch of the speech in percent (1 = 100%, values: 0-2, default: 1, optional).</param>
-      /// <param name="volume">Volume of the speaker in percent (1 = 100%, values: 0-1, default: 1, optional).</param>
+      /// <param name="volume">Volume of the speaker in percent (1 = 100%, values: 0.01-1, default: 1, optional).</param>
       /// <param name="outputFile">Saves the generated audio to an output file (without extension, optional).</param>
       /// <param name="forceSSML">Force SSML on supported platforms (default: true, optional).</param>
       /// <returns>UID of the speaker.</returns>
@@ -1353,7 +1353,7 @@ namespace Crosstales.RTVoice
       /// <param name="text">Text to speak.</param>
       /// <param name="source">AudioSource for the output.</param>
       /// <param name="voice">Voice to speak (optional).</param>
-      /// <param name="rate">Speech rate of the speaker in percent (1 = 100%, values: 0-3, default: 1, optional).</param>
+      /// <param name="rate">Speech rate of the speaker in percent (1 = 100%, values: 0.01-3, default: 1, optional).</param>
       /// <param name="pitch">Pitch of the speech in percent (1 = 100%, values: 0-2, default: 1, optional).</param>
       /// <param name="forceSSML">Force SSML on supported platforms (default: true, optional).</param>
       public void SpeakMarkedWordsWithUID(string uid, string text, AudioSource source, Model.Voice voice = null, float rate = 1f, float pitch = 1f, bool forceSSML = true)
@@ -1424,9 +1424,9 @@ namespace Crosstales.RTVoice
       /// <param name="text">Text to generate.</param>
       /// <param name="outputFile">Saves the generated audio to an output file (without extension).</param>
       /// <param name="voice">Voice to speak (optional).</param>
-      /// <param name="rate">Speech rate of the speaker in percent (1 = 100%, values: 0-3, default: 1, optional).</param>
+      /// <param name="rate">Speech rate of the speaker in percent (1 = 100%, values: 0.01-3, default: 1, optional).</param>
       /// <param name="pitch">Pitch of the speech in percent (1 = 100%, values: 0-2, default: 1, optional).</param>
-      /// <param name="volume">Volume of the speaker in percent (1 = 100%, values: 0-1, default: 1, optional).</param>
+      /// <param name="volume">Volume of the speaker in percent (1 = 100%, values: 0.01-1, default: 1, optional).</param>
       /// <param name="forceSSML">Force SSML on supported platforms (default: true, optional).</param>
       /// <returns>UID of the generator.</returns>
       public string Generate(string text, string outputFile, Model.Voice voice = null, float rate = 1f, float pitch = 1f, float volume = 1f, bool forceSSML = true)
@@ -1797,9 +1797,11 @@ namespace Crosstales.RTVoice
       /// <summary>Deletes all generated audio files.</summary>
       public void DeleteAudioFiles()
       {
+#if !UNITY_XBOXONE && !UNITY_WEBGL
          if (!Util.Helper.isWebPlatform)
          {
-            string path = Application.persistentDataPath;
+            //string path = Application.persistentDataPath;
+            string path = Application.temporaryCachePath;
 
 #if !UNITY_WSA || UNITY_EDITOR
             if (deleteWorker?.IsAlive == true)
@@ -1816,6 +1818,7 @@ namespace Crosstales.RTVoice
             deleteAudioFiles(path);
 #endif
          }
+#endif
       }
 
       #endregion
@@ -1823,13 +1826,13 @@ namespace Crosstales.RTVoice
 
       #region Private methods
 
-      private void deleteAudioFiles(string persistentDataPath)
+      private void deleteAudioFiles(string audioDataPath)
       {
          try
          {
             System.Random rnd = new System.Random();
             string filesToDelete = Util.Constants.AUDIOFILE_PREFIX + "*"; // + AudioFileExtension;
-            string path = Util.Helper.isAndroidPlatform || Util.Helper.isWSABasedPlatform ? Util.Helper.ValidatePath(persistentDataPath) : Util.Config.AUDIOFILE_PATH;
+            string path = Util.Helper.isAndroidPlatform || Util.Helper.isWSABasedPlatform ? Util.Helper.ValidatePath(audioDataPath) : Util.Config.AUDIOFILE_PATH;
             string[] fileList = System.IO.Directory.GetFiles(path, filesToDelete);
 
             foreach (string file in fileList)
@@ -1935,7 +1938,7 @@ namespace Crosstales.RTVoice
             voiceProvider = mainVoiceProvider = Provider.VoiceProviderIOS.Instance;
 #endif
          }
-#if (UNITY_WSA && !UNITY_EDITOR) && ENABLE_WINMD_SUPPORT //|| CT_DEVELOP
+#if ((UNITY_WSA || UNITY_XBOXONE) && !UNITY_EDITOR) && ENABLE_WINMD_SUPPORT //|| CT_DEVELOP
          else if (Util.Helper.isWSABasedPlatform)
          {
             voiceProvider = mainVoiceProvider = Provider.VoiceProviderWSA.Instance;
@@ -2265,4 +2268,4 @@ namespace Crosstales.RTVoice
       #endregion
    }
 }
-// © 2015-2020 crosstales LLC (https://www.crosstales.com)
+// © 2015-2021 crosstales LLC (https://www.crosstales.com)

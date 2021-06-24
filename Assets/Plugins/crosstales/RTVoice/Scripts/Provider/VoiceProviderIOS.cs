@@ -10,17 +10,13 @@ namespace Crosstales.RTVoice.Provider
    {
       #region Variables
 
-      //private static VoiceProviderIOS instance;
-
       private static System.Collections.Generic.List<Model.Voice> cachediOSVoices = new System.Collections.Generic.List<Model.Voice>();
 
-#if !UNITY_EDITOR || CT_DEVELOP
       private static string[] speechTextArray;
       private static int wordIndex;
       private static bool isWorking;
       private static Model.Wrapper wrapperNative;
       private static bool isPaused;
-#endif
 
       #endregion
 
@@ -76,23 +72,22 @@ namespace Crosstales.RTVoice.Provider
 
          if (voices.Length % 3 == 0)
          {
-         System.Collections.Generic.List<Model.Voice> voicesList = new System.Collections.Generic.List<Model.Voice>(60);
+            System.Collections.Generic.List<Model.Voice> voicesList = new System.Collections.Generic.List<Model.Voice>(60);
 
-         //for (int ii = 0; ii < voices.Length; ii += 2)
-         for (int ii = 0; ii < voices.Length; ii += 3)
-         {
-            string name = voices[ii + 1];
-            string culture = voices[ii + 2];
-            Model.Voice newVoice = new Model.Voice(name, "iOS voice: " + name + " " + culture,
-               Util.Helper.AppleVoiceNameToGender(name), "unknown", culture, voices[ii], "Apple");
+            //for (int ii = 0; ii < voices.Length; ii += 2)
+            for (int ii = 0; ii < voices.Length; ii += 3)
+            {
+               string name = voices[ii + 1];
+               string culture = voices[ii + 2];
+               Model.Voice newVoice = new Model.Voice(name, "iOS voice: " + name + " " + culture, Util.Helper.AppleVoiceNameToGender(name), "unknown", culture, voices[ii], "Apple");
 
-            voicesList.Add(newVoice);
-         }
+               voicesList.Add(newVoice);
+            }
 
-         cachediOSVoices = voicesList.OrderBy(s => s.Name).ToList();
+            cachediOSVoices = voicesList.OrderBy(s => s.Name).ToList();
 
-         if (Util.Constants.DEV_DEBUG)
-            Debug.Log("Voices read: " + cachediOSVoices.CTDump());
+            if (Util.Constants.DEV_DEBUG)
+               Debug.Log("Voices read: " + cachediOSVoices.CTDump());
          }
          else
          {
@@ -235,13 +230,11 @@ namespace Crosstales.RTVoice.Provider
 
                isWorking = true;
 
-               speechTextArray = Util.Helper.CleanText(wrapper.Text, false)
-                  .Split(splitCharWords, System.StringSplitOptions.RemoveEmptyEntries);
+               speechTextArray = Util.Helper.CleanText(wrapper.Text, false).Split(splitCharWords, System.StringSplitOptions.RemoveEmptyEntries);
                wordIndex = 0;
                wrapperNative = wrapper;
 
-               NativeMethods.RTVSpeak(voiceId, wrapper.Text, calculateRate(wrapper.Rate), wrapper.Pitch,
-                  wrapper.Volume);
+               NativeMethods.RTVSpeak(voiceId, wrapper.Text, calculateRate(wrapper.Rate), wrapper.Pitch, wrapper.Volume);
 
                do
                {
@@ -285,13 +278,12 @@ namespace Crosstales.RTVoice.Provider
          if (wrapper != null && string.IsNullOrEmpty(wrapper.Voice?.Identifier))
          {
             if (Util.Config.DEBUG)
-               Debug.LogWarning(
-                  "'wrapper.Voice' or 'wrapper.Voice.Identifier' is null! Using the OS 'default' voice.");
+               Debug.LogWarning("'wrapper.Voice' or 'wrapper.Voice.Identifier' is null! Using the OS 'default' voice.");
 
-            return Speaker.Instance.VoiceForName(DefaultVoiceName).Identifier;
+            return Speaker.Instance.VoiceForName(DefaultVoiceName)?.Identifier;
          }
 
-         return wrapper != null ? wrapper.Voice?.Identifier : Speaker.Instance.VoiceForName(DefaultVoiceName).Identifier;
+         return wrapper != null ? wrapper.Voice?.Identifier : Speaker.Instance.VoiceForName(DefaultVoiceName)?.Identifier;
       }
 
       #endregion
@@ -348,4 +340,4 @@ namespace Crosstales.RTVoice.Provider
    }
 }
 #endif
-// © 2016-2020 crosstales LLC (https://www.crosstales.com)
+// © 2016-2021 crosstales LLC (https://www.crosstales.com)

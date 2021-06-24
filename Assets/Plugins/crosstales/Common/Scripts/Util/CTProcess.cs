@@ -736,4 +736,4 @@ namespace Crosstales.Common.Util
    #endregion
 }
 #endif
-// © 2019-2020 crosstales LLC (https://www.crosstales.com)
+// © 2019-2021 crosstales LLC (https://www.crosstales.com)

@@ -1,8 +1,8 @@
 //
 //  RTVoiceIOSBridge.h
-//  Version 2020.4.0
+//  Version 2021.2.5
 //
-//  © 2016-2020 crosstales LLC (https://www.crosstales.com)
+//  © 2016-2021 crosstales LLC (https://www.crosstales.com)
 //
 #ifndef RTVoiceIOSBridge_h
 #define RTVoiceIOSBridge_h

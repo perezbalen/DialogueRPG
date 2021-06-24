@@ -10,13 +10,13 @@ namespace Crosstales.RTVoice.Tool
    {
       #region Variables
 
+      [Header("Configuration")]
       [UnityEngine.Serialization.FormerlySerializedAsAttribute("TextFiles")] [Tooltip("Text files to generate."), SerializeField]
       private TextAsset[] textFiles;
 
       [UnityEngine.Serialization.FormerlySerializedAsAttribute("FileInsideAssets")] [Tooltip("Are the specified file paths inside the Assets-folder (current project)? If this option is enabled, it prefixes the path with 'Application.dataPath' (default: true)."), SerializeField]
       private bool fileInsideAssets = true;
 
-#if (UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN) && !UNITY_EDITOR_OSX && !UNITY_EDITOR_LINUX
       [UnityEngine.Serialization.FormerlySerializedAsAttribute("SampleRate")] [Header("Windows Settings"), Tooltip("Set the sample rate of the WAV files (default: 48000). Note: this works only under Windows standalone."), SerializeField]
       private Common.Model.Enum.SampleRate sampleRate = Common.Model.Enum.SampleRate._48000Hz;
 
@@ -31,7 +31,6 @@ namespace Crosstales.RTVoice.Tool
 
       [UnityEngine.Serialization.FormerlySerializedAsAttribute("isNormalize")] [Tooltip("Normalize the volume of the WAV files (default: false). Note: this works only under Windows standalone."), SerializeField]
       private bool _isNormalize;
-#endif
 
       [UnityEngine.Serialization.FormerlySerializedAsAttribute("GenerateOnStart")] [Header("Behaviour Settings"), Tooltip("Enable generating of the texts on start (default: false)."), SerializeField]
       private bool generateOnStart;
@@ -61,7 +60,6 @@ namespace Crosstales.RTVoice.Tool
          set => fileInsideAssets = value;
       }
 
-#if (UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN) && !UNITY_EDITOR_OSX && !UNITY_EDITOR_LINUX
       /// <summary>Set the sample rate of the WAV files. Note: this works only under Windows standalone.</summary>
       public Common.Model.Enum.SampleRate SampleRate
       {
@@ -97,7 +95,6 @@ namespace Crosstales.RTVoice.Tool
          get => _isNormalize;
          set => _isNormalize = value;
       }
-#endif
 
       /// <summary>Enable generating of the texts on start.</summary>
       public bool GenerateOnStart
@@ -142,7 +139,6 @@ namespace Crosstales.RTVoice.Tool
 
       private void OnValidate()
       {
-#if (UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN) && !UNITY_EDITOR_OSX && !UNITY_EDITOR_LINUX
          if (bitsPerSample < 15)
          {
             bitsPerSample = 8;
@@ -157,7 +153,6 @@ namespace Crosstales.RTVoice.Tool
          }
 
          channels = channels <= 1 ? 1 : 2;
-#endif
       }
 
       #endregion
@@ -529,4 +524,4 @@ namespace Crosstales.RTVoice.Tool
       #endregion
    }
 }
-// © 2017-2020 crosstales LLC (https://www.crosstales.com)
+// © 2017-2021 crosstales LLC (https://www.crosstales.com)

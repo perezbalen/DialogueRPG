@@ -1,5 +1,65 @@
 ﻿# RT-Voice PRO - Release notes
 
+## 2021.2.7 - 15.06.2021
+* AWS Polly:
+  * Improvements for neural voices
+  * ca-central-1 as endpoint added for neural voices
+* All providers improved to always call "OnVoicesReady"
+* Speeches.txt improved
+* MaryTTS now uses SSML as default
+
+## 2021.2.6 - 04.06.2021
+* Editor improvements
+* Updated to Common 2021.2.2
+
+## 2021.2.5 - 23.05.2021
+* Android: fix for non-IL2CPP builds
+
+## 2021.2.4 - 06.05.2021
+* iOS: fix for Xcode 12.5 and newer
+* Speaker: improvements for given AudioSources
+* AudioFileGenerator: fix for Windows-builds from non Windows-editors
+* Fallback default set to "en"
+
+## 2021.2.3 - 21.04.2021
+* Fix for demo scenes (automatic import of the UI-package)
+
+## 2021.2.2 - 19.04.2021
+* Support for "Naninovel" (see folder "3rd party")
+* Android: fix for error in Unity Editor
+* Built-in providers improved
+
+## 2021.2.1 - 15.04.2021
+* Updated to Common 2021.2.1
+
+## 2021.2.0 - 14.04.2021
+* UI: speak Text and InputFields
+* iOS: voice handling improved
+* Android: SSML support
+* Updated to Common 2021.2.0
+
+## 2021.1.3 - 26.02.2021
+* iOS: fix for AVAudioSession
+* Updated to Common 2021.1.1
+
+## 2021.1.2 - 02.02.2021
+* iOS: fix for version 13 and above
+* Documentation updated
+
+## 2021.1.1 - 14.01.2021
+* SAPI Unity improved
+* Android provider improved
+* All 3rd-party packages updated
+
+## 2021.1.0 - 05.01.2021
+* Native provider for XBox added
+* AWS Polly: volume added
+* Google Cloud: pitch is now correctly distributed
+* Editor integration improved
+* Demo scenes improved
+* URLs updated
+* Updated to Common 2021.1.0
+
 ## 2020.4.10 - 17.12.2020
 * Improved for Unity 2020.2
 * Documentation updated
@@ -352,7 +412,6 @@
 * TextFileSpeaker: Next, Previous, SpeakAll and StopAll added
 * Paralanguage added
 * BaseCustomVoiceProvider added (for an example see "VoiceProviderExample")
-* WavMaster added
 * Wrapper: ForceSSML added
 * iOS: Voice match by id instead of name
 * Windows: SSML improved

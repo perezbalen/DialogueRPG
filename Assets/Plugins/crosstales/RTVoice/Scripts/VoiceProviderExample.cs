@@ -433,4 +433,4 @@ namespace Crosstales.RTVoice
       #endregion
    }
 }
-// © 2018-2020 crosstales LLC (https://www.crosstales.com)
+// © 2018-2021 crosstales LLC (https://www.crosstales.com)

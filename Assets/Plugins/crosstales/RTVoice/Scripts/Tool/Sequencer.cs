@@ -11,6 +11,7 @@ namespace Crosstales.RTVoice.Tool
       #region Variables
 
       /// <summary>All available sequences.</summary>
+      [Header("Configuration")]
       [Tooltip("All available sequences.")] public Model.Sequence[] Sequences;
 
       /// <summary>Delay in seconds before the Sequencer starts processing (default: 0).</summary>
@@ -178,4 +179,4 @@ namespace Crosstales.RTVoice.Tool
       #endregion
    }
 }
-// © 2016-2020 crosstales LLC (https://www.crosstales.com)
+// © 2016-2021 crosstales LLC (https://www.crosstales.com)

@@ -1,24 +1,20 @@
-﻿# crosstales LLC - Common package 2020.4.8
+﻿# crosstales LLC - Common package 2021.2.2
 
 ## Description
 This folder and its content is needed for all assets from "crosstales LLC".
 
-Please DON'T DELETE anything or the assets won't work anymore!
+Please DO NOT DELETE anything except the "Extras" or the assets will not work anymore!
+
+
+
+## Important:
+If the demo scenes of our assets look wrong ("Missing Prefabs", graphics missing etc.) please re-import "UI.unitypackage".
 
 
 
 ## Notes:
-
-### macOS (notarization and Mac App Store)
-To get an app through the Apples signing process, do one of the following things:
-
-1) Add the following key to the entitlement-file:
-<key>com.apple.security.cs.disable-library-validation</key><true/>
-
-2) Sign the libraries after building:
-codesign --deep --force --verify --verbose --timestamp --sign "Developer ID Application : YourCompanyName (0123456789)" "YourApp.app/Contents/Plugins/libProcessStart.bundle"
-
-If everything fails, delete "libProcessStart.bundle".
+The "Extras"-folder contains many packages that enhance your app.
+Please see the README for more information. 
 
 
 
@@ -43,4 +39,4 @@ CH-8002 Zürich
 * [Youtube-channel](https://www.youtube.com/c/Crosstales)
 
 
-`Version: 16.12.2020`
+`Version: 03.06.2021`

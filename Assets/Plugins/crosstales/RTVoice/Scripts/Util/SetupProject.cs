@@ -24,10 +24,11 @@ namespace Crosstales.RTVoice.Util
       private static void setup()
       {
          Crosstales.Common.Util.Singleton<Speaker>.PrefabPath = "Prefabs/RTVoice";
+         Crosstales.Common.Util.Singleton<Speaker>.GameObjectName = "RTVoice";
          Crosstales.Common.Util.Singleton<GlobalCache>.PrefabPath = "Prefabs/GlobalCache";
       }
 
       #endregion
    }
 }
-// © 2020 crosstales LLC (https://www.crosstales.com)
+// © 2020-2021 crosstales LLC (https://www.crosstales.com)

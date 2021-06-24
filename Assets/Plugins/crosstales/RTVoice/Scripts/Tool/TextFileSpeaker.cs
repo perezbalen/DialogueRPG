@@ -9,6 +9,7 @@ namespace Crosstales.RTVoice.Tool
    {
       #region Variables
 
+      [Header("Configuration")]
       [UnityEngine.Serialization.FormerlySerializedAsAttribute("TextFiles")] [Tooltip("Text files to speak."), SerializeField]
       private TextAsset[] textFiles;
 
@@ -41,7 +42,7 @@ namespace Crosstales.RTVoice.Tool
       [UnityEngine.Serialization.FormerlySerializedAsAttribute("SpeakRandom")] [Tooltip("Speaks the text files in random order (default: false)."), SerializeField]
       private bool speakRandom;
 
-      [UnityEngine.Serialization.FormerlySerializedAsAttribute("Delay")] [Tooltip("Delay until the speech for this text starts (default: 0.1)."), SerializeField]
+      [UnityEngine.Serialization.FormerlySerializedAsAttribute("Delay")] [Tooltip("Delay in seconds until the speech for this text starts (default: 0.1)."), SerializeField]
       private float delay = 0.1f;
 
       private string[] texts;
@@ -142,7 +143,7 @@ namespace Crosstales.RTVoice.Tool
          set => speakRandom = value;
       }
 
-      /// <summary>Delay until the speech for this text starts.</summary>
+      /// <summary>Delay in seconds until the speech for this text starts.</summary>
       public float Delay
       {
          get => delay;
@@ -505,4 +506,4 @@ namespace Crosstales.RTVoice.Tool
       #endregion
    }
 }
-// © 2016-2020 crosstales LLC (https://www.crosstales.com)
+// © 2016-2021 crosstales LLC (https://www.crosstales.com)

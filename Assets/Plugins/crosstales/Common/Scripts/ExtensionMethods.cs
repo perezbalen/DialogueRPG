@@ -6,6 +6,13 @@ namespace Crosstales
    /// <summary>Various extension methods.</summary>
    public static class ExtensionMethods
    {
+      #region Variables
+
+      private static readonly Vector3 flat = new Vector3(1, 0, 1);
+
+      #endregion
+
+
       #region Strings
 
       /// <summary>
@@ -17,15 +24,15 @@ namespace Crosstales
       public static string CTToTitleCase(this string str)
       {
          if (str == null)
-            throw new System.ArgumentNullException(nameof(str));
-#if UNITY_WSA
+            return str;
+#if UNITY_WSA || UNITY_XBOXONE
          return toTitleCase(str);
 #else
          return System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(str.ToLower());
 #endif
       }
 
-#if UNITY_WSA
+#if UNITY_WSA || UNITY_XBOXONE
      /// <summary>
      /// Converts to title case: each word starts with an upper case.
      /// </summary>
@@ -59,7 +66,7 @@ namespace Crosstales
       public static string CTReverse(this string str)
       {
          if (str == null)
-            throw new System.ArgumentNullException(nameof(str));
+            return str;
 
          char[] charArray = str.ToCharArray();
          System.Array.Reverse(charArray);
@@ -79,24 +86,28 @@ namespace Crosstales
       public static string CTReplace(this string str, string oldString, string newString, System.StringComparison comp = System.StringComparison.OrdinalIgnoreCase)
       {
          if (str == null)
-            throw new System.ArgumentNullException(nameof(str));
+            return str;
 
          if (oldString == null)
-            throw new System.ArgumentNullException(nameof(oldString));
+            return str;
 
          if (newString == null)
-            throw new System.ArgumentNullException(nameof(newString));
+            return str;
 
-         int index = str.IndexOf(oldString, comp);
-
-         bool MatchFound = index >= 0;
-
-         if (MatchFound)
+         bool matchFound;
+         do
          {
-            str = str.Remove(index, oldString.Length);
+            int index = str.IndexOf(oldString, comp);
 
-            str = str.Insert(index, newString);
-         }
+            matchFound = index >= 0;
+
+            if (matchFound)
+            {
+               str = str.Remove(index, oldString.Length);
+
+               str = str.Insert(index, newString);
+            }
+         } while (matchFound);
 
          return str;
       }
@@ -112,7 +123,7 @@ namespace Crosstales
       public static bool CTEquals(this string str, string toCheck, System.StringComparison comp = System.StringComparison.OrdinalIgnoreCase)
       {
          if (str == null)
-            throw new System.ArgumentNullException(nameof(str));
+            return false;
 
          //if (toCheck == null)
          //    throw new System.ArgumentNullException("toCheck");
@@ -131,7 +142,7 @@ namespace Crosstales
       public static bool CTContains(this string str, string toCheck, System.StringComparison comp = System.StringComparison.OrdinalIgnoreCase)
       {
          if (str == null)
-            throw new System.ArgumentNullException(nameof(str));
+            return false;
 
          //if (toCheck == null)
          //    throw new System.ArgumentNullException("toCheck");
@@ -150,7 +161,7 @@ namespace Crosstales
       public static bool CTContainsAny(this string str, string searchTerms, char splitChar = ' ')
       {
          if (str == null)
-            throw new System.ArgumentNullException(nameof(str));
+            return false;
 
          if (string.IsNullOrEmpty(searchTerms))
             return true;
@@ -171,7 +182,7 @@ namespace Crosstales
       public static bool CTContainsAll(this string str, string searchTerms, char splitChar = ' ')
       {
          if (str == null)
-            throw new System.ArgumentNullException(nameof(str));
+            return false;
 
          if (string.IsNullOrEmpty(searchTerms))
             return true;
@@ -183,6 +194,38 @@ namespace Crosstales
 
       /// <summary>
       /// Extension method for strings.
+      /// Replaces new lines with a replacement string pattern.
+      /// </summary>
+      /// <param name="str">String-instance.</param>
+      /// <param name="replacement">Replacement string pattern (default: "#nl#", optional).</param>
+      /// <param name="newLine">New line string (default: System.Environment.NewLine, optional).</param>
+      /// <returns>Replaced string without new lines.</returns>
+      public static string CTRemoveNewLines(this string str, string replacement = "#nl#", string newLine = null)
+      {
+         if (str == null)
+            return str;
+
+         return str.Replace(string.IsNullOrEmpty(newLine) ? System.Environment.NewLine : newLine, replacement);
+      }
+
+      /// <summary>
+      /// Extension method for strings.
+      /// Replaces a given string pattern with new lines in a string.
+      /// </summary>
+      /// <param name="str">String-instance.</param>
+      /// <param name="replacement">Replacement string pattern (default: "#nl#", optional).</param>
+      /// <param name="newLine">New line string (default: System.Environment.NewLine, optional).</param>
+      /// <returns>Replaced string with new lines.</returns>
+      public static string CTAddNewLines(this string str, string replacement = "#nl#", string newLine = null)
+      {
+         if (str == null)
+            return str;
+
+         return str.CTReplace(replacement, string.IsNullOrEmpty(newLine) ? System.Environment.NewLine : newLine);
+      }
+
+      /// <summary>
+      /// Extension method for strings.
       /// Checks if the string is numeric.
       /// </summary>
       /// <param name="str">String-instance.</param>
@@ -190,7 +233,7 @@ namespace Crosstales
       public static bool CTisNumeric(this string str)
       {
          if (str == null)
-            throw new System.ArgumentNullException(nameof(str));
+            return false;
 
          return double.TryParse(str, out double output);
       }
@@ -204,9 +247,107 @@ namespace Crosstales
       public static bool CTisInteger(this string str)
       {
          if (str == null)
-            throw new System.ArgumentNullException(nameof(str));
+            return false;
 
          return !str.Contains(".") && long.TryParse(str, out long output);
+      }
+
+      /// <summary>
+      /// Extension method for strings.
+      /// Checks if the string is an email address.
+      /// </summary>
+      /// <param name="str">String-instance.</param>
+      /// <returns>True if the string is an email address.</returns>
+      public static bool CTisEmail(this string str)
+      {
+         if (str == null)
+            return false;
+
+         return Common.Util.BaseConstants.REGEX_EMAIL.IsMatch(str);
+      }
+
+      /// <summary>
+      /// Extension method for strings.
+      /// Checks if the string is a website address.
+      /// </summary>
+      /// <param name="str">String-instance.</param>
+      /// <returns>True if the string is a website address.</returns>
+      public static bool CTisWebsite(this string str)
+      {
+         if (str == null)
+            return false;
+
+         return Common.Util.BaseConstants.REGEX_URL_WEB.IsMatch(str);
+      }
+
+      /// <summary>
+      /// Extension method for strings.
+      /// Checks if the string is a creditcard.
+      /// </summary>
+      /// <param name="str">String-instance.</param>
+      /// <returns>True if the string is a creditcard.</returns>
+      public static bool CTisCreditcard(this string str)
+      {
+         if (str == null)
+            return false;
+
+         return Common.Util.BaseConstants.REGEX_CREDITCARD.IsMatch(str);
+      }
+
+      /// <summary>
+      /// Extension method for strings.
+      /// Checks if the string is an IPv4 address.
+      /// </summary>
+      /// <param name="str">String-instance.</param>
+      /// <returns>True if the string is an IPv4 address.</returns>
+      public static bool CTisIPv4(this string str)
+      {
+         if (str == null)
+            return false;
+
+         return Common.Util.BaseConstants.REGEX_IP_ADDRESS.IsMatch(str);
+      }
+
+      /// <summary>
+      /// Extension method for strings.
+      /// Checks if the string is alphanumeric.
+      /// </summary>
+      /// <param name="str">String-instance.</param>
+      /// <returns>True if the string is alphanumeric.</returns>
+      public static bool CTisAlphanumeric(this string str)
+      {
+         if (str == null)
+            return false;
+
+         return Common.Util.BaseConstants.REGEX_ALPHANUMERIC.IsMatch(str);
+      }
+
+      /// <summary>
+      /// Extension method for strings.
+      /// Checks if the string has line endings.
+      /// </summary>
+      /// <param name="str">String-instance.</param>
+      /// <returns>True if the string has line endings.</returns>
+      public static bool CThasLineEndings(this string str)
+      {
+         if (str == null)
+            return false;
+
+         return Crosstales.Common.Util.BaseConstants.REGEX_LINEENDINGS.IsMatch(str);
+      }
+
+      /// <summary>
+      /// Extension method for strings.
+      /// Checks if the string has invalid characters.
+      /// </summary>
+      /// <param name="str">String-instance.</param>
+      /// <returns>True if the string has invalid characters.</returns>
+      public static bool CThasInvalidChars(this string str)
+      {
+         if (str == null)
+            return false;
+
+         return Common.Util.BaseConstants.REGEX_INVALID_CHARS.IsMatch(str);
       }
 
       /// <summary>
@@ -220,7 +361,7 @@ namespace Crosstales
       public static bool CTStartsWith(this string str, string toCheck, System.StringComparison comp = System.StringComparison.OrdinalIgnoreCase)
       {
          if (str == null)
-            throw new System.ArgumentNullException(nameof(str));
+            return false;
 
          return string.IsNullOrEmpty(toCheck) || str.StartsWith(toCheck, comp);
       }
@@ -236,7 +377,7 @@ namespace Crosstales
       public static bool CTEndsWith(this string str, string toCheck, System.StringComparison comp = System.StringComparison.OrdinalIgnoreCase)
       {
          if (str == null)
-            throw new System.ArgumentNullException(nameof(str));
+            return false;
 
          return string.IsNullOrEmpty(toCheck) || str.EndsWith(toCheck, comp);
       }
@@ -290,14 +431,137 @@ namespace Crosstales
          return string.IsNullOrEmpty(toCheck) ? 0 : str.IndexOf(toCheck, startIndex, comp);
       }
 
+      /// <summary>
+      /// Extension method for strings.
+      /// Converts the value of a string to a Base64-string.
+      /// </summary>
+      /// <param name="str">Input string.</param>
+      /// <returns>String value as converted Base64-string.</returns>
+      public static string CTToBase64(this string str)
+      {
+         if (str == null)
+            return null;
+
+         byte[] plainTextBytes = System.Text.Encoding.UTF8.GetBytes(str);
+         return System.Convert.ToBase64String(plainTextBytes);
+      }
+
+      /// <summary>
+      /// Extension method for strings.
+      /// Converts the value of a Base64-string to a string.
+      /// </summary>
+      /// <param name="str">Input Base64-string.</param>
+      /// <returns>Base64-string value as converted string.</returns>
+      public static string CTFromBase64(this string str)
+      {
+         if (str == null)
+            return null;
+
+         byte[] base64EncodedBytes = System.Convert.FromBase64String(str);
+         return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+      }
+
+      /// <summary>
+      /// Extension method for strings.
+      /// Converts the value of a string to a Hex-string (with Unicode support).
+      /// </summary>
+      /// <param name="str">Input string.</param>
+      /// <param name="addPrefix">Add "0x"-as prefix (default: false, optional).</param>
+      /// <returns>String value as converted Hex-string.</returns>
+      public static string CTToHex(this string str, bool addPrefix = false)
+      {
+         if (str == null)
+            return null;
+
+         System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+         if (addPrefix)
+            sb.Append("0x");
+
+         byte[] bytes = System.Text.Encoding.Unicode.GetBytes(str);
+         foreach (byte t in bytes)
+         {
+            sb.Append(t.ToString("X2"));
+         }
+
+         return sb.ToString(); // returns: "48656C6C6F20776F726C64" for "Hello world"
+      }
+
+      /// <summary>
+      /// Extension method for strings.
+      /// Converts the Hex-value of a string to a string (with Unicode support).
+      /// </summary>
+      /// <param name="hexString">Input as Hex-string.</param>
+      /// <returns>Hex-string value as converted string.</returns>
+      public static string CTHexToString(this string hexString)
+      {
+         if (hexString == null)
+            return null;
+
+         string _hex = hexString;
+
+         if (_hex.StartsWith("0x"))
+            _hex = _hex.Substring(2);
+
+         if (hexString.Length % 2 != 0)
+            throw new System.FormatException($"String seems to be an invalid hex-code: {hexString}");
+
+         var bytes = new byte[_hex.Length / 2];
+         for (var i = 0; i < bytes.Length; i++)
+         {
+            bytes[i] = System.Convert.ToByte(hexString.Substring(i * 2, 2), 16);
+         }
+
+         //return System.Text.Encoding.ASCII.GetString(bytes);
+         return System.Text.Encoding.Unicode.GetString(bytes); // returns: "Hello world" for "48656C6C6F20776F726C64"
+      }
+
+      /// <summary>
+      /// Extension method for strings.
+      /// Converts the Hex-value of a string to a color.
+      /// </summary>
+      /// <param name="hexString">Input as Hex-string.</param>
+      /// <returns>Hex-string value as Color.</returns>
+      public static Color CTHexToColor(this string hexString)
+      {
+         if (hexString == null)
+            throw new System.ArgumentNullException(nameof(hexString));
+
+         string _hex = hexString;
+
+         if (_hex.StartsWith("0x"))
+            _hex = _hex.Substring(2);
+
+         if (_hex.StartsWith("#"))
+            _hex = _hex.Substring(1);
+
+         if (_hex.Length != 6 && _hex.Length != 8)
+            throw new System.FormatException($"String seems to be an invalid color: {_hex}");
+
+         byte r = System.Convert.ToByte(_hex.Substring(0, 2), 16);
+         byte g = System.Convert.ToByte(_hex.Substring(2, 2), 16);
+         byte b = System.Convert.ToByte(_hex.Substring(4, 2), 16);
+         byte a = 0xFF;
+
+         if (_hex.Length == 0)
+            a = System.Convert.ToByte(_hex.Substring(6, 2), 16);
+
+         Color32 color = new Color32(r, g, b, a);
+
+         //Debug.Log("Hex orig: '" + _hex + "'");
+         //Debug.Log("Color: " + color);
+
+         return color;
+      }
+
       #endregion
 
 
       #region Arrays
 
       /// <summary>
-      /// Extension method for Arrays.
-      /// Shuffles an Array.
+      /// Extension method for arrays.
+      /// Shuffles an array.
       /// </summary>
       /// <param name="array">Array-instance to shuffle.</param>
       /// <param name="seed">Seed for the PRNG (default: 0 (=standard), optional)</param>
@@ -318,7 +582,7 @@ namespace Crosstales
       }
 
       /// <summary>
-      /// Extension method for Arrays.
+      /// Extension method for arrays.
       /// Dumps an array to a string.
       /// </summary>
       /// <param name="array">Array-instance to dump.</param>
@@ -328,7 +592,7 @@ namespace Crosstales
       public static string CTDump<T>(this T[] array, string prefix = "", string postfix = "")
       {
          if (array == null) // || array.Length <= 0)
-            throw new System.ArgumentNullException(nameof(array));
+            return null;
 
          System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
@@ -346,15 +610,15 @@ namespace Crosstales
       }
 
       /// <summary>
-      /// Extension method for Quaternion-Arrays.
+      /// Extension method for Quaternion-arrays.
       /// Dumps an array to a string.
       /// </summary>
-      /// <param name="array">Quaternion-Array-instance to dump.</param>
+      /// <param name="array">Quaternion-array-instance to dump.</param>
       /// <returns>String with lines for all array entries.</returns>
       public static string CTDump(this Quaternion[] array)
       {
          if (array == null) // || array.Length <= 0)
-            throw new System.ArgumentNullException(nameof(array));
+            return null;
 
          System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
@@ -376,15 +640,15 @@ namespace Crosstales
       }
 
       /// <summary>
-      /// Extension method for Vector2-Arrays.
+      /// Extension method for Vector2-arrays.
       /// Dumps an array to a string.
       /// </summary>
-      /// <param name="array">Vector2-Array-instance to dump.</param>
+      /// <param name="array">Vector2-array-instance to dump.</param>
       /// <returns>String with lines for all array entries.</returns>
       public static string CTDump(this Vector2[] array)
       {
          if (array == null) // || array.Length <= 0)
-            throw new System.ArgumentNullException(nameof(array));
+            return null;
 
          System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
@@ -402,15 +666,15 @@ namespace Crosstales
       }
 
       /// <summary>
-      /// Extension method for Vector3-Arrays.
+      /// Extension method for Vector3-arrays.
       /// Dumps an array to a string.
       /// </summary>
-      /// <param name="array">Vector3-Array-instance to dump.</param>
+      /// <param name="array">Vector3-array-instance to dump.</param>
       /// <returns>String with lines for all array entries.</returns>
       public static string CTDump(this Vector3[] array)
       {
          if (array == null) // || array.Length <= 0)
-            throw new System.ArgumentNullException(nameof(array));
+            return null;
 
          System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
@@ -430,15 +694,15 @@ namespace Crosstales
       }
 
       /// <summary>
-      /// Extension method for Vector4-Arrays.
+      /// Extension method for Vector4-arrays.
       /// Dumps an array to a string.
       /// </summary>
-      /// <param name="array">Vector4-Array-instance to dump.</param>
+      /// <param name="array">Vector4-array-instance to dump.</param>
       /// <returns>String with lines for all array entries.</returns>
       public static string CTDump(this Vector4[] array)
       {
          if (array == null) // || array.Length <= 0)
-            throw new System.ArgumentNullException(nameof(array));
+            return null;
 
          System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
@@ -460,7 +724,7 @@ namespace Crosstales
       }
 
       /// <summary>
-      /// Extension method for Arrays.
+      /// Extension method for arrays.
       /// Generates a string array with all entries (via ToString).
       /// </summary>
       /// <param name="array">Array-instance to ToString.</param>
@@ -478,6 +742,69 @@ namespace Crosstales
          }
 
          return result;
+      }
+
+      /// <summary>
+      /// Extension method for byte-arrays.
+      /// Converts a byte-array to a float-array.
+      /// </summary>
+      /// <param name="array">Array-instance to convert.</param>
+      /// <param name="count">Number of bytes to convert (optional).</param>
+      /// <returns>Converted float-array.</returns>
+      public static float[] CTToFloatArray(this byte[] array, int count = 0)
+      {
+         if (array == null) // || array.Length <= 0)
+            throw new System.ArgumentNullException(nameof(array));
+
+         int _count = count;
+
+         if (_count <= 0)
+            _count = array.Length;
+
+         float[] floats = new float[_count / 2];
+
+         int ii = 0;
+         for (int zz = 0; zz < _count; zz += 2)
+         {
+            floats[ii] = bytesToFloat(array[zz], array[zz + 1]);
+            ii++;
+         }
+
+         return floats;
+      }
+
+      /// <summary>
+      /// Extension method for float-arrays.
+      /// Converts a float-array to a byte-array.
+      /// </summary>
+      /// <param name="array">Array-instance to convert.</param>
+      /// <param name="count">Number of floats to convert (optional).</param>
+      /// <returns>Converted byte-array.</returns>
+      public static byte[] CTToByteArray(this float[] array, int count = 0)
+      {
+         if (array == null) // || array.Length <= 0)
+            throw new System.ArgumentNullException(nameof(array));
+
+         int _count = count;
+
+         if (_count <= 0)
+            _count = array.Length;
+
+         byte[] bytes = new byte[_count * 2];
+         int byteIndex = 0;
+
+         for (int ii = 0; ii < _count; ii++)
+         {
+            short outsample = (short)(array[ii] * short.MaxValue);
+
+            bytes[byteIndex] = (byte)(outsample & 0xff);
+
+            bytes[byteIndex + 1] = (byte)((outsample >> 8) & 0xff);
+
+            byteIndex += 2;
+         }
+
+         return bytes;
       }
 
       #endregion
@@ -519,7 +846,7 @@ namespace Crosstales
       public static string CTDump<T>(this System.Collections.Generic.IList<T> list, string prefix = "", string postfix = "")
       {
          if (list == null)
-            throw new System.ArgumentNullException(nameof(list));
+            return null;
 
          System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
@@ -545,7 +872,7 @@ namespace Crosstales
       public static string CTDump(this System.Collections.Generic.IList<Quaternion> list)
       {
          if (list == null)
-            throw new System.ArgumentNullException(nameof(list));
+            return null;
 
          System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
@@ -575,7 +902,7 @@ namespace Crosstales
       public static string CTDump(this System.Collections.Generic.IList<Vector2> list)
       {
          if (list == null)
-            throw new System.ArgumentNullException(nameof(list));
+            return null;
 
          System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
@@ -601,7 +928,7 @@ namespace Crosstales
       public static string CTDump(this System.Collections.Generic.IList<Vector3> list)
       {
          if (list == null)
-            throw new System.ArgumentNullException(nameof(list));
+            return null;
 
          System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
@@ -629,7 +956,7 @@ namespace Crosstales
       public static string CTDump(this System.Collections.Generic.IList<Vector4> list)
       {
          if (list == null)
-            throw new System.ArgumentNullException(nameof(list));
+            return null;
 
          System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
@@ -683,7 +1010,7 @@ namespace Crosstales
       public static string CTDump<K, V>(this System.Collections.Generic.IDictionary<K, V> dict, string prefix = "", string postfix = "")
       {
          if (dict == null)
-            throw new System.ArgumentNullException(nameof(dict));
+            return null;
 
          System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
@@ -734,6 +1061,403 @@ namespace Crosstales
       #endregion
 
 
+      #region Streams
+
+      /// <summary>
+      /// Extension method for Stream.
+      /// Reads the full content of a Stream.
+      /// </summary>
+      /// <param name="input">Stream-instance to read.</param>
+      /// <returns>Byte-array of the Stream content.</returns>
+      public static byte[] CTReadFully(this System.IO.Stream input)
+      {
+         if (input == null)
+            throw new System.ArgumentNullException(nameof(input));
+
+         using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+         {
+            input.CopyTo(ms);
+            return ms.ToArray();
+         }
+      }
+
+      #endregion
+
+
+      #region Color
+
+      /// <summary>
+      /// Extension method for Color.
+      /// Converts the value of a color to a Hex-string.
+      /// </summary>
+      /// <param name="input">Color to convert.</param>
+      /// <returns>Color value as Hex.</returns>
+      public static string CTToHex(this Color input)
+      {
+         Color32 color = input;
+         return $"{(color.r + 0x01):X2}{(color.g + 0x01):X2}{(color.b + 0x01):X2}";
+      }
+
+      /// <summary>
+      /// Extension method for Color.
+      /// Convert it to a Vector3.
+      /// </summary>
+      /// <param name="color">Color-instance to convert.</param>
+      /// <returns>Vector3 from color.</returns>
+      public static Vector3 CTVector3(this Color color)
+      {
+         return new Vector3(color.r, color.g, color.b);
+      }
+
+      /// <summary>
+      /// Extension method for Color.
+      /// Convert it to a Vector4.
+      /// </summary>
+      /// <param name="color">Color-instance to convert.</param>
+      /// <returns>Vector3 from color.</returns>
+      public static Vector4 CTVector4(this Color color)
+      {
+         return new Vector4(color.r, color.g, color.b, color.a);
+      }
+
+      #endregion
+
+
+      #region Vector2
+
+      /// <summary>
+      /// Allows you to multiply two Vector2s together, something Unity sorely lacks by default.
+      /// </summary>
+      /// <param name="right">Second vector</param>
+      /// <returns>The x*x, y*y result.</returns>
+      public static Vector2 CTMultiply(this Vector2 a, Vector2 b)
+      {
+         return new Vector2(a.x * b.x, a.y * b.y);
+      }
+
+      #endregion
+
+
+      #region Vector3
+
+      /// <summary>
+      /// Allows you to multiply two Vector3s together, something Unity sorely lacks by default.
+      /// </summary>
+      /// <param name="right">Second vector</param>
+      /// <returns>The x*x, y*y, z*z result.</returns>
+      public static Vector3 CTMultiply(this Vector3 a, Vector3 b)
+      {
+         return new Vector3(a.x * b.x, a.y * b.y, a.z * b.z);
+      }
+
+      /// <summary>
+      /// Returns a Vector3 with a 0 y-axis. This is useful for keeping entities oriented perpendicular to the ground.
+      /// </summary>
+      public static Vector3 CTFlatten(this Vector3 a)
+      {
+         return a.CTMultiply(flat);
+      }
+
+      /// <summary>
+      /// Extension method for Vector3.
+      /// Convert it to a Quaternion.
+      /// </summary>
+      /// <param name="eulerAngle">Vector3-instance to convert.</param>
+      /// <returns>Quaternion from euler angles.</returns>
+      public static Quaternion CTQuaternion(this Vector3 eulerAngle)
+      {
+         return Quaternion.Euler(eulerAngle);
+      }
+
+      /// <summary>
+      /// Extension method for Vector3.
+      /// Convert it to a Color.
+      /// </summary>
+      /// <param name="rgb">Vector3-instance to convert (RGB = xyz).</param>
+      /// <param name="alpha">Alpha-value of the color (default: 1, optional).</param>
+      /// <returns>Color from RGB.</returns>
+      public static Color CTColorRGB(this Vector3 rgb, float alpha = 1f)
+      {
+         return new Color(Mathf.Clamp01(rgb.x), Mathf.Clamp01(rgb.y), Mathf.Clamp01(rgb.z), Mathf.Clamp01(alpha));
+      }
+
+      #endregion
+
+
+      #region Vector4
+
+      /// <summary>
+      /// Allows you to multiply two Vector4s together, something Unity sorely lacks by default.
+      /// </summary>
+      /// <param name="right">Second vector</param>
+      /// <returns>The x*x, y*y, z*z, w*w result.</returns>
+      public static Vector4 CTMultiply(this Vector4 a, Vector4 b)
+      {
+         return new Vector4(a.x * b.x, a.y * b.y, a.z * b.z, a.w * b.w);
+      }
+
+      /// <summary>
+      /// Extension method for Vector4.
+      /// Convert it to a Quaternion.
+      /// </summary>
+      /// <param name="angle">Vector4-instance to convert.</param>
+      /// <returns>Quaternion from Vector4.</returns>
+      public static Quaternion CTQuaternion(this Vector4 angle)
+      {
+         return new Quaternion(angle.x, angle.y, angle.z, angle.w);
+      }
+
+      /// <summary>
+      /// Extension method for Vector4.
+      /// Convert it to a Color.
+      /// </summary>
+      /// <param name="rgba">Vector4-instance to convert (RGBA = xyzw).</param>
+      /// <returns>Color from RGBA.</returns>
+      public static Color CTColorRGBA(this Vector4 rgba)
+      {
+         return new Color(Mathf.Clamp01(rgba.x), Mathf.Clamp01(rgba.y), Mathf.Clamp01(rgba.z), Mathf.Clamp01(rgba.w));
+      }
+
+      #endregion
+
+
+      #region Quaternion
+
+      /// <summary>
+      /// Extension method for Quaternion.
+      /// Convert it to a Vector3.
+      /// </summary>
+      /// <param name="angle">Quaternion-instance to convert.</param>
+      /// <returns>Vector3 from Quaternion.</returns>
+      public static Vector3 CTVector3(this Quaternion angle)
+      {
+         return angle.eulerAngles;
+      }
+
+      /// <summary>
+      /// Extension method for Quaternion.
+      /// Convert it to a Vector4.
+      /// </summary>
+      /// <param name="angle">Quaternion-instance to convert.</param>
+      /// <returns>Vector4 from Quaternion.</returns>
+      public static Vector4 CTVector4(this Quaternion angle)
+      {
+         return new Vector4(angle.x, angle.y, angle.z, angle.w);
+      }
+
+      #endregion
+
+
+      #region Canvas
+
+      /// <summary>
+      /// Extension method for Canvas.
+      /// Convert current resolution scale.
+      /// </summary>
+      /// <param name="canvas">Canvas to convert.</param>
+      /// <returns>Vector3 with the correct scale.</returns>
+      public static Vector3 CTCorrectLossyScale(this Canvas canvas)
+      {
+         if (!Application.isPlaying)
+            return Vector3.one;
+
+         if (canvas.renderMode == RenderMode.ScreenSpaceCamera)
+         {
+            var scaler = canvas.GetComponent<UnityEngine.UI.CanvasScaler>();
+            if (scaler && scaler.enabled)
+            {
+               scaler.enabled = false;
+               var before = canvas.GetComponent<RectTransform>().lossyScale;
+               scaler.enabled = true;
+               var after = canvas.GetComponent<RectTransform>().lossyScale;
+               return new Vector3(after.x / before.x, after.y / before.y, after.z / before.z);
+            }
+
+            return Vector3.one;
+         }
+
+         return canvas.GetComponent<RectTransform>().lossyScale;
+      }
+
+      #endregion
+
+
+      #region RectTransform
+
+      /// <summary>
+      /// Extension method for RectTransform.
+      /// Sets the corners of a RectTransform.
+      /// </summary>
+      /// <param name="rt">RectTransform-instance.</param>
+      /// <param name="fourCornersArray">Corners for the RectTransform.</param>
+      /// <param name="canvas">Relevant canvas.</param>
+      /// <param name="inset">Inset from the corners.</param>
+      public static void CTGetLocalCorners(this RectTransform rt, Vector3[] fourCornersArray, Canvas canvas, float inset)
+      {
+         rt.GetLocalCorners(fourCornersArray);
+         if (inset != 0)
+         {
+            var uis = canvas.CTCorrectLossyScale();
+            fourCornersArray[0].x += inset * uis.x;
+            fourCornersArray[0].y += inset * uis.y;
+            fourCornersArray[1].x += inset * uis.x;
+            fourCornersArray[1].y -= inset * uis.y;
+            fourCornersArray[2].x -= inset * uis.x;
+            fourCornersArray[2].y -= inset * uis.y;
+            fourCornersArray[3].x -= inset * uis.x;
+            fourCornersArray[3].y += inset * uis.y;
+         }
+      }
+
+      /// <summary>
+      /// Extension method for RectTransform.
+      /// Sets the world corners of a RectTransform.
+      /// </summary>
+      /// <param name="rt">RectTransform-instance.</param>
+      /// <param name="fourCornersArray">Corners for the RectTransform.</param>
+      /// <param name="canvas">Relevant canvas.</param>
+      /// <param name="inset">Inset from the corners.</param>
+      public static void CTGetScreenCorners(this RectTransform rt, Vector3[] fourCornersArray, Canvas canvas, float inset)
+      {
+         // if screen space overlay mode then world corners are already in screen space
+         // if screen space camera mode then screen settings are in world and need to be converted to screen
+         rt.GetWorldCorners(fourCornersArray);
+         if (canvas.renderMode == RenderMode.ScreenSpaceCamera)
+            for (int i = 0; i < 4; i++)
+            {
+               fourCornersArray[i] = canvas.worldCamera.WorldToScreenPoint(fourCornersArray[i]);
+               fourCornersArray[i].z = 0;
+            }
+
+         if (inset != 0)
+         {
+            var uis = canvas.CTCorrectLossyScale();
+            fourCornersArray[0].x += inset * uis.x;
+            fourCornersArray[0].y += inset * uis.y;
+            fourCornersArray[1].x += inset * uis.x;
+            fourCornersArray[1].y -= inset * uis.y;
+            fourCornersArray[2].x -= inset * uis.x;
+            fourCornersArray[2].y -= inset * uis.y;
+            fourCornersArray[3].x -= inset * uis.x;
+            fourCornersArray[3].y += inset * uis.y;
+         }
+      }
+
+      #endregion
+
+
+      #region MonoBehaviour
+
+      /// <summary>
+      /// Extension method for MonoBehaviour.
+      /// Recursively searches all children of a parent MonoBehaviour for specific named GameObject
+      /// </summary>
+      /// <param name="parent">Parent of the current children.</param>
+      /// <param name="name">Name of the GameObject.</param>
+      /// <returns>GameObject with the given name or null.</returns>
+      public static GameObject CTFind(this MonoBehaviour parent, string name)
+      {
+         if (parent == null)
+            throw new System.ArgumentNullException(nameof(parent));
+
+         return parent.transform.CTFind(name).gameObject;
+      }
+
+      /// <summary>
+      /// Extension method for MonoBehaviour.
+      /// Recursively searches all children of a parent MonoBehaviour for specific named GameObject and returns a component.
+      /// </summary>
+      /// <param name="parent">Parent of the current children.</param>
+      /// <param name="name">Name of the GameObject.</param>
+      /// <returns>Component with the given type or null.</returns>
+      public static T CTFind<T>(this MonoBehaviour parent, string name)
+      {
+         if (parent == null)
+            throw new System.ArgumentNullException(nameof(parent));
+
+         return parent.transform.CTFind<T>(name);
+      }
+
+      #endregion
+
+
+      #region GameObject
+
+      /// <summary>
+      /// Extension method for GameObject.
+      /// Recursively searches all children of a parent GameObject for specific named GameObject
+      /// </summary>
+      /// <param name="parent">Parent of the current children.</param>
+      /// <param name="name">Name of the GameObject.</param>
+      /// <returns>GameObject with the given name or null.</returns>
+      public static GameObject CTFind(this GameObject parent, string name)
+      {
+         if (parent == null)
+            throw new System.ArgumentNullException(nameof(parent));
+
+         return parent.transform.CTFind(name).gameObject;
+      }
+
+      /// <summary>
+      /// Extension method for GameObject.
+      /// Recursively searches all children of a parent GameObject for specific named GameObject and returns a component.
+      /// </summary>
+      /// <param name="parent">Parent of the current children.</param>
+      /// <param name="name">Name of the GameObject.</param>
+      /// <returns>Component with the given type or null.</returns>
+      public static T CTFind<T>(this GameObject parent, string name)
+      {
+         if (parent == null)
+            throw new System.ArgumentNullException(nameof(parent));
+
+         return parent.transform.CTFind<T>(name);
+      }
+
+      #endregion
+
+
+      #region Transform
+
+      /// <summary>
+      /// Extension method for Transform.
+      /// Recursively searches all children of a parent transform for specific named transform
+      /// </summary>
+      /// <param name="parent">Parent of the current children.</param>
+      /// <param name="name">Name of the transform.</param>
+      /// <returns>Transform with the given name or null.</returns>
+      public static Transform CTFind(this Transform parent, string name)
+      {
+         if (parent == null)
+            throw new System.ArgumentNullException(nameof(parent));
+
+         if (name == null)
+            throw new System.ArgumentNullException(nameof(name));
+
+         return deepSearch(parent, name);
+      }
+
+      /// <summary>
+      /// Extension method for Transform.
+      /// Recursively searches all children of a parent transform for specific named transform and returns a component.
+      /// </summary>
+      /// <param name="parent">Parent of the current children.</param>
+      /// <param name="name">Name of the transform.</param>
+      /// <returns>Component with the given type or null.</returns>
+      public static T CTFind<T>(this Transform parent, string name)
+      {
+         if (parent == null)
+            throw new System.ArgumentNullException(nameof(parent));
+
+         Transform tf = parent.CTFind(name);
+
+         if (tf != null)
+            return tf.gameObject.GetComponent<T>();
+
+         return default(T);
+      }
+
+      #endregion
+
       #region Unity specific
 
       /// <summary>
@@ -755,21 +1479,13 @@ namespace Crosstales
          return GeometryUtility.TestPlanesAABB(planes, renderer.bounds);
       }
 
-      /// <summary>
-      /// Extension method for Transform.
-      /// Recursively searches all children of a parent transform for specific named transform
-      /// </summary>
-      /// <param name="parent">Parent of the current children.</param>
-      /// <param name="name">Name of the transform.</param>
-      /// <returns>True if the renderer is visible by the given camera.</returns>
-      public static Transform CTDeepSearch(Transform parent, string name)
+      #endregion
+
+
+      #region Private methods
+
+      private static Transform deepSearch(Transform parent, string name)
       {
-         if (parent == null)
-            throw new System.ArgumentNullException(nameof(parent));
-
-         if (name == null)
-            throw new System.ArgumentNullException(nameof(name));
-
          Transform tf = parent.Find(name);
 
          if (tf != null)
@@ -777,7 +1493,7 @@ namespace Crosstales
 
          foreach (Transform child in parent)
          {
-            tf = CTDeepSearch(child, name);
+            tf = deepSearch(child, name);
             if (tf != null)
                return tf;
          }
@@ -785,34 +1501,10 @@ namespace Crosstales
          return null;
       }
 
-      #endregion
-
-
-      #region Streams
-
-      /// <summary>
-      /// Extension method for Stream.
-      /// Reads the full content of a Stream.
-      /// </summary>
-      /// <param name="input">Stream-instance to read.</param>
-      /// <param name="bufferSize">Buffer size in bytes (default: 16384, optional).</param>
-      /// <returns>Byte-array of the Stream content.</returns>
-      public static byte[] CTReadFully(this System.IO.Stream input, int bufferSize = 16384)
+      private static float bytesToFloat(byte firstByte, byte secondByte)
       {
-         if (input == null)
-            throw new System.ArgumentNullException(nameof(input));
-
-         byte[] buffer = new byte[bufferSize];
-         using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
-         {
-            int read;
-            while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-            {
-               ms.Write(buffer, 0, read);
-            }
-
-            return ms.ToArray();
-         }
+         // convert two bytes to one short (little endian) and convert it to range from -1 to (just below) 1
+         return (short)((secondByte << 8) | firstByte) / Common.Util.BaseConstants.FLOAT_32768;
       }
 
       #endregion
@@ -901,4 +1593,4 @@ namespace Crosstales
   */
    }
 }
-// © 2016-2020 crosstales LLC (https://www.crosstales.com)
+// © 2016-2021 crosstales LLC (https://www.crosstales.com)

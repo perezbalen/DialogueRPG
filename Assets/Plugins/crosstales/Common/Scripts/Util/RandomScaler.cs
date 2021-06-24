@@ -3,6 +3,7 @@
 namespace Crosstales.Common.Util
 {
    /// <summary>Random scale changer.</summary>
+   [DisallowMultipleComponent]
    public class RandomScaler : MonoBehaviour
    {
       #region Variables
@@ -105,4 +106,4 @@ namespace Crosstales.Common.Util
       #endregion
    }
 }
-// © 2015-2020 crosstales LLC (https://www.crosstales.com)
+// © 2015-2021 crosstales LLC (https://www.crosstales.com)

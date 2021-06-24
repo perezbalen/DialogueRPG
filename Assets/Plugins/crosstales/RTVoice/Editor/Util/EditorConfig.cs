@@ -152,4 +152,4 @@ namespace Crosstales.RTVoice.EditorUtil
    }
 }
 #endif
-// © 2017-2020 crosstales LLC (https://www.crosstales.com)
+// © 2017-2021 crosstales LLC (https://www.crosstales.com)

@@ -1,4 +1,4 @@
-﻿#if (UNITY_WSA && !UNITY_EDITOR) && ENABLE_WINMD_SUPPORT //|| CT_DEVELOP
+﻿#if ((UNITY_WSA || UNITY_XBOXONE) && !UNITY_EDITOR) && ENABLE_WINMD_SUPPORT //|| CT_DEVELOP
 using UnityEngine;
 using System.Collections;
 using System.Linq;
@@ -6,11 +6,9 @@ using System.Linq;
 namespace Crosstales.RTVoice.Provider
 {
    /// <summary>WSA (UWP) voice provider.</summary>
-   public class VoiceProviderWSA : BaseVoiceProvider
+   public class VoiceProviderWSA : BaseVoiceProvider<VoiceProviderWSA>
    {
       #region Variables
-
-      private static VoiceProviderWSA instance;
 
       private static RTVoiceUWPBridge ttsHandler;
 
@@ -20,19 +18,6 @@ namespace Crosstales.RTVoice.Provider
 
 
       #region Properties
-
-      /// <summary>Returns the singleton instance of this class.</summary>
-      /// <returns>Singleton instance of this class.</returns>
-      public static VoiceProviderWSA Instance
-      {
-         get
-         {
-            if (instance == null)
-               instance = new VoiceProviderWSA();
-
-            return instance;
-         }
-      }
 
       public override string AudioFileExtension => ".wav";
 
@@ -68,7 +53,7 @@ namespace Crosstales.RTVoice.Provider
       #region Constructor
 
       /// <summary>Constructor for VoiceProviderWSA.</summary>
-      private VoiceProviderWSA()
+      public VoiceProviderWSA()
       {
          //Util.Config.DEBUG = true; //only for tests
 
@@ -94,7 +79,6 @@ namespace Crosstales.RTVoice.Provider
                      Debug.Log("Initializing TTS...");
 
                   ttsHandler = new RTVoiceUWPBridge();
-                  ttsHandler.DEBUG = Util.Config.DEBUG;
                }
 
                Speaker.Instance.StartCoroutine(getVoices());
@@ -118,6 +102,7 @@ namespace Crosstales.RTVoice.Provider
 
       public override IEnumerator Generate(Model.Wrapper wrapper)
       {
+#if UNITY_WSA
          if (wrapper == null)
          {
             Debug.LogWarning("'wrapper' is null!");
@@ -137,7 +122,8 @@ namespace Crosstales.RTVoice.Provider
 
                string voiceName = getVoiceName(wrapper);
                string outputFile = getOutputFile(wrapper.Uid, true);
-               string path = Application.persistentDataPath.Replace('/', '\\');
+               //string path = Application.persistentDataPath.Replace('/', '\\');
+               string path = Application.temporaryCachePath.Replace('/', '\\');
 
                //ttsHandler.SynthesizeToFile(prepareText(wrapper), Application.persistentDataPath.Replace('/', '\\'), Util.Constants.AUDIOFILE_PREFIX + wrapper.Uid + AudioFileExtension, voiceName);
                UnityEngine.WSA.Application.InvokeOnUIThread(() => { ttsHandler.SynthesizeToFile(prepareText(wrapper), path, Util.Constants.AUDIOFILE_PREFIX + wrapper.Uid + AudioFileExtension, voiceName); }, false);
@@ -157,13 +143,10 @@ namespace Crosstales.RTVoice.Provider
                processAudioFile(wrapper, outputFile);
             }
          }
-      }
-
-      public override void Silence()
-      {
-         UnityEngine.WSA.Application.InvokeOnUIThread(() => { ttsHandler.StopNative(); }, false);
-         //UnityEngine.WSA.Application.InvokeOnAppThread(() => { ttsHandler.StopNative(); }, false);
-         base.Silence();
+#else
+         Debug.LogWarning("Generate is not supported for XBox!");
+         yield return null;
+#endif
       }
 
       #endregion
@@ -231,13 +214,17 @@ namespace Crosstales.RTVoice.Provider
                   ttsHandler.isBusy = true;
 
                   string voiceName = getVoiceName(wrapper);
+#if UNITY_WSA
                   string outputFile = getOutputFile(wrapper.Uid, true);
-                  string path = Application.persistentDataPath.Replace('/', '\\');
+                  //string path = Application.persistentDataPath.Replace('/', '\\');
+                  string path = Application.temporaryCachePath.Replace('/', '\\');
 
                   //ttsHandler.SynthesizeToFile(prepareText(wrapper), path, Util.Constants.AUDIOFILE_PREFIX + wrapper.Uid + AudioFileExtension, voiceName);
                   UnityEngine.WSA.Application.InvokeOnUIThread(() => { ttsHandler.SynthesizeToFile(prepareText(wrapper), path, Util.Constants.AUDIOFILE_PREFIX + wrapper.Uid + AudioFileExtension, voiceName); }, false);
                   //UnityEngine.WSA.Application.InvokeOnAppThread(() => { ttsHandler.SynthesizeToFile(prepareText(wrapper), path, Util.Constants.AUDIOFILE_PREFIX + wrapper.Uid + AudioFileExtension, voiceName); }, false);
-
+#else
+                  System.Threading.Tasks.Task.Run(() => { ttsHandler.SynthesizeToMemory(prepareText(wrapper), voiceName); });
+#endif
                   silence = false;
 
                   if (!isNative)
@@ -249,10 +236,81 @@ namespace Crosstales.RTVoice.Provider
                   {
                      yield return null;
                   } while (!silence && ttsHandler.isBusy);
-
-                  yield return playAudioFile(wrapper, Util.Constants.PREFIX_FILE + outputFile, outputFile, AudioType.WAV, isNative);
+#if UNITY_WSA
+                  yield return playAudioFile(wrapper, Util.Constants.PREFIX_FILE + outputFile, outputFile, AudioFileType, isNative);
+#else
+                  yield return playAudioFile(wrapper, ttsHandler.AudioData, AudioFileType, isNative);
+#endif
                }
             }
+         }
+      }
+
+      private IEnumerator playAudioFile(Model.Wrapper wrapper, byte[] data, AudioType type = AudioType.WAV, bool isNative = false)
+      {
+         if (wrapper != null && wrapper.Source != null)
+         {
+            if (type == AudioType.WAV)
+            {
+               AudioClip ac = Common.Audio.WavMaster.ToAudioClip(data);
+               if (ac != null && ac.loadState == AudioDataLoadState.Loaded)
+               {
+                  wrapper.Source.clip = ac;
+
+                  if (Util.Config.DEBUG)
+                     Debug.Log($"Text generated: {wrapper.Text}");
+
+                  //copyAudioFile(wrapper, outputFile, isLocalFile, www.downloadHandler.data);
+
+                  if (!isNative)
+                     onSpeakAudioGenerationComplete(wrapper);
+
+                  if (ac != null && Speaker.Instance.Caching)
+                  {
+                     if (Util.Config.DEBUG)
+                        Debug.Log($"Adding wrapper to clips-cache: {wrapper}");
+
+                     GlobalCache.Instance.AddClip(wrapper, ac);
+                  }
+
+                  if ((isNative || wrapper.SpeakImmediately) && wrapper.Source != null)
+                  {
+                     wrapper.Source.Play();
+                     onSpeakStart(wrapper);
+
+                     do
+                     {
+                        yield return null;
+                     } while (!silence && Util.Helper.hasActiveClip(wrapper.Source));
+
+                     if (Util.Config.DEBUG)
+                        Debug.Log($"Text spoken: {wrapper.Text}");
+
+                     onSpeakComplete(wrapper);
+
+                     if (ac != null && !Speaker.Instance.Caching)
+                        AudioClip.Destroy(ac);
+                  }
+               }
+               else
+               {
+                  string errorMessage = $"Could not load the audio file from the speech: {wrapper}";
+                  Debug.LogError(errorMessage);
+                  onErrorInfo(wrapper, errorMessage);
+               }
+            }
+            else
+            {
+               string errorMessage = $"WebGL supports only WAV files: {wrapper}";
+               Debug.LogError(errorMessage);
+               onErrorInfo(wrapper, errorMessage);
+            }
+         }
+         else
+         {
+            string errorMessage = $"'Source' is null: {wrapper}";
+            Debug.LogError(errorMessage);
+            onErrorInfo(wrapper, errorMessage);
          }
       }
 
@@ -264,12 +322,10 @@ namespace Crosstales.RTVoice.Provider
          if (wrapper.ForceSSML && !Speaker.Instance.AutoClearTags)
          {
             System.Text.StringBuilder sbXML = new System.Text.StringBuilder();
-
             sbXML.Append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
             sbXML.Append("<speak version=\"1.0\" xmlns=\"http://www.w3.org/2001/10/synthesis\" xml:lang=\"");
             sbXML.Append(wrapper.Voice == null ? "en-US" : wrapper.Voice.Culture);
             sbXML.Append("\">");
-
             if (Mathf.Abs(wrapper.Rate - 1f) > Common.Util.BaseConstants.FLOAT_TOLERANCE ||
                 Mathf.Abs(wrapper.Pitch - 1f) > Common.Util.BaseConstants.FLOAT_TOLERANCE ||
                 Mathf.Abs(wrapper.Volume - 1f) > Common.Util.BaseConstants.FLOAT_TOLERANCE)
@@ -320,7 +376,6 @@ namespace Crosstales.RTVoice.Provider
             }
 
             sbXML.Append("</speak>");
-
             return getValidXML(sbXML.ToString());
          }
 
@@ -350,4 +405,4 @@ namespace Crosstales.RTVoice.Provider
    }
 }
 #endif
-// © 2016-2020 crosstales LLC (https://www.crosstales.com)
+// © 2016-2021 crosstales LLC (https://www.crosstales.com)

@@ -1,5 +1,5 @@
 # Adventure Creator
-Version: 1.65.1
+Version: 1.72.4
 https://assetstore.unity.com/packages/slug/11896?aid=1011lNGT
 
 
@@ -51,9 +51,9 @@ Version: 1.1
 https://assetstore.unity.com/packages/slug/32117?aid=1011lNGT
 
 
-# MaryTTS
-Version: 5.2
-http://mary.dfki.de/
+# Naninovel
+Version: 1.15.1
+https://assetstore.unity.com/packages/slug/135453?aid=1011lNGT
 
 
 # NPC Chat
@@ -72,17 +72,12 @@ https://assetstore.unity.com/packages/slug/148442?aid=1011lNGT
 For the previous version, see the "SALSAv1.zip"
 
 
-# SAPI Unity
-Version: 03.01.2018
-https://forum.unity.com/threads/text-to-speech-dll-for-windows-desktop.56038/page-4#post-3340957
-
-
 # SLATE
 Version: 1.8.2
 https://assetstore.unity.com/packages/slug/56558?aid=1011lNGT
 
 
-#Volumetric Audio
+# Volumetric Audio
 Version: 1.1.9
 https://assetstore.unity.com/packages/slug/17125?aid=1011lNGT
 

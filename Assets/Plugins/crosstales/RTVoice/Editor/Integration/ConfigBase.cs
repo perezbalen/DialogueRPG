@@ -33,7 +33,7 @@ namespace Crosstales.RTVoice.EditorIntegration
 
       private static readonly System.Random rnd = new System.Random();
 
-      private readonly int adRnd1 = rnd.Next(0, 8);
+      //private readonly int adRnd1 = rnd.Next(0, 8);
 
       private const int maxChars = 16000;
 
@@ -170,11 +170,11 @@ namespace Crosstales.RTVoice.EditorIntegration
 
             GUILayout.BeginHorizontal();
             {
-               if (GUILayout.Button(new GUIContent(string.Empty, EditorHelper.Asset_PlayMaker, "More information about 'PlayMaker'.")))
-                  Util.Helper.OpenURL(Util.Constants.ASSET_3P_PLAYMAKER);
-
                if (GUILayout.Button(new GUIContent(string.Empty, EditorHelper.Store_AdventureCreator, "More information about 'Adventure Creator'.")))
                   Util.Helper.OpenURL(Util.Constants.ASSET_3P_ADVENTURE_CREATOR);
+
+               if (GUILayout.Button(new GUIContent(string.Empty, EditorHelper.Store_Amplitude, "More information about 'Amplitude'.")))
+                  Util.Helper.OpenURL(Util.Constants.ASSET_3P_AMPLITUDE);
 
                if (GUILayout.Button(new GUIContent(string.Empty, EditorHelper.Store_CinemaDirector, "More information about 'Cinema Director'.")))
                   Util.Helper.OpenURL(Util.Constants.ASSET_3P_CINEMA_DIRECTOR);
@@ -186,14 +186,30 @@ namespace Crosstales.RTVoice.EditorIntegration
 
             GUILayout.BeginHorizontal();
             {
-               if (GUILayout.Button(new GUIContent(string.Empty, EditorHelper.Store_LDC, "More information about 'Localized Dialogs'.")))
-                  Util.Helper.OpenURL(Util.Constants.ASSET_3P_LOCALIZED_DIALOGS);
+               if (GUILayout.Button(new GUIContent(string.Empty, EditorHelper.Store_Google, "More information about 'Google Cloud Text To Speech'.")))
+                  Util.Helper.OpenURL(Util.Constants.ASSET_3P_GOOGLE);
+
+               if (GUILayout.Button(new GUIContent(string.Empty, EditorHelper.Store_Klattersynth, "More information about 'Klattersynth'.")))
+                  Util.Helper.OpenURL(Util.Constants.ASSET_3P_KLATTERSYNTH);
 
                if (GUILayout.Button(new GUIContent(string.Empty, EditorHelper.Store_LipSync, "More information about 'LipSync'.")))
                   Util.Helper.OpenURL(Util.Constants.ASSET_3P_LIPSYNC);
 
+               if (GUILayout.Button(new GUIContent(string.Empty, EditorHelper.Store_LDC, "More information about 'Localized Dialogs'.")))
+                  Util.Helper.OpenURL(Util.Constants.ASSET_3P_LOCALIZED_DIALOGS);
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            {
+               if (GUILayout.Button(new GUIContent(string.Empty, EditorHelper.Store_Naninovel, "More information about 'Naninovel'.")))
+                  Util.Helper.OpenURL(Util.Constants.ASSET_3P_NANINOVEL);
+
                if (GUILayout.Button(new GUIContent(string.Empty, EditorHelper.Store_NPC_Chat, "More information about 'NPC Chat'.")))
                   Util.Helper.OpenURL(Util.Constants.ASSET_3P_NPC_CHAT);
+
+               if (GUILayout.Button(new GUIContent(string.Empty, EditorHelper.Asset_PlayMaker, "More information about 'PlayMaker'.")))
+                  Util.Helper.OpenURL(Util.Constants.ASSET_3P_PLAYMAKER);
 
                if (GUILayout.Button(new GUIContent(string.Empty, EditorHelper.Store_QuestSystem, "More information about 'Quest System'.")))
                   Util.Helper.OpenURL(Util.Constants.ASSET_3P_QUEST_SYSTEM);
@@ -208,26 +224,13 @@ namespace Crosstales.RTVoice.EditorIntegration
                if (GUILayout.Button(new GUIContent(string.Empty, EditorHelper.Store_SLATE, "More information about 'SLATE'.")))
                   Util.Helper.OpenURL(Util.Constants.ASSET_3P_SLATE);
 
-               if (GUILayout.Button(new GUIContent(string.Empty, EditorHelper.Store_Amplitude, "More information about 'Amplitude'.")))
-                  Util.Helper.OpenURL(Util.Constants.ASSET_3P_AMPLITUDE);
-
-               if (GUILayout.Button(new GUIContent(string.Empty, EditorHelper.Store_Klattersynth, "More information about 'Klattersynth'.")))
-                  Util.Helper.OpenURL(Util.Constants.ASSET_3P_KLATTERSYNTH);
-            }
-            GUILayout.EndHorizontal();
-
-            GUILayout.BeginHorizontal();
-            {
-               if (GUILayout.Button(new GUIContent(string.Empty, EditorHelper.Store_WebGL, "More information about 'WebGL Speech Synthesis'.")))
-                  Util.Helper.OpenURL(Util.Constants.ASSET_3P_WEBGL);
-
-               if (GUILayout.Button(new GUIContent(string.Empty, EditorHelper.Store_Google, "More information about 'Google Cloud Text To Speech'.")))
-                  Util.Helper.OpenURL(Util.Constants.ASSET_3P_GOOGLE);
-
-
                if (GUILayout.Button(new GUIContent(string.Empty, EditorHelper.Asset_VolumetricAudio, "More information about 'Volumetric Audio'.")))
                   Util.Helper.OpenURL(Util.Constants.ASSET_3P_VOLUMETRIC_AUDIO);
 
+               if (GUILayout.Button(new GUIContent(string.Empty, EditorHelper.Store_WebGL, "More information about 'WebGL Speech Synthesis'.")))
+                  Util.Helper.OpenURL(Util.Constants.ASSET_3P_WEBGL);
+
+               /*
                //CT Ads
                switch (adRnd1)
                {
@@ -296,6 +299,7 @@ namespace Crosstales.RTVoice.EditorIntegration
                      break;
                   }
                }
+               */
             }
             GUILayout.EndHorizontal();
 
@@ -363,7 +367,7 @@ namespace Crosstales.RTVoice.EditorIntegration
          }
          GUILayout.EndHorizontal();
 
-         GUILayout.Label("© 2015-2020 by " + Util.Constants.ASSET_AUTHOR);
+         GUILayout.Label("© 2015-2021 by " + Util.Constants.ASSET_AUTHOR);
 
          EditorHelper.SeparatorUI();
 
@@ -596,4 +600,4 @@ namespace Crosstales.RTVoice.EditorIntegration
    }
 }
 #endif
-// © 2016-2020 crosstales LLC (https://www.crosstales.com)
+// © 2016-2021 crosstales LLC (https://www.crosstales.com)

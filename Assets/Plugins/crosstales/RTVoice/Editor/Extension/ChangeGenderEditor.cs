@@ -61,4 +61,4 @@ namespace Crosstales.RTVoice.EditorExtension
    }
 }
 #endif
-// © 2019 crosstales LLC (https://www.crosstales.com)
+// © 2019-2021 crosstales LLC (https://www.crosstales.com)

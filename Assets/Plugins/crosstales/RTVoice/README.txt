@@ -1,4 +1,4 @@
-﻿# RT-Voice PRO 2020.4.10
+﻿# RT-Voice PRO 2021.2.7
 
 Thank you for buying our asset "RT-Voice PRO"! 
 If you have any questions about this asset, send us an email at [rtvoice@crosstales.com](mailto:rtvoice@crosstales.com). 
@@ -30,6 +30,15 @@ Follow this steps to upgrade the version of "RT-Voice PRO":
 
 
 
+## Notes:
+
+### iOS
+On some device with iOS 13+ the voices can't be found.
+This is due a bug of in the iOS-upgrade which corrupts the voices.
+To solve it, go to the "Settings" (and look further for "Voices" or "Speech") on your device and re-install all needed voices. 
+
+
+
 ## Release notes
 
 See "VERSIONS.txt" for details.
@@ -37,8 +46,9 @@ See "VERSIONS.txt" for details.
 
 
 ## Credits
+"RT-Voice" uses a modified version [NAudio 1.7.2](https://github.com/naudio/NAudio).
 
-The icons are based on [Font Awesome](http://fontawesome.io/).
+The icons are based on [Font Awesome](https://fontawesome.io/).
 
 
 
@@ -61,9 +71,9 @@ CH-8002 Zürich
 
 ## More information
 * [AssetStore](https://assetstore.unity.com/lists/crosstales-42213?aid=1011lNGT)
-* [Forum](http://forum.unity3d.com/threads/rt-voice-run-time-text-to-speech-solution.340046/)
+* [Forum](https://forum.unity.com/threads/rt-voice-run-time-text-to-speech-solution.340046/)
 * [Documentation](https://www.crosstales.com/media/data/assets/rtvoice/RTVoice-doc.pdf)
-* [API](http://www.crosstales.com/en/assets/rtvoice/api/)
+* [API](https://www.crosstales.com/en/assets/rtvoice/api/)
 
 ### Videos
 [Youtube-channel](https://www.youtube.com/c/Crosstales)
@@ -81,22 +91,22 @@ CH-8002 Zürich
 ### Supported 3rd party assets
 [All supported asset](https://assetstore.unity.com/lists/rt-voice-friends-42209?aid=1011lNGT)
 
-* [PlayMaker](https://assetstore.unity.com/packages/slug/368?aid=1011lNGT)
-* [SALSA](https://assetstore.unity.com/packages/slug/148442?aid=1011lNGT)
-* [Amplitude](https://assetstore.unity.com/packages/slug/111277?aid=1011lNGT)
-* [Localized Dialogs](https://assetstore.unity.com/packages/slug/5020?aid=1011lNGT)
-* [Dialogue System](https://assetstore.unity.com/packages/slug/11672?aid=1011lNGT)
 * [Adventure Creator](https://assetstore.unity.com/packages/slug/11896?aid=1011lNGT)
-* [LipSync Pro](https://assetstore.unity.com/packages/slug/32117?aid=1011lNGT)
-* [SLATE](https://assetstore.unity.com/packages/slug/56558?aid=1011lNGT)
+* [Amplitude](https://assetstore.unity.com/packages/slug/111277?aid=1011lNGT)
 * [Cinema Director](https://assetstore.unity.com/packages/slug/19779?aid=1011lNGT)
-* [Quest System Pro](https://assetstore.unity.com/packages/slug/63460?aid=1011lNGT)
-* [NPC Chat](https://assetstore.unity.com/packages/slug/9723?aid=1011lNGT)
-* [Klattersynth](https://assetstore.unity.com/packages/slug/95453?aid=1011lNGT)
-* [WebGL Speech Synthesis](https://assetstore.unity.com/packages/slug/81861?aid=1011lNGT)
+* [Dialogue System](https://assetstore.unity.com/packages/slug/11672?aid=1011lNGT)
 * [Google Cloud Speech](https://assetstore.unity.com/packages/slug/115170?aid=1011lNGT)
-* [Volumetric Audio](https://assetstore.unity.com/packages/slug/17125?aid=1011lNGT)
+* [Klattersynth](https://assetstore.unity.com/packages/slug/95453?aid=1011lNGT)
+* [LipSync Pro](https://assetstore.unity.com/packages/slug/32117?aid=1011lNGT)
+* [Localized Dialogs](https://assetstore.unity.com/packages/slug/5020?aid=1011lNGT)
+* [Naninovel](https://assetstore.unity.com/packages/slug/135453?aid=1011lNGT)
+* [NPC Chat](https://assetstore.unity.com/packages/slug/9723?aid=1011lNGT)
 * [Online Check](https://assetstore.unity.com/packages/slug/74688?aid=1011lNGT)
+* [PlayMaker](https://assetstore.unity.com/packages/slug/368?aid=1011lNGT)
+* [Quest System Pro](https://assetstore.unity.com/packages/slug/63460?aid=1011lNGT)
+* [SALSA](https://assetstore.unity.com/packages/slug/148442?aid=1011lNGT)
+* [SLATE](https://assetstore.unity.com/packages/slug/56558?aid=1011lNGT)
+* [Volumetric Audio](https://assetstore.unity.com/packages/slug/17125?aid=1011lNGT)
+* [WebGL Speech Synthesis](https://assetstore.unity.com/packages/slug/81861?aid=1011lNGT)
 
-
-`Version: 17.12.2020`
+`Version: 15.06.2021`

@@ -64,6 +64,16 @@ namespace Crosstales.RTVoice.Provider
       #endregion
 
 
+      #region MonoBehaviour methods
+
+      private void Start()
+      {
+         //do nothing, just allow to enable/disable the script
+      }
+
+      #endregion
+
+
       #region Implemented methods
 
       public abstract string AudioFileExtension { get; }
@@ -189,7 +199,8 @@ namespace Crosstales.RTVoice.Provider
 
          if (isPersistentData)
          {
-            outputFile = Util.Helper.ValidatePath(Application.persistentDataPath) + filename;
+            //outputFile = Util.Helper.ValidatePath(Application.persistentDataPath) + filename;
+            outputFile = Util.Helper.ValidatePath(Application.temporaryCachePath) + filename;
          }
          else
          {
@@ -298,7 +309,7 @@ namespace Crosstales.RTVoice.Provider
 
                      yield return www.SendWebRequest();
 #if UNITY_2020_1_OR_NEWER
-                  if (www.result != UnityWebRequest.Result.ProtocolError && www.result != UnityWebRequest.Result.ConnectionError)
+                     if (www.result != UnityWebRequest.Result.ProtocolError && www.result != UnityWebRequest.Result.ConnectionError)
 #else
                      if (!www.isHttpError && !www.isNetworkError)
 #endif
@@ -309,21 +320,23 @@ namespace Crosstales.RTVoice.Provider
 #if UNITY_WEBGL
                      if (type == AudioType.WAV)
                      {
-                        AudioClip ac = Util.WavMaster.ToAudioClip(www.downloadHandler.data);
+                        AudioClip ac = Common.Audio.WavMaster.ToAudioClip(www.downloadHandler.data);
 #else
                         AudioClip ac = DownloadHandlerAudioClip.GetContent(www);
 
                         do
                         {
                            yield return ac;
-                        } while (ac.loadState == AudioDataLoadState.Loading);
+                        } while (ac != null && ac.loadState == AudioDataLoadState.Loading);
 #endif
+                        //Debug.Log($"Loadstate: {ac.loadState}");
+
                         if (ac != null && ac.loadState == AudioDataLoadState.Loaded)
                         {
                            wrapper.Source.clip = ac;
 
                            if (Util.Config.DEBUG)
-                              Debug.Log("Text generated: " + wrapper.Text, this);
+                              Debug.Log($"Text generated: {wrapper.Text}", this);
 
                            copyAudioFile(wrapper, outputFile, isLocalFile, www.downloadHandler.data);
 
@@ -333,7 +346,7 @@ namespace Crosstales.RTVoice.Provider
                            if (ac != null && Speaker.Instance.Caching)
                            {
                               if (Util.Config.DEBUG)
-                                 Debug.Log("Adding wrapper to clips-cache: " + wrapper);
+                                 Debug.Log($"Adding wrapper to clips-cache: {wrapper}", this);
 
                               GlobalCache.Instance.AddClip(wrapper, ac);
                            }
@@ -349,7 +362,7 @@ namespace Crosstales.RTVoice.Provider
                               } while (!silence && Util.Helper.hasActiveClip(wrapper.Source));
 
                               if (Util.Config.DEBUG)
-                                 Debug.Log("Text spoken: " + wrapper.Text, this);
+                                 Debug.Log($"Text spoken: {wrapper.Text}", this);
 
                               onSpeakComplete(wrapper);
 
@@ -359,7 +372,7 @@ namespace Crosstales.RTVoice.Provider
                         }
                         else
                         {
-                           string errorMessage = "Could not load the audio file from the speech: " + wrapper;
+                           string errorMessage = $"Could not load the audio file from the speech: {wrapper}";
                            Debug.LogError(errorMessage, this);
                            onErrorInfo(wrapper, errorMessage);
                         }
@@ -367,7 +380,7 @@ namespace Crosstales.RTVoice.Provider
                      }
                      else
                      {
-                        string errorMessage = "WebGL supports only WAV files: " + wrapper;
+                        string errorMessage = $"WebGL supports only WAV files: {wrapper}";
                         Debug.LogError(errorMessage, this);
                         onErrorInfo(wrapper, errorMessage);
                      }
@@ -375,8 +388,7 @@ namespace Crosstales.RTVoice.Provider
                      }
                      else
                      {
-                        string errorMessage = "Could not generate the speech: " + wrapper +
-                                              System.Environment.NewLine + "WWW error: " + www.error;
+                        string errorMessage = $"Could not generate the speech: {wrapper} ({www.error})";
                         Debug.LogError(errorMessage, this);
                         onErrorInfo(wrapper, errorMessage);
                      }
@@ -385,7 +397,7 @@ namespace Crosstales.RTVoice.Provider
             }
             else
             {
-               string errorMessage = "The generated audio file is invalid: " + wrapper;
+               string errorMessage = $"The generated audio file is invalid: {wrapper}";
                Debug.LogError(errorMessage, this);
                onErrorInfo(wrapper, errorMessage);
             }
@@ -393,7 +405,7 @@ namespace Crosstales.RTVoice.Provider
          else
 
          {
-            string errorMessage = "'Source' is null: " + wrapper;
+            string errorMessage = $"'Source' is null: {wrapper}";
             Debug.LogError(errorMessage, this);
             onErrorInfo(wrapper, errorMessage);
          }
@@ -409,7 +421,7 @@ namespace Crosstales.RTVoice.Provider
 
                if (isLocalFile)
                {
-                  Util.Helper.FileCopy(outputFile, wrapper.OutputFile, Util.Config.AUDIOFILE_AUTOMATIC_DELETE);
+                  Util.Helper.CopyFile(outputFile, wrapper.OutputFile, Util.Config.AUDIOFILE_AUTOMATIC_DELETE);
                }
                else
                {
@@ -608,4 +620,4 @@ namespace Crosstales.RTVoice.Provider
       #endregion
    }
 }
-// © 2018-2020 crosstales LLC (https://www.crosstales.com)
+// © 2018-2021 crosstales LLC (https://www.crosstales.com)

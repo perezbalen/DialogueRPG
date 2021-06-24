@@ -13,8 +13,6 @@ namespace Crosstales.Common.Util
 
       public static readonly System.Globalization.CultureInfo BaseCulture = new System.Globalization.CultureInfo("en-US"); //TODO set with current user locale?
 
-      protected static readonly System.Text.RegularExpressions.Regex lineEndingsRegex = new System.Text.RegularExpressions.Regex(@"\r\n|\r|\n");
-
       //protected static readonly Regex cleanStringRegex = new Regex(@"([^a-zA-Z0-9 ]|[ ]{2,})");
       protected static readonly System.Text.RegularExpressions.Regex cleanSpacesRegex = new System.Text.RegularExpressions.Regex(@"\s+");
 
@@ -148,7 +146,7 @@ namespace Crosstales.Common.Util
       {
          get
          {
-#if UNITY_WSA
+#if UNITY_WSA || UNITY_XBOXONE
             return true;
 #else
             return false;
@@ -354,13 +352,14 @@ namespace Crosstales.Common.Util
          //Debug.Log("initialize");
          ApplicationIsPlaying = Application.isPlaying;
          applicationDataPath = Application.dataPath;
-
+/*
          if (!isEditorMode)
          {
             GameObject go = new GameObject("_HelperCT");
             go.AddComponent<HelperCT>();
             GameObject.DontDestroyOnLoad(go);
          }
+*/
       }
 
       #endregion
@@ -375,7 +374,7 @@ namespace Crosstales.Common.Util
       {
          if (isValidURL(url))
          {
-            Application.OpenURL(url);
+            openURL(url);
 
             return true;
          }
@@ -415,14 +414,13 @@ namespace Crosstales.Common.Util
       /// <returns>True if the AudioSource has an active clip.</returns>
       public static bool hasActiveClip(AudioSource source)
       {
-         int timeSamples = source.timeSamples;
          return source != null && source.clip != null &&
-                (!source.loop && timeSamples > 0 && timeSamples < source.clip.samples - 256 ||
+                (source.isPlaying ||
                  source.loop ||
-                 source.isPlaying);
+                 (!source.loop && source.timeSamples > 0 && source.timeSamples < source.clip.samples - 256));
       }
 
-#if !UNITY_WSA || UNITY_EDITOR
+#if (!UNITY_WSA && !UNITY_XBOXONE) || UNITY_EDITOR
       /// <summary>HTTPS-certification callback.</summary>
       public static bool RemoteCertificateValidationCallback(object sender,
          System.Security.Cryptography.X509Certificates.X509Certificate certificate,
@@ -459,6 +457,9 @@ namespace Crosstales.Common.Util
       {
          if (!string.IsNullOrEmpty(path))
          {
+            if (isValidURL(path))
+               return path;
+
             string pathTemp = path.Trim();
             string result;
 
@@ -500,6 +501,9 @@ namespace Crosstales.Common.Util
       {
          if (!string.IsNullOrEmpty(path))
          {
+            if (isValidURL(path))
+               return path;
+
             string result = ValidatePath(path);
 
             if (result.CTEndsWith(BaseConstants.PATH_DELIMITER_WINDOWS) ||
@@ -545,7 +549,7 @@ namespace Crosstales.Common.Util
          else if (isWSABasedPlatform && !isEditor)
          {
 #if CT_FB_PRO
-#if UNITY_WSA && !UNITY_EDITOR
+#if (UNITY_WSA || UNITY_XBOXONE) && !UNITY_EDITOR && ENABLE_WINMD_SUPPORT
              Crosstales.FB.FileBrowserWSAImpl fbWsa = new Crosstales.FB.FileBrowserWSAImpl();
              fbWsa.isBusy = true;
              UnityEngine.WSA.Application.InvokeOnUIThread(() => { fbWsa.GetFiles(path, isRecursive, extensions); }, false);
@@ -619,7 +623,7 @@ namespace Crosstales.Common.Util
          else if (isWSABasedPlatform && !isEditor)
          {
 #if CT_FB_PRO
-#if UNITY_WSA && !UNITY_EDITOR
+#if (UNITY_WSA || UNITY_XBOXONE) && !UNITY_EDITOR && ENABLE_WINMD_SUPPORT
             Crosstales.FB.FileBrowserWSAImpl fbWsa = new Crosstales.FB.FileBrowserWSAImpl();
             fbWsa.isBusy = true;
             UnityEngine.WSA.Application.InvokeOnUIThread(() => { fbWsa.GetDirectories(path, isRecursive); }, false);
@@ -676,7 +680,7 @@ namespace Crosstales.Common.Util
          else if (isWSABasedPlatform && !isEditor)
          {
 #if CT_FB_PRO
-#if UNITY_WSA && !UNITY_EDITOR && ENABLE_WINMD_SUPPORT
+#if (UNITY_WSA || UNITY_XBOXONE) && !UNITY_EDITOR && ENABLE_WINMD_SUPPORT
             Crosstales.FB.FileBrowserWSAImpl fbWsa = new Crosstales.FB.FileBrowserWSAImpl();
             fbWsa.isBusy = true;
             UnityEngine.WSA.Application.InvokeOnUIThread(() => { fbWsa.GetDrives(); }, false);
@@ -694,7 +698,7 @@ namespace Crosstales.Common.Util
          }
          else
          {
-#if !UNITY_WSA || UNITY_EDITOR
+#if (!UNITY_WSA && !UNITY_XBOXONE) || UNITY_EDITOR
             try
             {
                return System.IO.Directory.GetLogicalDrives();
@@ -856,7 +860,7 @@ namespace Crosstales.Common.Util
       /// <returns>Clean text without line endings.</returns>
       public static string ClearLineEndings(string text)
       {
-         return text != null ? lineEndingsRegex.Replace(text, string.Empty).Trim() : null;
+         return text != null ? BaseConstants.REGEX_LINEENDINGS.Replace(text, string.Empty).Trim() : null;
       }
 
       /// <summary>Split the given text to lines and return it as list.</summary>
@@ -876,7 +880,7 @@ namespace Crosstales.Common.Util
          }
          else
          {
-            string[] lines = lineEndingsRegex.Split(text);
+            string[] lines = BaseConstants.REGEX_LINEENDINGS.Split(text);
 
             for (int ii = 0; ii < lines.Length; ii++)
             {
@@ -960,7 +964,7 @@ namespace Crosstales.Common.Util
       /// <returns>True if the current platform is supported.</returns>
       public static Color HSVToRGB(float h, float s, float v, float a = 1f)
       {
-         if (Mathf.Abs(s) < BaseConstants.FLOAT_TOLERANCE)
+         if (s < BaseConstants.FLOAT_TOLERANCE)
             return new Color(v, v, v, a);
 
          float _h = h / 60f;
@@ -998,67 +1002,125 @@ namespace Crosstales.Common.Util
                  url.StartsWith(BaseConstants.PREFIX_HTTPS, System.StringComparison.OrdinalIgnoreCase));
       }
 
-      /// <summary>Copy or move a file.</summary>
-      /// <param name="inputFile">Input file path</param>
-      /// <param name="outputFile">Output file path</param>
-      /// <param name="move">Move file instead of copy (default: false, optional)</param>
-      public static void FileCopy(string inputFile, string outputFile, bool move = false)
+      /// <summary>Copy or move a directory.</summary>
+      /// <param name="sourcePath">Source directory path</param>
+      /// <param name="destPath">Destination directory path</param>
+      /// <param name="move">Move directory instead of copy (default: false, optional)</param>
+      public static void CopyPath(string sourcePath, string destPath, bool move = false)
       {
          if ((isWSABasedPlatform || isWebPlatform) && !isEditor)
          {
-            Debug.LogWarning("'FileCopy' is not supported for the current platform!");
+            Debug.LogWarning("'CopyPath' is not supported for the current platform!");
          }
          else
          {
-            if (!string.IsNullOrEmpty(outputFile))
+            if (!string.IsNullOrEmpty(destPath))
             {
                try
                {
-                  if (!System.IO.File.Exists(inputFile))
+                  if (!System.IO.Directory.Exists(sourcePath))
                   {
-                     Debug.LogError($"Input file does not exists: {inputFile}");
+                     Debug.LogError($"Source directory does not exists: {sourcePath}");
                   }
                   else
                   {
-                     System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(outputFile));
+                     //System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(destPath));
 
-                     if (System.IO.File.Exists(outputFile))
+                     if (System.IO.Directory.Exists(destPath))
                      {
                         if (BaseConstants.DEV_DEBUG)
-                           Debug.LogWarning($"Overwrite output file: {outputFile}");
+                           Debug.LogWarning($"Overwrite destination directory: {destPath}");
 
-                        System.IO.File.Delete(outputFile);
+                        System.IO.Directory.Delete(destPath, true);
                      }
 
                      if (move)
                      {
-#if UNITY_STANDALONE || UNITY_EDITOR
-                        System.IO.File.Move(inputFile, outputFile);
-#else
-                        System.IO.File.Copy(inputFile, outputFile);
-                        System.IO.File.Delete(inputFile);
-#endif
+                        System.IO.Directory.Move(sourcePath, destPath);
                      }
                      else
                      {
-                        System.IO.File.Copy(inputFile, outputFile);
+                        copyAll(new System.IO.DirectoryInfo(sourcePath), new System.IO.DirectoryInfo(destPath));
                      }
                   }
                }
                catch (System.Exception ex)
                {
-                  Debug.LogError($"Could not copy file: {ex}");
+                  Debug.LogError($"Could not {(move ? "move" : "copy")} directory: {ex}");
+               }
+            }
+         }
+      }
+
+      /// <summary>Copy or move a file.</summary>
+      /// <param name="sourceFile">Source file path</param>
+      /// <param name="destFile">Destination file path</param>
+      /// <param name="move">Move file instead of copy (default: false, optional)</param>
+      public static void CopyFile(string sourceFile, string destFile, bool move = false)
+      {
+         if ((isWSABasedPlatform || isWebPlatform) && !isEditor)
+         {
+            Debug.LogWarning("'CopyFile' is not supported for the current platform!");
+         }
+         else
+         {
+            if (!string.IsNullOrEmpty(destFile))
+            {
+               try
+               {
+                  if (!System.IO.File.Exists(sourceFile))
+                  {
+                     Debug.LogError($"Source file does not exists: {sourceFile}");
+                  }
+                  else
+                  {
+                     System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(destFile));
+
+                     if (System.IO.File.Exists(destFile))
+                     {
+                        if (BaseConstants.DEV_DEBUG)
+                           Debug.LogWarning($"Overwrite destination file: {destFile}");
+
+                        System.IO.File.Delete(destFile);
+                     }
+
+                     if (move)
+                     {
+#if UNITY_STANDALONE || UNITY_EDITOR
+                        System.IO.File.Move(sourceFile, destFile);
+#else
+                        System.IO.File.Copy(sourceFile, destFile);
+                        System.IO.File.Delete(destFile);
+#endif
+                     }
+                     else
+                     {
+                        System.IO.File.Copy(sourceFile, destFile);
+                     }
+                  }
+               }
+               catch (System.Exception ex)
+               {
+                  Debug.LogError($"Could not {(move ? "move" : "copy")} file: {ex}");
                }
             }
          }
       }
 
       /// <summary>
-      /// Shows the location of a path or file in OS file explorer.
-      /// NOTE: only works for standalone platforms
+      /// Shows the location of a path (or file) in OS file explorer.
+      /// NOTE: only works on standalone platforms
       /// </summary>
-      /// <param name="file">File path</param>
-      public static void ShowFileLocation(string file)
+      public static void ShowPath(string path)
+      {
+         ShowFile(path);
+      }
+
+      /// <summary>
+      /// Shows the location of a file (or path) in OS file explorer.
+      /// NOTE: only works on standalone platforms
+      /// </summary>
+      public static void ShowFile(string file)
       {
          if (isStandalonePlatform || isEditor)
          {
@@ -1082,7 +1144,7 @@ namespace Crosstales.Common.Util
             {
                if (System.IO.Directory.Exists(path))
                {
-#if ENABLE_IL2CPP
+#if ENABLE_IL2CPP && CT_PROC
                   using (CTProcess process = new CTProcess())
                   {
                      process.StartInfo.Arguments = $"\"{path}\"";
@@ -1139,7 +1201,7 @@ namespace Crosstales.Common.Util
 #if UNITY_STANDALONE || UNITY_EDITOR
                if (System.IO.File.Exists(file))
                {
-#if ENABLE_IL2CPP
+#if ENABLE_IL2CPP && CT_PROC
                   using (CTProcess process = new CTProcess())
                   {
                      process.StartInfo.Arguments = $"\"{file}\"";
@@ -1211,7 +1273,7 @@ namespace Crosstales.Common.Util
       {
          if (!string.IsNullOrEmpty(host))
          {
-#if !UNITY_WSA && !UNITY_WEBGL
+#if !UNITY_WSA && !UNITY_WEBGL && !UNITY_XBOXONE
             try
             {
                return System.Net.Dns.GetHostAddresses(host)[0].ToString();
@@ -1221,7 +1283,7 @@ namespace Crosstales.Common.Util
                Debug.LogWarning($"Could not resolve host '{host}': {ex}");
             }
 #else
-			    Debug.LogWarning("'getIP' doesn't work in WebGL or WSA! Returning original string.");
+            Debug.LogWarning("'getIP' doesn't work in WebGL or WSA! Returning original string.");
 #endif
          }
          else
@@ -1232,10 +1294,291 @@ namespace Crosstales.Common.Util
          return host;
       }
 
+      /// <summary>Generates a "Lorem Ipsum" based on various parameters.</summary>
+      /// <param name="length">Length of the text</param>
+      /// <param name="minSentences">Minimum number of sentences for the text (default: 1, optional)</param>
+      /// <param name="maxSentences">Maximal number of sentences for the text (default: int.MaxValue, optional)</param>
+      /// <param name="minWords">Minimum number of words per sentence (default: 1, optional)</param>
+      /// <param name="maxWords">Maximal number of words per sentence (default: 15, optional)</param>
+      /// <returns>"Lorem Ipsum" based on the given parameters.</returns>
+      public static string GenerateLoremIpsum(int length, int minSentences = 1, int maxSentences = int.MaxValue, int minWords = 1, int maxWords = 15)
+      {
+         string[] words =
+         {
+            "lorem", "ipsum", "dolor", "sit", "amet", "consectetuer", "adipiscing", "elit", "sed", "diam", "nonummy", "nibh", "euismod", "tincidunt", "ut", "laoreet", "dolore", "magna", "aliquam", "erat"
+         };
+
+         int numSentences = rnd.Next(maxSentences - minSentences) + minSentences + 1;
+
+         System.Text.StringBuilder result = new System.Text.StringBuilder();
+
+         for (int s = 0; s < numSentences && result.Length <= length; s++)
+         {
+            int numWords = rnd.Next(maxWords - minWords) + minWords + 1;
+            for (int w = 0; w < numWords && result.Length <= length; w++)
+            {
+               if (w > 0)
+                  result.Append(" ");
+
+               result.Append(w == 0 ? words[rnd.Next(words.Length)].CTToTitleCase() : words[rnd.Next(words.Length)]);
+            }
+
+            result.Append(". ");
+         }
+
+         string text = result.ToString();
+
+         if (length > 0 && text.Length > length)
+            text = text.Substring(0, length - 1) + ".";
+
+         return text;
+      }
+
+      /// <summary>Converts a SystemLanguage to an ISO639-1 code. Returns "en" if the SystemLanguage could not be converted.</summary>
+      /// <param name="language">SystemLanguage to convert.</param>
+      /// <returns>"ISO639-1 code for the given SystemLanguage.</returns>
+      public static string LanguageToISO639(SystemLanguage language)
+      {
+         switch (language)
+         {
+            case SystemLanguage.Afrikaans:
+               return "af";
+            case SystemLanguage.Arabic:
+               return "ar";
+            case SystemLanguage.Basque:
+               return "eu";
+            case SystemLanguage.Belarusian:
+               return "be";
+            case SystemLanguage.Bulgarian:
+               return "bg";
+            case SystemLanguage.Catalan:
+               return "ca";
+            case SystemLanguage.ChineseSimplified:
+            case SystemLanguage.ChineseTraditional:
+            case SystemLanguage.Chinese:
+               return "zh";
+            case SystemLanguage.Czech:
+               return "cs";
+            case SystemLanguage.Danish:
+               return "da";
+            case SystemLanguage.Dutch:
+               return "nl";
+            case SystemLanguage.English:
+               return "en";
+            case SystemLanguage.Estonian:
+               return "et";
+            case SystemLanguage.Faroese:
+               return "fo";
+            case SystemLanguage.Finnish:
+               return "fi";
+            case SystemLanguage.French:
+               return "fr";
+            case SystemLanguage.German:
+               return "de";
+            case SystemLanguage.Greek:
+               return "el";
+            case SystemLanguage.Hebrew:
+               return "he";
+            case SystemLanguage.Hungarian:
+               return "hu";
+            case SystemLanguage.Icelandic:
+               return "is";
+            case SystemLanguage.Indonesian:
+               return "id";
+            case SystemLanguage.Italian:
+               return "it";
+            case SystemLanguage.Japanese:
+               return "ja";
+            case SystemLanguage.Korean:
+               return "ko";
+            case SystemLanguage.Latvian:
+               return "lv";
+            case SystemLanguage.Lithuanian:
+               return "lt";
+            case SystemLanguage.Norwegian:
+               return "no";
+            case SystemLanguage.Polish:
+               return "pl";
+            case SystemLanguage.Portuguese:
+               return "pt";
+            case SystemLanguage.Romanian:
+               return "ro";
+            case SystemLanguage.Russian:
+               return "ru";
+            case SystemLanguage.SerboCroatian:
+               return "sh";
+            case SystemLanguage.Slovak:
+               return "sk";
+            case SystemLanguage.Slovenian:
+               return "sl";
+            case SystemLanguage.Spanish:
+               return "es";
+            case SystemLanguage.Swedish:
+               return "sv";
+            case SystemLanguage.Thai:
+               return "th";
+            case SystemLanguage.Turkish:
+               return "tr";
+            case SystemLanguage.Ukrainian:
+               return "uk";
+            case SystemLanguage.Vietnamese:
+               return "vi";
+            default:
+               return "en";
+         }
+      }
+
+      /// <summary>Converts an ISO639-1 code to a SystemLanguage. Returns SystemLanguage.English if the code could not be converted.</summary>
+      /// <param name="isoCode">ISO639-1 code to convert.</param>
+      /// <returns>"SystemLanguage for the given ISO639-1 code.</returns>
+      public static SystemLanguage ISO639ToLanguage(string isoCode)
+      {
+         if (!string.IsNullOrEmpty(isoCode) && isoCode.Length >= 2)
+         {
+            string code = isoCode.Substring(0, 2).ToLower();
+
+            switch (code)
+            {
+               case "af":
+                  return SystemLanguage.Afrikaans;
+               case "ar":
+                  return SystemLanguage.Arabic;
+               case "eu":
+                  return SystemLanguage.Basque;
+               case "be":
+                  return SystemLanguage.Belarusian;
+               case "bg":
+                  return SystemLanguage.Bulgarian;
+               case "ca":
+                  return SystemLanguage.Catalan;
+               case "zh":
+                  return SystemLanguage.Chinese;
+               case "cs":
+                  return SystemLanguage.Czech;
+               case "da":
+                  return SystemLanguage.Danish;
+               case "nl":
+                  return SystemLanguage.Dutch;
+               case "en":
+                  return SystemLanguage.English;
+               case "et":
+                  return SystemLanguage.Estonian;
+               case "fo":
+                  return SystemLanguage.Faroese;
+               case "fi":
+                  return SystemLanguage.Finnish;
+               case "fr":
+                  return SystemLanguage.French;
+               case "de":
+                  return SystemLanguage.German;
+               case "el":
+                  return SystemLanguage.Greek;
+               case "he":
+                  return SystemLanguage.Hebrew;
+               case "hu":
+                  return SystemLanguage.Hungarian;
+               case "is":
+                  return SystemLanguage.Icelandic;
+               case "id":
+                  return SystemLanguage.Indonesian;
+               case "it":
+                  return SystemLanguage.Italian;
+               case "ja":
+                  return SystemLanguage.Japanese;
+               case "ko":
+                  return SystemLanguage.Korean;
+               case "lv":
+                  return SystemLanguage.Latvian;
+               case "lt":
+                  return SystemLanguage.Lithuanian;
+               case "no":
+                  return SystemLanguage.Norwegian;
+               case "pl":
+                  return SystemLanguage.Polish;
+               case "pt":
+                  return SystemLanguage.Portuguese;
+               case "ro":
+                  return SystemLanguage.Romanian;
+               case "ru":
+                  return SystemLanguage.Russian;
+               case "sh":
+                  return SystemLanguage.SerboCroatian;
+               case "sk":
+                  return SystemLanguage.Slovak;
+               case "sl":
+                  return SystemLanguage.Slovenian;
+               case "es":
+                  return SystemLanguage.Spanish;
+               case "sv":
+                  return SystemLanguage.Swedish;
+               case "th":
+                  return SystemLanguage.Thai;
+               case "tr":
+                  return SystemLanguage.Turkish;
+               case "uk":
+                  return SystemLanguage.Ukrainian;
+               case "vi":
+                  return SystemLanguage.Vietnamese;
+               default:
+                  return SystemLanguage.English;
+            }
+         }
+
+         return SystemLanguage.English;
+      }
+
+      #endregion
+
+
+      #region Private methods
+
       private static string addLeadingZero(int value)
       {
          return value < 10 ? "0" + value : value.ToString();
       }
+
+      private static void copyAll(System.IO.DirectoryInfo source, System.IO.DirectoryInfo target)
+      {
+         System.IO.Directory.CreateDirectory(target.FullName);
+
+         foreach (System.IO.FileInfo fi in source.GetFiles())
+         {
+            fi.CopyTo(System.IO.Path.Combine(target.FullName, fi.Name), true);
+         }
+
+         // Copy each subdirectory using recursion.
+         foreach (System.IO.DirectoryInfo sourceSubDir in source.GetDirectories())
+         {
+            System.IO.DirectoryInfo nextTargetSubDir = target.CreateSubdirectory(sourceSubDir.Name);
+            copyAll(sourceSubDir, nextTargetSubDir);
+         }
+      }
+
+      private static void openURL(string url)
+      {
+#if !UNITY_EDITOR && UNITY_WEBGL
+         openURLPlugin(url);
+#else
+         Application.OpenURL(url);
+#endif
+      }
+/*
+      private static void openURLJS(string url)
+      {
+         Application.ExternalEval("window.open('" + url + "');");
+      }
+*/
+#if !UNITY_EDITOR && UNITY_WEBGL
+      private static void openURLPlugin(string url)
+      {
+		   ctOpenWindow(url);
+      }
+
+      [System.Runtime.InteropServices.DllImportAttribute("__Internal")]
+      private static extern void ctOpenWindow(string url);
+#endif
+
+      #endregion
 
       // StringHelper
       /*
@@ -1277,15 +1620,6 @@ namespace Crosstales.Common.Util
 
       // Color Helper
       /*
-      public static string ColorToHex(Color32 color)
-      {
-          //			if (color == null)
-          //				throw new ArgumentNullException("color");
-
-          string hex = color.r.ToString("X2") + color.g.ToString("X2") + color.b.ToString("X2");
-          return hex;
-      }
-
       public static Color HexToColor(string hex)
       {
           if (string.IsNullOrEmpty(hex))
@@ -1297,29 +1631,6 @@ namespace Crosstales.Common.Util
           return new Color32(r, g, b, 255);
       }
       */
-
-      #endregion
    }
-
-   /// <summary>Helper to reset the necessary settings.</summary>
-   public class HelperCT : MonoBehaviour
-   {
-      private void OnApplicationQuit()
-      {
-         BaseHelper.ApplicationIsPlaying = false;
-      }
-   }
-
-#if UNITY_EDITOR
-   [UnityEditor.CustomEditor(typeof(HelperCT))]
-   public class HelperCTEditor : UnityEditor.Editor
-   {
-      public override void OnInspectorGUI()
-      {
-         UnityEditor.EditorGUILayout.HelpBox("This helper ensures the flawless working of the assets from 'crosstales LLC'.\nPlease do not delete it from the hierarchy.", UnityEditor.MessageType.Info);
-      }
-   }
-
-#endif
 }
-// © 2015-2020 crosstales LLC (https://www.crosstales.com)
+// © 2015-2021 crosstales LLC (https://www.crosstales.com)

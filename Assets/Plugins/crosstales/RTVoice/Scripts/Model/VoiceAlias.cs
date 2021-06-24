@@ -9,25 +9,25 @@ namespace Crosstales.RTVoice.Model
       #region Variables
 
       /// <summary>Name of the voice under Windows.</summary>
-      [Tooltip("Name of the voice under Windows.")] public string VoiceNameWindows = "David";
+      [Tooltip("Name of the voice under Windows.")] public string VoiceNameWindows; // = "David";
 
       /// <summary>Name of the voice under macOS.</summary>
-      [Tooltip("Name of the voice under macOS.")] public string VoiceNameMac = "Alex";
+      [Tooltip("Name of the voice under macOS.")] public string VoiceNameMac; // = "Alex";
 
       /// <summary>Name of the voice under Linux and for eSpeak.</summary>
-      [Tooltip("Name of the voice under Linux and for eSpeak.")] public string VoiceNameLinux = "en";
+      [Tooltip("Name of the voice under Linux and for eSpeak.")] public string VoiceNameLinux; // = "en";
 
       /// <summary>Name of the voice under Android.</summary>
-      [Tooltip("Name of the voice under Android.")] public string VoiceNameAndroid = "en";
+      [Tooltip("Name of the voice under Android.")] public string VoiceNameAndroid; // = "en";
 
       /// <summary>Name of the voice under iOS.</summary>
-      [Tooltip("Name of the voice under iOS.")] public string VoiceNameIOS = "Daniel";
+      [Tooltip("Name of the voice under iOS.")] public string VoiceNameIOS; // = "Daniel";
 
       /// <summary>Name of the voice under WSA.</summary>
-      [Tooltip("Name of the voice under WSA.")] public string VoiceNameWSA = "David";
+      [Tooltip("Name of the voice under WSA.")] public string VoiceNameWSA; // = "David";
 
       /// <summary>Name of the voice for custom TTS-systems.</summary>
-      [Tooltip("Name of the voice for custom TTS-systems.")] public string VoiceNameCustom = string.Empty;
+      [Tooltip("Name of the voice for custom TTS-systems.")] public string VoiceNameCustom; // = string.Empty;
 
       /// <summary>Fallback culture for the text (e.g. 'en', optional).</summary>
       [Tooltip("Fallback culture for the text (e.g. 'en', optional).")] public string Culture = "en";
@@ -195,4 +195,4 @@ namespace Crosstales.RTVoice.Model
       #endregion
    }
 }
-// © 2018-2020 crosstales LLC (https://www.crosstales.com)
+// © 2018-2021 crosstales LLC (https://www.crosstales.com)

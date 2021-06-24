@@ -1087,12 +1087,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 193780089}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0fc54f60ccc9172449b8b5aa41ce2b1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speaker: {fileID: 0}
+  speaker: {fileID: 558638073}
   label: {fileID: 1453226501}
 --- !u!114 &193780092
 MonoBehaviour:
@@ -1101,7 +1101,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 193780089}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
@@ -1231,6 +1231,7 @@ GameObject:
   - component: {fileID: 204607404}
   - component: {fileID: 204607407}
   - component: {fileID: 204607406}
+  - component: {fileID: 204607408}
   m_Layer: 0
   m_Name: Mindy
   m_TagString: Untagged
@@ -1527,6 +1528,29 @@ MonoBehaviour:
   frustrationLevel: 0
   arousalMaxLevel: 100
   arousalLevel: 0
+--- !u!114 &204607408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 204607398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c7659ae4db6d094998499508b7f9425, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  voicePreferences:
+  - language: Microsoft Hazel Desktop (en-GB, FEMALE)
+    name: 
+    gender: 0
+    minAge: 0
+    maxAge: 0
+  rate: 2
+  pitch: 1
+  volume: 1
+  waitForVoiceInConversations: 1
+  voiceState: 0
 --- !u!1 &207360957 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 125852, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
@@ -2483,6 +2507,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 536509011}
   m_CullTransparentMesh: 1
+--- !u!114 &558638073 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 11493764, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
+  m_PrefabInstance: {fileID: 1008356234}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11222982cd0da5048a5b032a719ffd7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &558638074 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
+  m_PrefabInstance: {fileID: 1008356234}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &575575480
 GameObject:
   m_ObjectHideFlags: 0
@@ -4933,6 +4973,63 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugIsSuccess: 1
   currentCard: {fileID: 11400000, guid: 29320bd5c3209f24189d863de7569f7b, type: 2}
+--- !u!1001 &1008356234
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1636282598}
+    m_Modifications:
+    - target: {fileID: 101928, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
+      propertyPath: m_Name
+      value: RTVoice
+      objectReference: {fileID: 0}
+    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -772.9328
+      objectReference: {fileID: 0}
+    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -349.52408
+      objectReference: {fileID: 0}
+    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 16568.479
+      objectReference: {fileID: 0}
+    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
 --- !u!1 &1019493334
 GameObject:
   m_ObjectHideFlags: 0
@@ -5386,6 +5483,7 @@ GameObject:
   - component: {fileID: 1079919425}
   - component: {fileID: 1079919426}
   - component: {fileID: 1079919427}
+  - component: {fileID: 1079919428}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -5677,6 +5775,29 @@ MonoBehaviour:
   color: {r: 0.4537647, g: 0.5490105, b: 0.9339623, a: 1}
   applyTo: 1
   prependActorNameSeparator: " \u2013 "
+--- !u!114 &1079919428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1079919421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c7659ae4db6d094998499508b7f9425, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  voicePreferences:
+  - language: 
+    name: 
+    gender: 1
+    minAge: 0
+    maxAge: 0
+  rate: 2
+  pitch: 1
+  volume: 1
+  waitForVoiceInConversations: 1
+  voiceState: 0
 --- !u!1 &1113888828
 GameObject:
   m_ObjectHideFlags: 0
@@ -7986,6 +8107,7 @@ Transform:
   m_Children:
   - {fileID: 1990710464}
   - {fileID: 595711941}
+  - {fileID: 558638074}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9058,6 +9180,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1937966671}
   - component: {fileID: 1937966672}
+  - component: {fileID: 1937966673}
   m_Layer: 0
   m_Name: Libido
   m_TagString: Untagged
@@ -9111,6 +9234,29 @@ MonoBehaviour:
     applyColorToPrependedName: 0
     prependActorNameSeparator: ': '
     subtitleColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &1937966673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1937966670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c7659ae4db6d094998499508b7f9425, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  voicePreferences:
+  - language: Microsoft Hazel Desktop (en-GB, FEMALE)
+    name: 
+    gender: 0
+    minAge: 0
+    maxAge: 0
+  rate: 2
+  pitch: 1
+  volume: 1
+  waitForVoiceInConversations: 1
+  voiceState: 0
 --- !u!4 &1990710464 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 425660, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}

@@ -3,6 +3,7 @@
 namespace Crosstales.Common.Util
 {
    /// <summary>Random rotation changer.</summary>
+   [DisallowMultipleComponent]
    public class RandomRotator : MonoBehaviour
    {
       #region Variables
@@ -23,10 +24,16 @@ namespace Crosstales.Common.Util
       ///<summary>Set the object to a random rotation at Start (default: false).</summary>
       [Tooltip("Set the object to a random rotation at Start (default: false).")] public bool RandomRotationAtStart;
 
+      ///<summary>Random change interval per axis (default: true).</summary>
+      [Tooltip("Random change interval per axis (default: true).")] public bool RandomChangeIntervalPerAxis = true;
+
       private Transform tf;
       private Vector3 speed;
       private float elapsedTime;
       private float changeTime;
+
+      private Vector3 elapsedTimeAxis = Vector3.zero;
+      private Vector3 changeTimeAxis;
 
       #endregion
 
@@ -37,7 +44,16 @@ namespace Crosstales.Common.Util
       {
          tf = transform;
 
-         elapsedTime = changeTime = Random.Range(ChangeInterval.x, ChangeInterval.y);
+         if (RandomChangeIntervalPerAxis)
+         {
+            elapsedTimeAxis.x = changeTimeAxis.x = Random.Range(ChangeInterval.x, ChangeInterval.y);
+            elapsedTimeAxis.y = changeTimeAxis.y = Random.Range(ChangeInterval.x, ChangeInterval.y);
+            elapsedTimeAxis.z = changeTimeAxis.z = Random.Range(ChangeInterval.x, ChangeInterval.y);
+         }
+         else
+         {
+            elapsedTime = changeTime = Random.Range(ChangeInterval.x, ChangeInterval.y);
+         }
 
          if (RandomRotationAtStart)
             tf.localRotation = Random.rotation;
@@ -47,16 +63,49 @@ namespace Crosstales.Common.Util
       {
          if (UseInterval)
          {
-            elapsedTime += Time.deltaTime;
-
-            if (elapsedTime > changeTime)
+            if (RandomChangeIntervalPerAxis)
             {
-               elapsedTime = 0f;
+               elapsedTimeAxis.x += Time.deltaTime;
+               elapsedTimeAxis.y += Time.deltaTime;
+               elapsedTimeAxis.z += Time.deltaTime;
 
-               speed.x = Random.Range(Mathf.Abs(SpeedMin.x), Mathf.Abs(SpeedMax.x)) * (Random.Range(0, 2) == 0 ? 1 : -1);
-               speed.y = Random.Range(Mathf.Abs(SpeedMin.y), Mathf.Abs(SpeedMax.y)) * (Random.Range(0, 2) == 0 ? 1 : -1);
-               speed.z = Random.Range(Mathf.Abs(SpeedMin.z), Mathf.Abs(SpeedMax.z)) * (Random.Range(0, 2) == 0 ? 1 : -1);
-               changeTime = Random.Range(ChangeInterval.x, ChangeInterval.y);
+               if (elapsedTimeAxis.x > changeTimeAxis.x)
+               {
+                  elapsedTimeAxis.x = 0f;
+
+                  speed.x = Random.Range(Mathf.Abs(SpeedMin.x), Mathf.Abs(SpeedMax.x)) * (Random.Range(0, 2) == 0 ? 1 : -1);
+                  changeTimeAxis.x = Random.Range(ChangeInterval.x, ChangeInterval.y);
+               }
+
+               if (elapsedTimeAxis.y > changeTimeAxis.y)
+               {
+                  elapsedTimeAxis.y = 0f;
+
+                  speed.y = Random.Range(Mathf.Abs(SpeedMin.y), Mathf.Abs(SpeedMax.y)) * (Random.Range(0, 2) == 0 ? 1 : -1);
+                  changeTimeAxis.y = Random.Range(ChangeInterval.x, ChangeInterval.y);
+               }
+
+               if (elapsedTimeAxis.z > changeTimeAxis.z)
+               {
+                  elapsedTimeAxis.z = 0f;
+
+                  speed.z = Random.Range(Mathf.Abs(SpeedMin.z), Mathf.Abs(SpeedMax.z)) * (Random.Range(0, 2) == 0 ? 1 : -1);
+                  changeTimeAxis.z = Random.Range(ChangeInterval.x, ChangeInterval.y);
+               }
+            }
+            else
+            {
+               elapsedTime += Time.deltaTime;
+
+               if (elapsedTime > changeTime)
+               {
+                  elapsedTime = 0f;
+
+                  speed.x = Random.Range(Mathf.Abs(SpeedMin.x), Mathf.Abs(SpeedMax.x)) * (Random.Range(0, 2) == 0 ? 1 : -1);
+                  speed.y = Random.Range(Mathf.Abs(SpeedMin.y), Mathf.Abs(SpeedMax.y)) * (Random.Range(0, 2) == 0 ? 1 : -1);
+                  speed.z = Random.Range(Mathf.Abs(SpeedMin.z), Mathf.Abs(SpeedMax.z)) * (Random.Range(0, 2) == 0 ? 1 : -1);
+                  changeTime = Random.Range(ChangeInterval.x, ChangeInterval.y);
+               }
             }
 
             tf.Rotate(speed.x * Time.deltaTime, speed.y * Time.deltaTime, speed.z * Time.deltaTime);
@@ -66,4 +115,4 @@ namespace Crosstales.Common.Util
       #endregion
    }
 }
-// © 2015-2020 crosstales LLC (https://www.crosstales.com)
+// © 2015-2021 crosstales LLC (https://www.crosstales.com)

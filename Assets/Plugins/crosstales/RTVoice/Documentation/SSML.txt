@@ -1,6 +1,6 @@
 ﻿# RT-Voice PRO - SSML
 
-Works with Windows, WSA (UWP), MaryTTS, eSpeak, AWS Polly, Azure and Google Cloud.
+Works with Windows, WSA (UWP), Android, MaryTTS, eSpeak, AWS Polly, Azure and Google Cloud.
 
 
 ## Examples
@@ -51,7 +51,7 @@ I am now <prosody rate="+0.3">speaking 30% faster.</prosody>
 <prosody pitch="75Hz">This has a pitch mean of 75 Hertz.</prosody>
 
 
-### Adjusting Output Volume (partially working in AWS Polly)
+### Adjusting Output Volume
 <prosody volume="silent">This is silent.</prosody>
 <prosody volume="x-soft">This is 25% as loud.</prosody>
 <prosody volume="soft">This is 50% as loud.</prosody>
@@ -63,6 +63,7 @@ I am now <prosody rate="+0.3">speaking 30% faster.</prosody>
 <prosody volume="+33%">This is 33% louder.</prosody>
 <prosody volume="33%">This is 33% louder.</prosody>
 <prosody volume="33">This is 33% of normal volume.</prosody>
+<prosody volume="-6dB">Approximately half as loud.</prosody>
 
 
 ### Adding Emphasis to Speech (no effect in MaryTTS 5.2)
@@ -100,4 +101,5 @@ time="500ms" /> <say-as interpret-as="hms12"> 4:00pm </say-as> today.
 
 ## More information
 * [SSML](https://www.w3.org/TR/speech-synthesis/)
-* [Reference MS](https://docs.microsoft.com/en-us/cortana/reference/ssml)
+* [Reference Microsoft](https://docs.microsoft.com/en-us/cortana/reference/ssml)
+* [Reference AWS Polly](https://docs.aws.amazon.com/polly/latest/dg/supportedtags.html)

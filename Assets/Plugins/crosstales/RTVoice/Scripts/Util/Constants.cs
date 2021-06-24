@@ -14,16 +14,16 @@ namespace Crosstales.RTVoice.Util
       public const string ASSET_NAME_SHORT = "RTV PRO";
 
       /// <summary>Version of the asset.</summary>
-      public const string ASSET_VERSION = "2020.4.10";
+      public const string ASSET_VERSION = "2021.2.7";
 
       /// <summary>Build number of the asset.</summary>
-      public const int ASSET_BUILD = 20201217;
+      public const int ASSET_BUILD = 20210615;
 
       /// <summary>Create date of the asset (YYYY, MM, DD).</summary>
       public static readonly System.DateTime ASSET_CREATED = new System.DateTime(2015, 4, 29);
 
       /// <summary>Change date of the asset (YYYY, MM, DD).</summary>
-      public static readonly System.DateTime ASSET_CHANGED = new System.DateTime(2020, 12, 17);
+      public static readonly System.DateTime ASSET_CHANGED = new System.DateTime(2021, 6, 15);
 
       /// <summary>URL of the PRO asset in UAS.</summary>
       public const string ASSET_PRO_URL = "https://assetstore.unity.com/packages/slug/41068?aid=1011lNGT";
@@ -42,10 +42,10 @@ namespace Crosstales.RTVoice.Util
       public const string ASSET_MANUAL_URL = "https://www.crosstales.com/media/data/assets/rtvoice/RTVoice-doc.pdf";
 
       /// <summary>URL of the asset API.</summary>
-      public const string ASSET_API_URL = "http://www.crosstales.com/en/assets/rtvoice/api/";
+      public const string ASSET_API_URL = "https://www.crosstales.com/en/assets/rtvoice/api/";
 
       /// <summary>URL of the asset forum.</summary>
-      public const string ASSET_FORUM_URL = "http://forum.unity3d.com/threads/rt-voice-run-time-text-to-speech-solution.340046/";
+      public const string ASSET_FORUM_URL = "https://forum.unity.com/threads/rt-voice-run-time-text-to-speech-solution.340046/";
 
       /// <summary>URL of the asset in crosstales.</summary>
       public const string ASSET_WEB_URL = "https://www.crosstales.com/en/portfolio/rtvoice/";
@@ -70,6 +70,9 @@ namespace Crosstales.RTVoice.Util
 
       /// <summary>URL of the 3rd party asset "LipSync Pro".</summary>
       public const string ASSET_3P_LIPSYNC = "https://assetstore.unity.com/packages/slug/32117?aid=1011lNGT";
+
+      /// <summary>URL of the 3rd party asset "Naninovel".</summary>
+      public const string ASSET_3P_NANINOVEL = "https://assetstore.unity.com/packages/slug/135453?aid=1011lNGT";
 
       /// <summary>URL of the 3rd party asset "NPC Chat".</summary>
       public const string ASSET_3P_NPC_CHAT = "https://assetstore.unity.com/packages/slug/9723?aid=1011lNGT";
@@ -103,8 +106,6 @@ namespace Crosstales.RTVoice.Util
       public const string KEY_AUDIOFILE_PATH = KEY_PREFIX + "AUDIOFILE_PATH";
       public const string KEY_AUDIOFILE_AUTOMATIC_DELETE = KEY_PREFIX + "AUDIOFILE_AUTOMATIC_DELETE";
 
-      public const string KEY_ENFORCE_32BIT_WINDOWS = KEY_PREFIX + "ENFORCE_32BIT_WINDOWS";
-
       public const string KEY_ENFORCE_STANDALONE_TTS = KEY_PREFIX + "ENFORCE_STANDALONE_TTS";
 
       //public const string KEY_TTS_MACOS = KEY_PREFIX + "TTS_MACOS";
@@ -112,8 +113,6 @@ namespace Crosstales.RTVoice.Util
       // Default values
       public static readonly string DEFAULT_AUDIOFILE_PATH = Helper.ValidatePath(Application.temporaryCachePath);
       public const bool DEFAULT_AUDIOFILE_AUTOMATIC_DELETE = true;
-
-      public const bool DEFAULT_ENFORCE_32BIT_WINDOWS = false;
 
       public const bool DEFAULT_ENFORCE_STANDALONE_TTS = true;
       //public const string DEFAULT_TTS_WINDOWS_BUILD = @"/RTVoiceTTSWrapper.exe";
@@ -158,4 +157,4 @@ namespace Crosstales.RTVoice.Util
       #endregion
    }
 }
-// © 2015-2020 crosstales LLC (https://www.crosstales.com)
+// © 2015-2021 crosstales LLC (https://www.crosstales.com)

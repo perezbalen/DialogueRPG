@@ -30,6 +30,7 @@ namespace Crosstales.RTVoice.EditorUtil
       private static Texture2D store_DialogueSystem;
       private static Texture2D store_LDC;
       private static Texture2D store_LipSync;
+      private static Texture2D store_Naninovel;
       private static Texture2D store_NPC_Chat;
       private static Texture2D store_QuestSystem;
       private static Texture2D store_SALSA;
@@ -66,6 +67,8 @@ namespace Crosstales.RTVoice.EditorUtil
 
       public static Texture2D Store_LipSync => loadImage(ref store_LipSync, "Store_LipSync.png");
 
+      public static Texture2D Store_Naninovel => loadImage(ref store_Naninovel, "Store_Naninovel.png");
+      
       public static Texture2D Store_NPC_Chat => loadImage(ref store_NPC_Chat, "Store_NPC_Chat.png");
 
       public static Texture2D Store_QuestSystem => loadImage(ref store_QuestSystem, "Store_QuestSystem.png");
@@ -140,8 +143,7 @@ namespace Crosstales.RTVoice.EditorUtil
       /// <param name="prefabName">Name of the prefab.</param>
       public static void InstantiatePrefab(string prefabName)
       {
-         PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath("Assets" + EditorConfig.PREFAB_PATH + prefabName + ".prefab", typeof(GameObject)));
-         EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+         InstantiatePrefab(prefabName, EditorConfig.PREFAB_PATH);
       }
 
       /// <summary>Checks if the "RTVoice"-prefab is in the scene.</summary>
@@ -203,4 +205,4 @@ namespace Crosstales.RTVoice.EditorUtil
    }
 }
 #endif
-// © 2016-2020 crosstales LLC (https://www.crosstales.com)
+// © 2016-2021 crosstales LLC (https://www.crosstales.com)

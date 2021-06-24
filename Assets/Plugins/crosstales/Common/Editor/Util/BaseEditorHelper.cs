@@ -230,10 +230,8 @@ namespace Crosstales.Common.EditorUtil
       /// <param name="options">Asset import options (default: ImportAssetOptions.Default, optional).</param>
       public static void RefreshAssetDatabase(ImportAssetOptions options = ImportAssetOptions.Default)
       {
-         if (isEditorMode)
-         {
+         if (!Application.isPlaying)
             AssetDatabase.Refresh(options);
-         }
       }
 
       /// <summary>Invokes a public static method on a full qualified class.</summary>
@@ -415,6 +413,61 @@ namespace Crosstales.Common.EditorUtil
          return guids.Select(AssetDatabase.GUIDToAssetPath).Select(AssetDatabase.LoadAssetAtPath<T>).Where(asset => asset != null).ToList();
       }
 
+      /// <summary>
+      /// Create and return a new asset in a smart location based on the current selection and then select it.
+      /// </summary>
+      /// <param name="name">Name of the new asset. Do not include the .asset extension.</param>
+      /// <param name="showSaveFileBrowser">Shows the save file browser to select a destination for the asset (default: true, optional).</param>
+      /// <returns>The new asset.</returns>
+      public static T CreateAsset<T>(string name, bool showSaveFileBrowser = true) where T : ScriptableObject
+      {
+         string path;
+
+         if (showSaveFileBrowser)
+         {
+            //string classname = nameof(T);
+            path = EditorUtility.SaveFilePanelInProject($"Save asset {name}", name, "asset", "");
+         }
+         else
+         {
+            path = AssetDatabase.GetAssetPath(Selection.activeObject);
+            if (path.Length == 0)
+            {
+               // no asset selected, place in asset root
+               path = "Assets/" + name + ".asset";
+            }
+            else if (System.IO.Directory.Exists(path))
+            {
+               // place in currently selected directory
+               path += "/" + name + ".asset";
+            }
+            else
+            {
+               // place in current selection's containing directory
+               path = System.IO.Path.GetDirectoryName(path) + "/" + name + ".asset";
+            }
+         }
+
+         if (string.IsNullOrEmpty(path))
+            return default;
+
+         T asset = ScriptableObject.CreateInstance<T>();
+         AssetDatabase.CreateAsset(asset, AssetDatabase.GenerateUniqueAssetPath(path));
+         EditorUtility.FocusProjectWindow();
+         Selection.activeObject = asset;
+
+         return asset;
+      }
+
+      /// <summary>Instantiates a prefab.</summary>
+      /// <param name="prefabName">Name of the prefab.</param>
+      /// <param name="path">Path to the prefab.</param>
+      public static void InstantiatePrefab(string prefabName, string path)
+      {
+         PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath($"Assets{path}{prefabName}.prefab", typeof(GameObject)));
+         UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene());
+      }
+
       #endregion
 
 
@@ -436,8 +489,8 @@ namespace Crosstales.Common.EditorUtil
          // header
          sb.AppendLine("echo ##############################################################################");
          sb.AppendLine("echo #                                                                            #");
-         sb.AppendLine("echo #  Common 2020.4.1 - Windows                                                 #");
-         sb.AppendLine("echo #  Copyright 2018-2020 by www.crosstales.com                                 #");
+         sb.AppendLine("echo #  Common 2021.1.0 - Windows                                                 #");
+         sb.AppendLine("echo #  Copyright 2018-2021 by www.crosstales.com                                 #");
          sb.AppendLine("echo #                                                                            #");
          sb.AppendLine("echo #  This script restarts Unity.                                               #");
          sb.AppendLine("echo #  This will take some time, so please be patient and DON'T CLOSE THIS       #");
@@ -525,8 +578,8 @@ namespace Crosstales.Common.EditorUtil
          // header
          sb.AppendLine("echo \"+----------------------------------------------------------------------------+\"");
          sb.AppendLine("echo \"¦                                                                            ¦\"");
-         sb.AppendLine("echo \"¦  Common 2020.4.1 - macOS                                                   ¦\"");
-         sb.AppendLine("echo \"¦  Copyright 2018-2020 by www.crosstales.com                                 ¦\"");
+         sb.AppendLine("echo \"¦  Common 2021.1.0 - macOS                                                   ¦\"");
+         sb.AppendLine("echo \"¦  Copyright 2018-2021 by www.crosstales.com                                 ¦\"");
          sb.AppendLine("echo \"¦                                                                            ¦\"");
          sb.AppendLine("echo \"¦  This script restarts Unity.                                               ¦\"");
          sb.AppendLine("echo \"¦  This will take some time, so please be patient and DON'T CLOSE THIS       ¦\"");
@@ -612,8 +665,8 @@ namespace Crosstales.Common.EditorUtil
          // header
          sb.AppendLine("echo \"+----------------------------------------------------------------------------+\"");
          sb.AppendLine("echo \"¦                                                                            ¦\"");
-         sb.AppendLine("echo \"¦  Common 2020.4.1 - Linux                                                   ¦\"");
-         sb.AppendLine("echo \"¦  Copyright 2018-2020 by www.crosstales.com                                 ¦\"");
+         sb.AppendLine("echo \"¦  Common 2021.1.0 - Linux                                                   ¦\"");
+         sb.AppendLine("echo \"¦  Copyright 2018-2021 by www.crosstales.com                                 ¦\"");
          sb.AppendLine("echo \"¦                                                                            ¦\"");
          sb.AppendLine("echo \"¦  This script restarts Unity.                                               ¦\"");
          sb.AppendLine("echo \"¦  This will take some time, so please be patient and DON'T CLOSE THIS       ¦\"");
@@ -699,25 +752,7 @@ namespace Crosstales.Common.EditorUtil
       }
 
       #endregion
-
-
-      /*
-// compress the folder into a ZIP file, uses https://github.com/r2d2rigo/dotnetzip-for-unity
-static void CompressDirectory(string directory, string zipFileOutputPath)
-{
-  Debug.Log("attempting to compress " + directory + " into " + zipFileOutputPath);
-  // display fake percentage, I can't get zip.SaveProgress event handler to work for some reason, whatever
-  EditorUtility.DisplayProgressBar("COMPRESSING... please wait", zipFileOutputPath, 0.38f);
-  using (ZipFile zip = new ZipFile())
-  {
-      zip.ParallelDeflateThreshold = -1; // DotNetZip bugfix that corrupts DLLs / binaries http://stackoverflow.com/questions/15337186/dotnetzip-badreadexception-on-extract
-      zip.AddDirectory(directory);
-      zip.Save(zipFileOutputPath);
-  }
-  EditorUtility.ClearProgressBar();
-}
-*/
    }
 }
 #endif
-// © 2018-2020 crosstales LLC (https://www.crosstales.com)
+// © 2018-2021 crosstales LLC (https://www.crosstales.com)
