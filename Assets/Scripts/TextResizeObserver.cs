@@ -12,7 +12,7 @@ using TMPro;
 /// </summary>
 public class TextResizeObserver : MonoBehaviour
 {
-    [Tooltip("How much bigger should the font be, than the default size. Negative for smaller.")]
+    [Tooltip("Text wil change to 22.7 in Medium. How much should this be bigger (or smaller) than that?")]
     public float embigenFactor;
     private void OnEnable() 
     {
@@ -23,6 +23,8 @@ public class TextResizeObserver : MonoBehaviour
         
         /// When the object is enambled, it must find out the current fotn size
         /// and adjust itself to the norm.
+        /// 22.7
+        
         UpdateTextSize(ChangeFontSize.currentSize);
     }
 

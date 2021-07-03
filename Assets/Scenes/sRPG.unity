@@ -1284,7 +1284,7 @@ MonoBehaviour:
   allowBarksDuringConversations: 0
   skipBarkIfNoValidEntries: 0
   cacheBarkLines: 0
-  conversation: Atiliana Puzzle
+  conversation: Opening Conversation
   conversationConversant: {fileID: 1937966671}
   conversationActor: {fileID: 1079919422}
   startConversationEntryID: -1
@@ -1541,7 +1541,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   voicePreferences:
-  - language: Microsoft Hazel Desktop (en-GB, FEMALE)
+  - language: 
     name: 
     gender: 0
     minAge: 0
@@ -3485,6 +3485,7 @@ GameObject:
   - component: {fileID: 775401692}
   - component: {fileID: 775401693}
   - component: {fileID: 775401694}
+  - component: {fileID: 775401695}
   m_Layer: 5
   m_Name: CombatManager
   m_TagString: Untagged
@@ -3621,6 +3622,19 @@ MonoBehaviour:
   useBarkTitlePicker: 1
   useQuestNamePicker: 1
   selectedDatabase: {fileID: 11400000, guid: c1ffea4f72e9a4c42856b33cc7874e98, type: 2}
+--- !u!114 &775401695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 775401689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92a9a2c1776b40b40aeef630ac54e7c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueDatabase: {fileID: 0}
 --- !u!1 &788262409
 GameObject:
   m_ObjectHideFlags: 0
@@ -4984,6 +4998,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RTVoice
       objectReference: {fileID: 0}
+    - target: {fileID: 101928, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -5790,7 +5808,7 @@ MonoBehaviour:
   voicePreferences:
   - language: 
     name: 
-    gender: 1
+    gender: 0
     minAge: 0
     maxAge: 0
   rate: 2
@@ -6678,6 +6696,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 52db532af160e424487ae953f33e8987, type: 2}
   - {fileID: 11400000, guid: 83149df5ee3409647af01a9d609e66d3, type: 2}
   - {fileID: 11400000, guid: ac0122c5fed498847842a4a3825bbdac, type: 2}
+  - {fileID: 11400000, guid: 516b23f27189bc34ab6f233b89929d7c, type: 2}
+  - {fileID: 11400000, guid: 56d470531d7851845b3c7bcdf5af5408, type: 2}
 --- !u!1 &1365467346
 GameObject:
   m_ObjectHideFlags: 0
@@ -8337,11 +8357,11 @@ PrefabInstance:
       objectReference: {fileID: 1755290531}
     - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: displaySettings.subtitleSettings.continueButton
-      value: 9
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: displaySettings.inputSettings.emTagForOldResponses
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: displaySettings.inputSettings.includeInvalidEntries
@@ -8353,7 +8373,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: displaySettings.inputSettings.alwaysForceResponseMenu
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: displaySettings.inputSettings.emTagForInvalidResponses
@@ -9247,7 +9267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   voicePreferences:
-  - language: Microsoft Hazel Desktop (en-GB, FEMALE)
+  - language: 
     name: 
     gender: 0
     minAge: 0
@@ -11191,6 +11211,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 16415858}
     m_Modifications:
+    - target: {fileID: 8966698806258226900, guid: e6cab598017118d4dac7781b1a90a0f3, type: 3}
+      propertyPath: m_fontSize
+      value: 22.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8966698806258226900, guid: e6cab598017118d4dac7781b1a90a0f3, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 809b38a566f245f4da59750b715fbace, type: 2}
+    - target: {fileID: 8966698806258226900, guid: e6cab598017118d4dac7781b1a90a0f3, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8966698806258226900, guid: e6cab598017118d4dac7781b1a90a0f3, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 22.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8966698806258226900, guid: e6cab598017118d4dac7781b1a90a0f3, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 4520911103986896951, guid: 809b38a566f245f4da59750b715fbace, type: 2}
     - target: {fileID: 8966698806258226903, guid: e6cab598017118d4dac7781b1a90a0f3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -11242,6 +11282,14 @@ PrefabInstance:
     - target: {fileID: 8966698806365963349, guid: e6cab598017118d4dac7781b1a90a0f3, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8966698806365963350, guid: e6cab598017118d4dac7781b1a90a0f3, type: 3}
+      propertyPath: autonumber.format
+      value: <color=#ffffffff>{0})</color> {1}
+      objectReference: {fileID: 0}
+    - target: {fileID: 8966698806365963350, guid: e6cab598017118d4dac7781b1a90a0f3, type: 3}
+      propertyPath: autonumber.numpadHotkeys
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8966698806378431160, guid: e6cab598017118d4dac7781b1a90a0f3, type: 3}
       propertyPath: m_Name
@@ -11408,13 +11456,21 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8966698807908371440, guid: e6cab598017118d4dac7781b1a90a0f3, type: 3}
-      propertyPath: m_lineSpacing
-      value: 2
+      propertyPath: m_fontSize
+      value: 22.7
       objectReference: {fileID: 0}
     - target: {fileID: 8966698807908371440, guid: e6cab598017118d4dac7781b1a90a0f3, type: 3}
-      propertyPath: m_paragraphSpacing
-      value: 70
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 809b38a566f245f4da59750b715fbace, type: 2}
+    - target: {fileID: 8966698807908371440, guid: e6cab598017118d4dac7781b1a90a0f3, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 22.7
       objectReference: {fileID: 0}
+    - target: {fileID: 8966698807908371440, guid: e6cab598017118d4dac7781b1a90a0f3, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 4520911103986896951, guid: 809b38a566f245f4da59750b715fbace, type: 2}
     - target: {fileID: 8966698807908371452, guid: e6cab598017118d4dac7781b1a90a0f3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -11462,14 +11518,6 @@ PrefabInstance:
     - target: {fileID: 8966698807943666754, guid: e6cab598017118d4dac7781b1a90a0f3, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8966698807991133774, guid: e6cab598017118d4dac7781b1a90a0f3, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8966698807991133774, guid: e6cab598017118d4dac7781b1a90a0f3, type: 3}
-      propertyPath: embigenFactor
-      value: 27.3
       objectReference: {fileID: 0}
     - target: {fileID: 8966698808054901050, guid: e6cab598017118d4dac7781b1a90a0f3, type: 3}
       propertyPath: m_SizeDelta.y

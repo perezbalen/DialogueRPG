@@ -7,7 +7,8 @@ public class Card : ScriptableObject
 {
 
     #region Parameters
-    //public string cardName; //the name is the file/object name
+    public new string name; //the name is the file/object name
+
     [Tooltip("Flag to tell if Roll stats should be shown. (And wantever else I manage to do)")]
     [Header("If the card is set to isCombat, to ShowCardWin, and it's the first in a conversation, it will never trigger.")]
     public bool isCombat = true;

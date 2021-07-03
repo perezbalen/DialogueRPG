@@ -9,7 +9,7 @@ public class TooltipForDialogueSystem : MonoBehaviour
 {
     //public TooltipTrigger tooltipTrigger;
 
-       public CardDeck deckOfCards; //where the cards are stored. Do I need this?
+    public CardDeck deckOfCards; //where the cards are stored. Do I need this?
 
     public CardInfo cardInfo;   //the tooltip thing to show the data
     
@@ -57,8 +57,10 @@ public class TooltipForDialogueSystem : MonoBehaviour
                 //SetScriptForCombat(response, persistentMethodName); 
             }
         }
+        
+        //Debug.Log("cardLoadedOnHover: " + cardLoadedOnHover);
 
-        if (cardLoadedOnHover != null) //If the card ecists.
+        if (cardLoadedOnHover != null) //If the card excists.
         {
             cardLoadedOnHover.GetCardReady();
             cardInfo.hasCardData = cardLoadedOnHover.isCombat; //tells the cardInfo tooltip thing there's something to display.
@@ -135,6 +137,10 @@ public class TooltipForDialogueSystem : MonoBehaviour
 
     public void OnUnhover()
     {
+        ///Thios makes the botton forget the card before (since the dialogue sistem reuses response buttons
+        /// not forgetting was making old tooltips show on new responses that had no card).
+        cardLoadedOnHover = null;
+        
         /*
         if (tooltipTrigger != null) 
             tooltipTrigger.content = string.Empty;

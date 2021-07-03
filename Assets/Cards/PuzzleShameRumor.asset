@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e47d44ef21e97e141a7ad68795e4c08d, type: 3}
+  m_Name: PuzzleShameRumor
+  m_EditorClassIdentifier: 
+  name: Old rumor
+  isCombat: 1
+  internalDescription: Tutorial Shame Roll
+  sexActType: 7
+  statDependency: 3
+  cardDificulty: 2
+  sucessImage: {fileID: 0}
+  successText: She's turned on by your alpha-holeness
+  firstLinesSuccess: []
+  exhaustionHitPlayer1Success: 0
+  frustrationHitPlayer1Success: 0
+  arousalHitPlayer1Success: 0
+  exhaustionHitPlayer2Success: 0
+  frustrationHitPlayer2Success: 0
+  arousalHitPlayer2Success: 1
+  failImage: {fileID: 0}
+  failText: She calls you an ass
+  firstLinesFailure: []
+  exhaustionHitPlayer1Failure: 0
+  frustrationHitPlayer1Failure: 0
+  arousalHitPlayer1Failure: 0
+  exhaustionHitPlayer2Failure: 0
+  frustrationHitPlayer2Failure: 1
+  arousalHitPlayer2Failure: 0

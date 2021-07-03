@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e47d44ef21e97e141a7ad68795e4c08d, type: 3}
   m_Name: Tits Fondle
   m_EditorClassIdentifier: 
+  name: Play
   isCombat: 1
   internalDescription: This wnot show in game. It's as a helper for design. Actual
     description will go in dialogue system.
