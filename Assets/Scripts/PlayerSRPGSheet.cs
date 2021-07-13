@@ -32,7 +32,8 @@ public class PlayerSRPGSheet : MonoBehaviour
     [Tooltip("Typically leave unticked so temporary Dialogue Managers don't unregister your functions.")]
     public bool unregisterOnDisable = false; //Maybe remove. If not needed.
 
-    [Header("Player Stats")]
+    [Header("Character Stats")]
+    public int characterLevel = 1; //In the future use the character level to calcluate MaxLevel
     [Range(2, 12)]
     public int stamina;
     [Range(2, 12)]
@@ -137,9 +138,9 @@ public class PlayerSRPGSheet : MonoBehaviour
     /// </summary>
     private void SetHealthPoolsMaxLevels()
     {
-        exhaustionMaxLevel = stamina * 10;
-        frustrationMaxLevel = will * 10;
-        arousalMaxLevel = technique * 10;
+        exhaustionMaxLevel = stamina * characterLevel;
+        frustrationMaxLevel = will * characterLevel;
+        arousalMaxLevel = technique * characterLevel;
     }
 
     /// <summary>

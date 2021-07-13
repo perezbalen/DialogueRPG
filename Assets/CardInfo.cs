@@ -16,12 +16,14 @@ public class CardInfo : MonoBehaviour
     public string bodyMessage;
     private TextMeshProUGUI body;
 
-    public CardDisplay cardDisplay;
+    public CardDisplayMove cardDisplay;
     public bool hasCardData = false; //does the latest dialoge option has Card Data to display? This is set by the TooltioForDialogueSystem.
 
     [Header("Inner Workings")]
     public RectTransform rectTransform;
     private CanvasGroup canvasGroup;
+
+    public bool showExhaustion = false;
 
     [Header("Customization")]
     public float fadeInSpeed = 0.03f;
@@ -126,78 +128,115 @@ public class CardInfo : MonoBehaviour
 
     private void fillSuccessPlayer1(Card card)
     {
+        /// TODO: Make temp text. If there is no pool change at all, don't write "For you:"; leave .text as ""
         successPlayer1.text = "";
-        if (card.exhaustionHitPlayer1Success!=0 || card.frustrationHitPlayer1Success != 0 || card.arousalHitPlayer1Success != 0)
-            successPlayer1.text += "<b>For you:</b><br>";
-        if (card.exhaustionHitPlayer1Success > 0)
-            successPlayer1.text += "Exhaustion +" + card.exhaustionHitPlayer1Success + "<br>";
-        if (card.exhaustionHitPlayer1Success < 0)
-            successPlayer1.text += "Exhaustion " + card.exhaustionHitPlayer1Success + "<br>";
+        string tempText = "";
+
+        if (showExhaustion)
+        {
+            if (card.exhaustionHitPlayer1Success > 0)
+                tempText += "Exhaustion +" + card.exhaustionHitPlayer1Success + "<br>";
+            if (card.exhaustionHitPlayer1Success < 0)
+                tempText += "Exhaustion " + card.exhaustionHitPlayer1Success + "<br>";
+        }
         if (card.frustrationHitPlayer1Success > 0)
-            successPlayer1.text += "Frustration +" + card.frustrationHitPlayer1Success + "<br>";
+            tempText += "Frustration +" + card.frustrationHitPlayer1Success + "<br>";
         if (card.frustrationHitPlayer1Success < 0)
-            successPlayer1.text += "Frustration " + card.frustrationHitPlayer1Success + "<br>";
+            tempText += "Frustration " + card.frustrationHitPlayer1Success + "<br>";
         if (card.arousalHitPlayer1Success > 0)
-            successPlayer1.text += "Arousal +" + card.arousalHitPlayer1Success + "<br>";
+            tempText += "Arousal +" + card.arousalHitPlayer1Success + "<br>";
         if (card.arousalHitPlayer1Success < 0)
-            successPlayer1.text += "Arousal " + card.arousalHitPlayer1Success + "<br>";
+            tempText += "Arousal " + card.arousalHitPlayer1Success + "<br>";
+        if (tempText != "")
+        {
+            //if (card.exhaustionHitPlayer1Success != 0 || card.frustrationHitPlayer1Success != 0 || card.arousalHitPlayer1Success != 0)
+            successPlayer1.text += "<b>For you:</b><br>";
+            successPlayer1.text += tempText;
+        }
     }
 
     private void fillSuccessPlayer2(Card card)
     {
         successPlayer2.text = "";
-        if (card.exhaustionHitPlayer2Success != 0 || card.frustrationHitPlayer2Success != 0 || card.arousalHitPlayer2Success != 0)
-            successPlayer2.text += "<b>For her:</b><br>";
-        if (card.exhaustionHitPlayer2Success > 0)
-            successPlayer2.text += "Exhaustion +" + card.exhaustionHitPlayer2Success + "<br>";
-        if (card.exhaustionHitPlayer2Success < 0)
-            successPlayer2.text += "Exhaustion " + card.exhaustionHitPlayer2Success + "<br>";
+        string tempText = "";
+
+        if (showExhaustion)
+        {
+            if (card.exhaustionHitPlayer2Success > 0)
+                tempText += "Exhaustion +" + card.exhaustionHitPlayer2Success + "<br>";
+            if (card.exhaustionHitPlayer2Success < 0)
+                tempText += "Exhaustion " + card.exhaustionHitPlayer2Success + "<br>";
+        }
         if (card.frustrationHitPlayer2Success > 0)
-            successPlayer2.text += "Frustration +" + card.frustrationHitPlayer2Success + "<br>";
+            tempText += "Frustration +" + card.frustrationHitPlayer2Success + "<br>";
         if (card.frustrationHitPlayer2Success < 0)
-            successPlayer2.text += "Frustration " + card.frustrationHitPlayer2Success + "<br>";
+            tempText += "Frustration " + card.frustrationHitPlayer2Success + "<br>";
         if (card.arousalHitPlayer2Success > 0)
-            successPlayer2.text += "Arousal +" + card.arousalHitPlayer2Success + "<br>";
+            tempText += "Arousal +" + card.arousalHitPlayer2Success + "<br>";
         if (card.arousalHitPlayer2Success < 0)
-            successPlayer2.text += "Arousal " + card.arousalHitPlayer2Success + "<br>";
+            tempText += "Arousal " + card.arousalHitPlayer2Success + "<br>";
+        if (tempText != "")
+        {
+            //if (card.exhaustionHitPlayer2Success != 0 || card.frustrationHitPlayer2Success != 0 || card.arousalHitPlayer2Success != 0)
+            successPlayer2.text += "<b>For her:</b><br>";
+            successPlayer2.text += tempText;
+        }
     }
 
     private void fillFailurePlayer1(Card card)
     {
         failurePlayer1.text = "";
-        if (card.exhaustionHitPlayer1Failure != 0 || card.frustrationHitPlayer1Failure != 0 || card.arousalHitPlayer1Failure != 0)
-            failurePlayer1.text += "<b>For you:</b><br>";
-        if (card.exhaustionHitPlayer1Failure > 0)
-            failurePlayer1.text += "Exhaustion +" + card.exhaustionHitPlayer1Failure + "<br>";
-        if (card.exhaustionHitPlayer1Failure < 0)
-            failurePlayer1.text += "Exhaustion " + card.exhaustionHitPlayer1Failure + "<br>";
+        string tempText = "";
+
+        if (showExhaustion)
+        {
+            if (card.exhaustionHitPlayer1Failure > 0)
+                tempText += "Exhaustion +" + card.exhaustionHitPlayer1Failure + "<br>";
+            if (card.exhaustionHitPlayer1Failure < 0)
+                tempText += "Exhaustion " + card.exhaustionHitPlayer1Failure + "<br>";
+        }
         if (card.frustrationHitPlayer1Failure > 0)
-            failurePlayer1.text += "Frustration +" + card.frustrationHitPlayer1Failure + "<br>";
+            tempText += "Frustration +" + card.frustrationHitPlayer1Failure + "<br>";
         if (card.frustrationHitPlayer1Failure < 0)
-            failurePlayer1.text += "Frustration " + card.frustrationHitPlayer1Failure + "<br>";
+            tempText += "Frustration " + card.frustrationHitPlayer1Failure + "<br>";
         if (card.arousalHitPlayer1Failure > 0)
-            failurePlayer1.text += "Arousal +" + card.arousalHitPlayer1Failure + "<br>";
+            tempText += "Arousal +" + card.arousalHitPlayer1Failure + "<br>";
         if (card.arousalHitPlayer1Failure < 0)
-            failurePlayer1.text += "Arousal " + card.arousalHitPlayer1Failure + "<br>";
+            tempText += "Arousal " + card.arousalHitPlayer1Failure + "<br>";
+        if (tempText != "")
+        {
+            //if (card.exhaustionHitPlayer1Failure != 0 || card.frustrationHitPlayer1Failure != 0 || card.arousalHitPlayer1Failure != 0)
+            failurePlayer1.text += "<b>For you:</b><br>";
+            failurePlayer1.text += tempText;
+        }
     }
 
     private void fillFailurePlayer2(Card card)
     {
         failurePlayer2.text = "";
-        if (card.exhaustionHitPlayer2Failure != 0 || card.frustrationHitPlayer2Failure != 0 || card.arousalHitPlayer2Failure != 0)
-            failurePlayer2.text += "<b>For her:</b><br>";
-        if (card.exhaustionHitPlayer2Failure > 0)
-            failurePlayer2.text += "Exhaustion +" + card.exhaustionHitPlayer2Failure + "<br>";
-        if (card.exhaustionHitPlayer2Failure < 0)
-            failurePlayer2.text += "Exhaustion " + card.exhaustionHitPlayer2Failure + "<br>";
+        string tempText = "";
+
+        if (showExhaustion)
+        {
+            if (card.exhaustionHitPlayer2Failure > 0)
+                tempText += "Exhaustion +" + card.exhaustionHitPlayer2Failure + "<br>";
+            if (card.exhaustionHitPlayer2Failure < 0)
+                tempText += "Exhaustion " + card.exhaustionHitPlayer2Failure + "<br>";
+        }
         if (card.frustrationHitPlayer2Failure > 0)
-            failurePlayer2.text += "Frustration +" + card.frustrationHitPlayer2Failure + "<br>";
+            tempText += "Frustration +" + card.frustrationHitPlayer2Failure + "<br>";
         if (card.frustrationHitPlayer2Failure < 0)
-            failurePlayer2.text += "Frustration " + card.frustrationHitPlayer2Failure + "<br>";
+            tempText += "Frustration " + card.frustrationHitPlayer2Failure + "<br>";
         if (card.arousalHitPlayer2Failure > 0)
-            failurePlayer2.text += "Arousal +" + card.arousalHitPlayer2Failure + "<br>";
+            tempText += "Arousal +" + card.arousalHitPlayer2Failure + "<br>";
         if (card.arousalHitPlayer2Failure < 0)
-            failurePlayer2.text += "Arousal " + card.arousalHitPlayer2Failure + "<br>";
+            tempText += "Arousal " + card.arousalHitPlayer2Failure + "<br>";
+        if (tempText != "")
+        {
+            //if (card.exhaustionHitPlayer2Failure != 0 || card.frustrationHitPlayer2Failure != 0 || card.arousalHitPlayer2Failure != 0)
+            failurePlayer2.text += "<b>For her:</b><br>";
+            failurePlayer2.text += tempText;
+        }
     }
 
 #endregion

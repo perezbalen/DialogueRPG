@@ -19,7 +19,7 @@ MonoBehaviour:
   sexActType: 0
   statDependency: 0
   cardDificulty: 0
-  sucessImage: {fileID: 0}
+  sucessImage: {fileID: 21300000, guid: a604f471ced5ee14eadf29f5fce92dfd, type: 3}
   successText: I think this will also be here for reference. The actual text goes
     in the dialogue system
   firstLinesSuccess: []

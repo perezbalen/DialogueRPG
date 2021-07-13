@@ -6,6 +6,8 @@ public class CameraWondering : MonoBehaviour
 {
     public Vector3 cameraOrigin;
     public Vector3 cameraDestination;
+    [Tooltip("For 2D, use Z as Zoom")]
+    public bool zAsZoom;
     [Header("Curves")]
     public LeanTweenType easeTypeX;
     public LeanTweenType easeTypeY;
@@ -25,7 +27,16 @@ public class CameraWondering : MonoBehaviour
     {
         LeanTween.moveX(gameObject, cameraDestination.x, axisTime.x).setLoopPingPong().setEase(easeTypeX);
         LeanTween.moveY(gameObject, cameraDestination.y, axisTime.y).setLoopPingPong().setEase(easeTypeY);
-        LeanTween.moveZ(gameObject, cameraDestination.z, axisTime.z).setLoopPingPong().setEase(easeTypeZ);
+        //For 2D, Z move does nothing. So the trick is to scale the object X, Y, and Z (which, again, does nothing)
+        if (zAsZoom)
+        {
+            Vector3 OriginalSize = gameObject.transform.localScale;
+            LeanTween.scale(gameObject, OriginalSize*cameraDestination.z, axisTime.z).setLoopPingPong().setEase(easeTypeZ);
+        }
+        else
+        {
+            LeanTween.moveZ(gameObject, cameraDestination.z, axisTime.z).setLoopPingPong().setEase(easeTypeZ);
+        }
     }
 
     // Update is called once per frame

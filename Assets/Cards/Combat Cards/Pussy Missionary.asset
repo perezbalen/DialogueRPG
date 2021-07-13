@@ -19,7 +19,7 @@ MonoBehaviour:
   sexActType: 2
   statDependency: 0
   cardDificulty: 0
-  sucessImage: {fileID: 0}
+  sucessImage: {fileID: 21300000, guid: 951599629522b7c4cb03bc1a9d36169e, type: 3}
   successText: I think this will also be here for reference. The actual text goes
     in the dialogue system
   firstLinesSuccess: []
@@ -29,7 +29,7 @@ MonoBehaviour:
   exhaustionHitPlayer2Success: 0
   frustrationHitPlayer2Success: 0
   arousalHitPlayer2Success: 0
-  failImage: {fileID: 0}
+  failImage: {fileID: 21300000, guid: 00ae10661d5b2dd43949c744e1feee7e, type: 3}
   failText: "Bad technique. Are you in?\r"
   firstLinesFailure: []
   exhaustionHitPlayer1Failure: 0

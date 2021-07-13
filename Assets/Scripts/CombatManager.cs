@@ -17,7 +17,7 @@ public class CombatManager : MonoBehaviour
 
     public DiceRoller diceRoller;
 
-    public CardDisplay cardDisplay;
+    public CardDisplayMove cardDisplay;
 
     public enum StatElement { Stamina, Technique, Charisma, Will }
 

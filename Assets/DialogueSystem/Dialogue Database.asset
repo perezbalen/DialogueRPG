@@ -6721,7 +6721,19 @@ MonoBehaviour:
       userScript: 
       onExecute:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 11400000, guid: 74428e2dc50a74a4cb4113b7dfe44647, type: 2}
+            m_TargetAssemblyTypeName: Card, Assembly-CSharp
+            m_MethodName: ShowNonCombatCardWinSide
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
       canvasRect:
         serializedVersion: 2
         x: 36
@@ -13179,8 +13191,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 464.49005, y: 0}
-    canvasZoom: 0.48999992
+    canvasScrollPosition: {x: 0, y: 2.3255615}
+    canvasZoom: 0.42999992
   - id: 5
     fields:
     - title: Title
@@ -33232,7 +33244,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: "\u201CShit! Sorry.\u201D"
+        value: "\u201CShit! You startled me.\u201D"
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -33277,7 +33289,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 1594.399
-        y: 818.00775
+        y: 816.9089
         width: 160
         height: 30
     - id: 60
@@ -33457,7 +33469,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: "\u201CThat\u2019s some crappy writing.\u201D"
+        value: "\u201CWho wrote your dialogue?\u201D"
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -33834,7 +33846,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: "\u201CSorry. I thought you were an NPC.\u201D"
+        value: "\u201CSorry, sorry. I thought you were an NPC.\u201D"
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -41994,8 +42006,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 2.941162, y: 149.99985}
-    canvasZoom: 0.3400001
+    canvasScrollPosition: {x: 1770.0388, y: 1475.5273}
+    canvasZoom: 0.9099997
   syncInfo:
     syncActors: 0
     syncItems: 0

@@ -19,7 +19,7 @@ MonoBehaviour:
   sexActType: 2
   statDependency: 0
   cardDificulty: 0
-  sucessImage: {fileID: 21300000, guid: 8c2758f88d3991c40818bda1bf3022bf, type: 3}
+  sucessImage: {fileID: 21300000, guid: 7f3b23efc105b6f479169788362140e7, type: 3}
   successText: I think this will also be here for reference. The actual text goes
     in the dialogue system
   firstLinesSuccess: []
@@ -29,7 +29,7 @@ MonoBehaviour:
   exhaustionHitPlayer2Success: 0
   frustrationHitPlayer2Success: 0
   arousalHitPlayer2Success: 0
-  failImage: {fileID: 0}
+  failImage: {fileID: 21300000, guid: 6e982cfc52db51543b8971bc2234ecad, type: 3}
   failText: "Crush against wall. Cramp in leg\r"
   firstLinesFailure: []
   exhaustionHitPlayer1Failure: 0

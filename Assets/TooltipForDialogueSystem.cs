@@ -14,6 +14,7 @@ public class TooltipForDialogueSystem : MonoBehaviour
     public CardInfo cardInfo;   //the tooltip thing to show the data
     
     //shown for debug.
+    [Header("Show for debug")]
     [SerializeField]
     private Card cardLoadedOnHover;
 
@@ -51,8 +52,7 @@ public class TooltipForDialogueSystem : MonoBehaviour
             if (returnedPersistentTarget.GetType() == typeof(Card)) //Didnt use && because Null poiner exception.
             {
                 //loads the card used in the Dialogue Entry
-                cardLoadedOnHover = (Card)returnedPersistentTarget; 
-
+                cardLoadedOnHover = (Card)returnedPersistentTarget;
                 //Sets the script (No longer here. Moved to COmbat Manager).
                 //SetScriptForCombat(response, persistentMethodName); 
             }

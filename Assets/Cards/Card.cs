@@ -62,13 +62,13 @@ public class Card : ScriptableObject
 
     [Header("Success Player 1")]
     [Tooltip("What does this card does tp player 1 HPs when the roll wins.")]
-    public int exhaustionHitPlayer1Success = 0; 
+    public int exhaustionHitPlayer1Success = 1; 
     public int frustrationHitPlayer1Success = 0;
     public int arousalHitPlayer1Success = 0;
 
     [Header("Success Player 2")]
     [Tooltip("What does this card does tp player 2 HPs when the roll fails.")]
-    public int exhaustionHitPlayer2Success = 0;
+    public int exhaustionHitPlayer2Success = 1;
     public int frustrationHitPlayer2Success = 0;
     public int arousalHitPlayer2Success = 0;
     
@@ -83,14 +83,14 @@ public class Card : ScriptableObject
 
     [Header("Failure Player 1")]
     [Tooltip("What does this card does tp player 1 HPs when the roll wins.")]
-    public int exhaustionHitPlayer1Failure = 0;
+    public int exhaustionHitPlayer1Failure = 1;
     public int frustrationHitPlayer1Failure = 0;
     public int arousalHitPlayer1Failure = 0;
 
     [Header("Failure Player 2")]
     [Tooltip("What does this card does tp player 2 HPs when the roll fails.")]
-    public int exhaustionHitPlayer2Failure = 0;
-    public int frustrationHitPlayer2Failure = 0;
+    public int exhaustionHitPlayer2Failure = 1;
+    public int frustrationHitPlayer2Failure = 1;
     public int arousalHitPlayer2Failure = 0;
 
     #endregion 
