@@ -23,18 +23,18 @@ MonoBehaviour:
   successText: I think this will also be here for reference. The actual text goes
     in the dialogue system
   firstLinesSuccess: []
-  exhaustionHitPlayer1Success: 1
-  frustrationHitPlayer1Success: 0
-  arousalHitPlayer1Success: 1
-  exhaustionHitPlayer2Success: 1
+  exhaustionHitPlayer1Success: 9
+  frustrationHitPlayer1Success: -3
+  arousalHitPlayer1Success: 0
+  exhaustionHitPlayer2Success: 0
   frustrationHitPlayer2Success: 0
   arousalHitPlayer2Success: 0
   failImage: {fileID: 21300000, guid: fa3616e47b4edf14f9e18d3a2e4d64aa, type: 3}
   failText: "Almost throws up\r"
   firstLinesFailure: []
-  exhaustionHitPlayer1Failure: 1
-  frustrationHitPlayer1Failure: 0
+  exhaustionHitPlayer1Failure: 0
+  frustrationHitPlayer1Failure: 7
   arousalHitPlayer1Failure: 0
-  exhaustionHitPlayer2Failure: 1
-  frustrationHitPlayer2Failure: 1
+  exhaustionHitPlayer2Failure: 0
+  frustrationHitPlayer2Failure: 5
   arousalHitPlayer2Failure: 0

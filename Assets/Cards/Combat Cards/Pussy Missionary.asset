@@ -23,16 +23,16 @@ MonoBehaviour:
   successText: I think this will also be here for reference. The actual text goes
     in the dialogue system
   firstLinesSuccess: []
-  exhaustionHitPlayer1Success: 0
+  exhaustionHitPlayer1Success: 3
   frustrationHitPlayer1Success: 0
-  arousalHitPlayer1Success: 0
+  arousalHitPlayer1Success: 3
   exhaustionHitPlayer2Success: 0
   frustrationHitPlayer2Success: 0
-  arousalHitPlayer2Success: 0
+  arousalHitPlayer2Success: 5
   failImage: {fileID: 21300000, guid: 00ae10661d5b2dd43949c744e1feee7e, type: 3}
   failText: "Bad technique. Are you in?\r"
   firstLinesFailure: []
-  exhaustionHitPlayer1Failure: 0
+  exhaustionHitPlayer1Failure: 5
   frustrationHitPlayer1Failure: 0
   arousalHitPlayer1Failure: 0
   exhaustionHitPlayer2Failure: 0

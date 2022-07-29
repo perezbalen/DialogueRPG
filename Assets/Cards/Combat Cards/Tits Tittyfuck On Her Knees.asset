@@ -17,15 +17,15 @@ MonoBehaviour:
   internalDescription: This wnot show in game. It's as a helper for design. Actual
     description will go in dialogue system.
   sexActType: 1
-  statDependency: 0
-  cardDificulty: 0
+  statDependency: 3
+  cardDificulty: 1
   sucessImage: {fileID: 21300000, guid: 919d891b24ebdfd4a9e1304eb3ad1c9e, type: 3}
   successText: I think this will also be here for reference. The actual text goes
     in the dialogue system
   firstLinesSuccess: []
   exhaustionHitPlayer1Success: 0
-  frustrationHitPlayer1Success: 0
-  arousalHitPlayer1Success: 0
+  frustrationHitPlayer1Success: -3
+  arousalHitPlayer1Success: 7
   exhaustionHitPlayer2Success: 0
   frustrationHitPlayer2Success: 0
   arousalHitPlayer2Success: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
   failText: "Too excited. Hit her in chest as you thrust.\r"
   firstLinesFailure: []
   exhaustionHitPlayer1Failure: 0
-  frustrationHitPlayer1Failure: 0
+  frustrationHitPlayer1Failure: 5
   arousalHitPlayer1Failure: 0
   exhaustionHitPlayer2Failure: 0
   frustrationHitPlayer2Failure: 0

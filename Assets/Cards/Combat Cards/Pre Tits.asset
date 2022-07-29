@@ -17,7 +17,7 @@ MonoBehaviour:
   internalDescription: This wnot show in game. It's as a helper for design. Actual
     description will go in dialogue system.
   sexActType: 1
-  statDependency: 0
+  statDependency: 2
   cardDificulty: 0
   sucessImage: {fileID: 21300000, guid: 37f9423f08dae174abfdc0e2b1bd8ca5, type: 3}
   successText: I think this will also be here for reference. The actual text goes

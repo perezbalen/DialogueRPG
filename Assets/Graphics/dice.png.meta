@@ -38,10 +38,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -80,6 +82,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -124,7 +127,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 973804f7ff36c8000800000000000000
-      internalID: 39516445742236537
+      internalID: 2376305099863235458
       vertices: []
       indices: 
       edges: []
@@ -145,7 +148,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 28b1c4be5e45af020800000000000000
-      internalID: 2376305099863235458
+      internalID: 1813239885723335896
       vertices: []
       indices: 
       edges: []
@@ -166,7 +169,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 8dcfb11b11ce92910800000000000000
-      internalID: 1813239885723335896
+      internalID: -7464760887336577109
       vertices: []
       indices: 
       edges: []
@@ -187,7 +190,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: ba7d211e587d76890800000000000000
-      internalID: -7464760887336577109
+      internalID: -8866378825118310145
       vertices: []
       indices: 
       edges: []
@@ -208,7 +211,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: ff027c44f6b44f480800000000000000
-      internalID: -8866378825118310145
+      internalID: 39516445742236537
       vertices: []
       indices: 
       edges: []
@@ -244,9 +247,15 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      dice_1: 2376305099863235458
+      dice_2: 1813239885723335896
+      dice_3: -7464760887336577109
+      dice_6: -3287765887320952711
+      dice_5: 39516445742236537
+      dice_4: -8866378825118310145
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

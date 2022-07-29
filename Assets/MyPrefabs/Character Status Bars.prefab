@@ -27,12 +27,13 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -192.63492}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2459162070078597703}
   - {fileID: 2459162070672470407}
   - {fileID: 2459162070047518950}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -65,51 +66,36 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &1521830348155886255
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2459162070047518945}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69eadefaf4e71b346acadb033526aa51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  header: Arousal
-  content: "This bar goes up the more stimulated you are, and goes down when your
-    genitals are not stimulated. You can only come when this bar is high enough.
-    The higher it is, the nicer the orgasm (will affect bonus multipliers). \nUpon
-    acheaving orgasm, the bar will reset. You can come again as long as you are not
-    exhausted to continue."
-  delayTime: 0.5
---- !u!114 &1521830346712256070
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2459162070672470400}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69eadefaf4e71b346acadb033526aa51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  header: Frustration
-  content: "Frustration indicates how anoyed you are. If this reaches 100%, your
-    frustration will outweigh the need to have sex, and will stop having sex. (Keep
-    an eye on the other's person frustration bar.) \nThis increases when the other
-    person does something you don't like. Mostly the result of falied rolls, though
-    not always."
-  delayTime: 0.5
 --- !u!1001 &1521830346548484095
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 2
     m_TransformParent: {fileID: 1521830346844607835}
     m_Modifications:
+    - target: {fileID: 1984449031, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: content
+      value: It lets you know how much energy a character has left. When it reaches
+        zero, they will fall asleep, exhausted. If the current location is not ideal
+        for a nap, they will go to some place they can fall asleep.
+      objectReference: {fileID: 0}
+    - target: {fileID: 1984449031, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: delayTime
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447531186964, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: m_Color.b
+      value: 0.84705883
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447531186964, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447531186964, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780024, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -194,12 +180,156 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780025, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: m_Value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780025, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: m_MaxValue
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: maxValue
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: slideDelay
+      value: 0.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: bounceDelay
+      value: 0.83
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: gradient.ctime0
+      value: 13107
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: gradient.ctime1
+      value: 47609
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: gradient.ctime2
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: gradient.key0.b
+      value: 0.84705883
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: gradient.key0.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: gradient.key0.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: gradient.key1.b
+      value: 0.20784314
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: gradient.key1.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: gradient.key1.r
+      value: 0.98039216
+      objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780031, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: m_Name
       value: ExhaustionBar
       objectReference: {fileID: 0}
+    - target: {fileID: 3980639447991415749, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: db80912d40ecd9040a67d51151a0e946, type: 2}
+    - target: {fileID: 3980639448311719573, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: m_text
+      value: 0/20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6371615397394804340, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: InitializationMode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6371615397394804340, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: Feedbacks.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6371615397394804340, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: Feedbacks.Array.data[0]
+      value: 
+      objectReference: {fileID: 39603398}
     m_RemovedComponents: []
+    m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+--- !u!1 &2459162070078597696 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3980639447619780031, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+  m_PrefabInstance: {fileID: 1521830346548484095}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &39603398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2459162070078597696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c2ce51367856bd49b72678cc4263225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Active: 1
+  Label: Sound
+  Timing:
+    InitialDelay: 0
+    CooldownDuration: 0
+    NumberOfRepeats: 0
+    RepeatForever: 0
+    DelayBetweenRepeats: 1
+  DebugActive: 0
+  Sfx: {fileID: 0}
+  RandomSfx: []
+  PlayMethod: 1
+  MinVolume: 1
+  MaxVolume: 1
+  MinPitch: 1
+  MaxPitch: 1
+  SfxAudioMixerGroup: {fileID: 0}
+--- !u!114 &1049208421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2459162070078597696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c2ce51367856bd49b72678cc4263225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Active: 0
+  Label: Sound
+  Timing:
+    InitialDelay: 0
+    CooldownDuration: 0
+    NumberOfRepeats: 0
+    RepeatForever: 0
+    DelayBetweenRepeats: 1
+  DebugActive: 0
+  Sfx: {fileID: 8300000, guid: cdebbd691d1e7c748955b62cef466831, type: 3}
+  RandomSfx: []
+  PlayMethod: 0
+  MinVolume: 1
+  MaxVolume: 1
+  MinPitch: 1
+  MaxPitch: 1
+  SfxAudioMixerGroup: {fileID: 0}
 --- !u!224 &2459162070078597703 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3980639447619780024, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
@@ -210,19 +340,20 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 2
     m_TransformParent: {fileID: 1521830346844607835}
     m_Modifications:
     - target: {fileID: 3980639447531186964, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: m_Color.b
-      value: 0.29556784
+      value: 0.28170723
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447531186964, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: m_Color.g
-      value: 0.7735849
+      value: 0.0944108
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447531186964, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: m_Color.r
-      value: 0.5416347
+      value: 0.49056602
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447531186971, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: m_AnchorMax.x
@@ -334,7 +465,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780025, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: m_MaxValue
-      value: 80
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: label
@@ -346,7 +477,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: maxValue
-      value: 80
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: moveTime
@@ -362,7 +493,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: slideDelay
-      value: 0.15
+      value: 0.82
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: zoomAmount
@@ -370,7 +501,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: bounceDelay
-      value: 0.1
+      value: 1.19
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: slideEaseType
@@ -381,36 +512,88 @@ PrefabInstance:
       value: 34
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: gradient.ctime0
+      value: 11180
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: gradient.ctime1
-      value: 43947
+      value: 21203
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
-      propertyPath: gradient.key1.b
-      value: 0.3685031
+      propertyPath: gradient.ctime2
+      value: 33346
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
-      propertyPath: gradient.key1.g
-      value: 0.2053667
+      propertyPath: gradient.ctime3
+      value: 47802
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
-      propertyPath: gradient.key1.r
-      value: 0.6132076
+      propertyPath: gradient.ctime4
+      value: 55127
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
-      propertyPath: gradient.key2.b
+      propertyPath: gradient.key0.b
+      value: 0.28170723
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: gradient.key0.g
+      value: 0.0944108
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: gradient.key0.r
       value: 0.49056602
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: gradient.key1.b
+      value: 0.28170723
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: gradient.key1.g
+      value: 0.0944108
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: gradient.key1.r
+      value: 0.49056602
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: gradient.key2.b
+      value: 0.4502332
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: gradient.key2.g
-      value: 0.33547318
+      value: 0.20392157
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: gradient.key2.r
-      value: 0.108757555
+      value: 0.6117647
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: gradient.key3.b
+      value: 0.7911321
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: gradient.key3.g
+      value: 0.652759
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: gradient.key3.r
+      value: 0.9056604
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: gradient.key4.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: gradient.key4.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: gradient.key4.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: gradient.m_NumColorKeys
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780031, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: m_Name
@@ -434,16 +617,107 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3980639448311719573, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: m_text
-      value: 0/80
+      value: 0/20
       objectReference: {fileID: 0}
+    - target: {fileID: 6371615397394804340, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: InitializationMode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6371615397394804340, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: Feedbacks.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6371615397394804340, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: Feedbacks.Array.data[0]
+      value: 
+      objectReference: {fileID: 54018327}
     m_RemovedComponents:
     - {fileID: 1984449031, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+    m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
 --- !u!1 &2459162070047518945 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3980639447619780031, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
   m_PrefabInstance: {fileID: 1521830346575007070}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &54018327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2459162070047518945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c2ce51367856bd49b72678cc4263225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Active: 1
+  Label: Sound
+  Timing:
+    InitialDelay: 4.1
+    CooldownDuration: 0
+    NumberOfRepeats: 0
+    RepeatForever: 0
+    DelayBetweenRepeats: 1
+  DebugActive: 0
+  Sfx: {fileID: 8300000, guid: cdebbd691d1e7c748955b62cef466831, type: 3}
+  RandomSfx: []
+  PlayMethod: 1
+  MinVolume: 1
+  MaxVolume: 1
+  MinPitch: 1
+  MaxPitch: 1
+  SfxAudioMixerGroup: {fileID: 0}
+--- !u!114 &528282933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2459162070047518945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c2ce51367856bd49b72678cc4263225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Active: 1
+  Label: Sound
+  Timing:
+    InitialDelay: 3.1
+    CooldownDuration: 0
+    NumberOfRepeats: 0
+    RepeatForever: 0
+    DelayBetweenRepeats: 1
+  DebugActive: 0
+  Sfx: {fileID: 8300000, guid: cdebbd691d1e7c748955b62cef466831, type: 3}
+  RandomSfx: []
+  PlayMethod: 1
+  MinVolume: 1
+  MaxVolume: 1
+  MinPitch: 1
+  MaxPitch: 1
+  SfxAudioMixerGroup: {fileID: 0}
+--- !u!114 &1521830348155886255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2459162070047518945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69eadefaf4e71b346acadb033526aa51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  header: Arousal
+  content: 'This bar goes up the more stimulated the character is, and goes down
+    when their erogenous zones are not stimulated. You can only come when this bar
+    is high enough.
+
+    Upon achieving orgasm, the bar will reset. The character
+    can come again as long as they are not exhausted.'
+  delayTime: 0.5
 --- !u!224 &2459162070047518950 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3980639447619780024, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
@@ -454,19 +728,20 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 2
     m_TransformParent: {fileID: 1521830346844607835}
     m_Modifications:
     - target: {fileID: 3980639447531186964, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: m_Color.b
-      value: 0.29556784
+      value: 0.59445035
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447531186964, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: m_Color.g
-      value: 0.7735849
+      value: 0.56169456
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447531186964, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: m_Color.r
-      value: 0.5416347
+      value: 0.9245283
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447531186971, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: m_AnchorMax.x
@@ -578,7 +853,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780025, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: m_MaxValue
-      value: 90
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: label
@@ -590,7 +865,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: maxValue
-      value: 90
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: moveTime
@@ -606,7 +881,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: slideDelay
-      value: 0.17
+      value: 1.21
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: zoomAmount
@@ -614,7 +889,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: bounceDelay
-      value: 0.3
+      value: 0.79
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: slideEaseType
@@ -626,39 +901,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: gradient.ctime0
-      value: 13878
+      value: 2699
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: gradient.ctime1
-      value: 31997
+      value: 50308
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: gradient.ctime2
-      value: 54548
+      value: 60138
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: gradient.key0.b
-      value: 0.29556784
+      value: 0.59445035
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: gradient.key0.g
-      value: 0.7735849
+      value: 0.56169456
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: gradient.key0.r
-      value: 0.5416347
+      value: 0.9245283
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: gradient.key1.b
-      value: 0.32484868
+      value: 0.19922405
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: gradient.key1.g
-      value: 0.8902398
+      value: 0.14117646
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: gradient.key1.r
-      value: 0.9433962
+      value: 0.68235296
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: gradient.key2.b
@@ -670,6 +945,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: gradient.key2.r
+      value: 0.7607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: gradient.key3.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: gradient.key3.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3980639447619780026, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: gradient.key3.r
       value: 0.7607843
       objectReference: {fileID: 0}
     - target: {fileID: 3980639447619780031, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
@@ -694,16 +981,106 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3980639448311719573, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
       propertyPath: m_text
-      value: 0/90
+      value: 0/20
       objectReference: {fileID: 0}
+    - target: {fileID: 6371615397394804340, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: InitializationMode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6371615397394804340, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: Feedbacks.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6371615397394804340, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+      propertyPath: Feedbacks.Array.data[0]
+      value: 
+      objectReference: {fileID: 949830626}
     m_RemovedComponents:
     - {fileID: 1984449031, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
+    m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
 --- !u!1 &2459162070672470400 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3980639447619780031, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}
   m_PrefabInstance: {fileID: 1521830348147870783}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &949830626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2459162070672470400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c2ce51367856bd49b72678cc4263225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Active: 1
+  Label: Sound
+  Timing:
+    InitialDelay: 4.3
+    CooldownDuration: 0
+    NumberOfRepeats: 0
+    RepeatForever: 0
+    DelayBetweenRepeats: 1
+  DebugActive: 0
+  Sfx: {fileID: 8300000, guid: 37cc5c4c34e880e4ea94f0daa8bb4aef, type: 3}
+  RandomSfx: []
+  PlayMethod: 1
+  MinVolume: 1
+  MaxVolume: 1
+  MinPitch: 1
+  MaxPitch: 1
+  SfxAudioMixerGroup: {fileID: 0}
+--- !u!114 &1100823143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2459162070672470400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c2ce51367856bd49b72678cc4263225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Active: 1
+  Label: Sound
+  Timing:
+    InitialDelay: 3.3
+    CooldownDuration: 0
+    NumberOfRepeats: 0
+    RepeatForever: 0
+    DelayBetweenRepeats: 1
+  DebugActive: 0
+  Sfx: {fileID: 8300000, guid: 2c4b4be36545b8241ba9ac14147378e6, type: 3}
+  RandomSfx: []
+  PlayMethod: 1
+  MinVolume: 1
+  MaxVolume: 1
+  MinPitch: 1
+  MaxPitch: 1
+  SfxAudioMixerGroup: {fileID: 0}
+--- !u!114 &1521830346712256070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2459162070672470400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69eadefaf4e71b346acadb033526aa51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  header: Frustration
+  content: "Frustration shows how annoyed the character is. If this reaches 100%,
+    the frustration will outweigh the need to have sex, and they will stop fucking.
+    <i>Keep an eye on the other character\u2019s frustration bar.</i>\n\nThis increases
+    when the other character does something this character doesn\u2019t like. The
+    result of failed rolls, though not always."
+  delayTime: 0.5
 --- !u!224 &2459162070672470407 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3980639447619780024, guid: 807d73ed3723869498440c44e2c1b74e, type: 3}

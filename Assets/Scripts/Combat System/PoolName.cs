@@ -1,0 +1,1 @@
+public enum PoolName { Exhaustion, Frustration, Arousal }
